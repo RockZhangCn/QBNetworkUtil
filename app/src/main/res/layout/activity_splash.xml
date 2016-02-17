@@ -4,7 +4,6 @@
                 android:layout_width="match_parent"
                 style="@style/FitSystemWindows"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent"
                 tools:context="tencent.com.rocksnzhang.qbnetworkutil.SplashActivity">
         <ImageView
             android:layout_width="match_parent"

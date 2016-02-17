@@ -35,7 +35,6 @@ public class SplashActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_splash);
         mSplashImage = (ImageView)findViewById(R.id.iv_entry);
-        Random r = new Random(SystemClock.elapsedRealtime());
         animateImage();
     }
 
@@ -55,12 +54,10 @@ public class SplashActivity extends AppCompatActivity {
         set.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                //MainActivity.start(EntryActivity.this);
-               // EntryActivity.this.finish();
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
-
 }
