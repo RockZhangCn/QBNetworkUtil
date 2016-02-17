@@ -1,46 +1,55 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0099cc"
-    tools:context="tencent.com.rocksnzhang.qbnetworkutil.SplashActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                style="@style/FitSystemWindows"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                tools:context="tencent.com.rocksnzhang.qbnetworkutil.SplashActivity">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:contentDescription="entry"
+            android:src="@drawable/flyhigher"
+            android:id="@+id/iv_entry"/>
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-    <TextView android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:keepScreenOn="true"
-        android:textColor="#33b5e5"
-        android:textStyle="bold"
-        android:textSize="50sp"
-        android:gravity="center"
-        android:text="@string/dummy_content" />
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@drawable/ban_shadow"/>-->
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <LinearLayout android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:id="@+id/appnamestring"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="150dp"
+            android:text="QBNetworkUtil"/>
 
-            <Button android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:id="@+id/tv_bxbxbai"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_below="@id/appnamestring"-->
+           <!-- -->
+            <!--android:layout_marginBottom="300dp"-->
+            <!--android:textSize="16sp"-->
+            <!--android:text="rock.zhang.cn@gmail.com"/>-->
 
-        </LinearLayout>
-    </FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:id="@+id/tv_bxbxb2ai"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_marginBottom="100dp"
+        android:text="rock.zhang.cn@gmail.com"/>
 
-</FrameLayout>
+    </RelativeLayout>
