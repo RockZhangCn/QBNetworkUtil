@@ -3,11 +3,11 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.example.rock.helloworld.MainActivity">
 
-    <!--<item-->
-        <!--android:id="@+id/refreshid"-->
-        <!--android:orderInCategory="99"-->
-        <!--android:title="Refresh"-->
-        <!--app:showAsAction="always"/>-->
+    <item
+        android:id="@+id/menu_refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="refresh"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_settings"
