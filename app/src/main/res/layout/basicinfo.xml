@@ -10,9 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    android:layout_gravity="center"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="tencent.com.rocksnzhang.qbnetworkutil.MainActivity"
+    android:gravity="center"
     tools:showIn="@layout/activity_main">
 
 
@@ -20,6 +18,7 @@
         android:id="@+id/fragment_tv"
         android:text="Basic Info Fragement"
         android:layout_width="wrap_content"
+        android:textSize="20sp"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>

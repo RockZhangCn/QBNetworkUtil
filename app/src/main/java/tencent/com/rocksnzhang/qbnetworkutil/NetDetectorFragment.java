@@ -9,16 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 /**
  * Created by rock on 16-2-19.
  */
-public class BasicInfoFragment extends Fragment
+public class NetDetectorFragment extends Fragment
 {
     private Context mContext;
 
-    public BasicInfoFragment()
+    public NetDetectorFragment()
     {
 
     }
