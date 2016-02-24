@@ -39,4 +39,9 @@
     <style name="customtablayout" parent="Widget.Design.TabLayout">>
            <item name="tabIndicatorHeight">4dp</item>
     </style>
+
+    <style name="tablayouttextsize" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">18sp</item>
+    </style>
+    tablayouttextsize
 </resources>
