@@ -28,7 +28,7 @@ public class NetDetectorFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.basicinfo, container, false);
-        mTextView = (TextView)view.findViewById(R.id.fragment_tv);
+        mTextView = (TextView)view.findViewById(R.id.basicinfo_tv);
         mTextView.setText(mTitle);
         return view;
     }

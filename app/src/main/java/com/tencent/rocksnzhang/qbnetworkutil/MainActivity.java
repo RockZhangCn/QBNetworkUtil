@@ -85,9 +85,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
 
-        viewPager.setAdapter( pagerAdapter);
+        viewPager.setAdapter(pagerAdapter);
 
-        if(true)
+        if (true)
         {
             tabLayout.addTab(tabLayout.newTab().setText("基本信息"));
             tabLayout.addTab(tabLayout.newTab().setText("网络诊断"));
@@ -100,24 +100,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onTabSelected(TabLayout.Tab tab)
                 {
-
                     viewPager.setCurrentItem(tab.getPosition());
                 }
 
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab)
                 {
-
                 }
 
                 @Override
                 public void onTabReselected(TabLayout.Tab tab)
                 {
-
                 }
             });
-
-           // tabLayout.getTabAt(0).set
         }
         else
         {
@@ -125,7 +120,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
             tabLayout.setupWithViewPager(viewPager);
         }
-        tabLayout.setOnClickListener(new View.OnClickListener(){
+        
+		tabLayout.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view)
             {
@@ -136,8 +133,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView()
     {
-        viewPager = (ViewPager)findViewById(R.id.viewpager);
-        tabLayout = (TabLayout)findViewById(R.id.tablayout);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.tablayout);
     }
 
     @Override
@@ -163,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(MainActivity.this, "This is menu response", Toast.LENGTH_LONG).show();
             return true;
         }
-        else if(id == R.id.menu_refresh)
+        else if (id == R.id.menu_refresh)
         {
             Toast.makeText(MainActivity.this, "This is refresh response", Toast.LENGTH_LONG).show();
             return true;
@@ -184,13 +181,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         //if(view.getId() == R.id.menu_refresh)
-            Toast.makeText(MainActivity.this, "This is my response", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, "This is my response", Toast.LENGTH_LONG).show();
         Log.i("TEST", "--- DVB Mac Address : ");
-        new Thread(new Runnable(){
+        
+		new Thread(new Runnable()
+        {
             @Override
             public void run()
             {
-                Log.i("TEST", "--- DVB Mac Address : " );
+                Log.i("TEST", "--- DVB Mac Address : ");
                 getMacAddress();
             }
         }).start();
