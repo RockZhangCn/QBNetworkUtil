@@ -4,19 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.SystemClock;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
-
-import java.util.Random;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
