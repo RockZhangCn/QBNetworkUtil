@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="tencent.com.rocksnzhang.qbnetworkutil.MainActivity">
+    tools:context="com.tencent.rocksnzhang.qbnetworkutil.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

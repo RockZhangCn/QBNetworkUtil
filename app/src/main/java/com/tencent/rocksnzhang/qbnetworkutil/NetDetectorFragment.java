@@ -1,4 +1,4 @@
-package tencent.com.rocksnzhang.qbnetworkutil;
+package com.tencent.rocksnzhang.qbnetworkutil;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,11 +12,11 @@ import android.widget.TextView;
 /**
  * Created by rock on 16-2-19.
  */
-public class OtherToolFragment extends Fragment
+public class NetDetectorFragment extends Fragment
 {
     private Context mContext;
 
-    public OtherToolFragment()
+    public NetDetectorFragment()
     {
 
     }

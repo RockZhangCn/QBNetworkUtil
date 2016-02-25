@@ -1,4 +1,4 @@
-package tencent.com.rocksnzhang.qbnetworkutil;
+package com.tencent.rocksnzhang.qbnetworkutil;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
