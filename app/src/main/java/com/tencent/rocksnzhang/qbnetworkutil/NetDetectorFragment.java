@@ -28,7 +28,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     private Button handshakebtn;
     private Button traceroutebtn;
 
-    public NetDetectorFragment( )
+    public NetDetectorFragment()
     {
     }
 
@@ -65,7 +65,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         pingbtn = (Button) view.findViewById(R.id.pingaction);
         pingbtn.setOnClickListener(this);
 
-        dnsresolvebtn = (Button)view.findViewById(R.id.resolveaction);
+        dnsresolvebtn = (Button) view.findViewById(R.id.resolveaction);
         dnsresolvebtn.setOnClickListener(this);
         return view;
     }
@@ -97,21 +97,20 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     @Override
     public void onDetectStarted(DetectTask task)
     {
-
+        Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect started", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onDetectFinished(DetectTask task)
     {
-
+        Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect " + (task.isSuccess() ? "successed" : "failed"), Toast.LENGTH_LONG).show();
     }
-
 
 
     private boolean checkDomainIPValidate()
     {
         mStrDomainIP = domainipedit.getText().toString();
-        return  IPDomainVlidator.isValidDomainOrIPAddr(mStrDomainIP);
+        return IPDomainVlidator.isValidDomainOrIPAddr(mStrDomainIP);
     }
 }
 

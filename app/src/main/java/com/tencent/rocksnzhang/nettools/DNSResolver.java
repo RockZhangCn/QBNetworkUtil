@@ -29,11 +29,13 @@ public class DNSResolver extends DetectTask
                 case MSG_FINISH:
                     mResult = (String) msg.obj;
                     mIsSuccess = true;
+                    mDetectListener.onDetectFinished(DNSResolver.this);
                     break;
 
                 case MSG_ERROR:
                     mResult = (String) msg.obj;
                     mIsSuccess = false;
+                    mDetectListener.onDetectFinished(DNSResolver.this);
                     break;
 
             }
@@ -51,6 +53,7 @@ public class DNSResolver extends DetectTask
     @Override
     public void startDetect()
     {
+        mDetectListener.onDetectStarted(this);
         new ResolverThread().start();
     }
 

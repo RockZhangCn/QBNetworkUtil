@@ -2,6 +2,7 @@ package com.tencent.rocksnzhang.qbnetworkutil;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 /**
  * Created by rock on 16-2-25.
@@ -16,7 +17,8 @@ public class NetworkUtilApp extends Application
     {
         super.onCreate();
         m_singleInstance = this;
-        mAppContext = this.getApplicationContext();
+        Log.e("TAG", "onCreate() + instance is " + m_singleInstance);
+        mAppContext = m_singleInstance;
     }
 
     public Context getApplicationContext()
