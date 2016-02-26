@@ -1,25 +1,14 @@
 package com.tencent.rocksnzhang.qbnetworkutil;
 
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.tencent.rocksnzhang.io.FileUtils;
 import com.tencent.rocksnzhang.qbnetworkutil.netinfo.NetBasicInfo;
 import com.tencent.rocksnzhang.qbnetworkutil.netinfo.SystemBasicInfo;
-import com.tencent.rocksnzhang.utils.IDataPersist;
-
-import org.apache.commons.io.IOUtils;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by rock on 16-2-19.
@@ -28,9 +17,8 @@ public class BasicInfoFragment extends CommonFragment
 {
     private NetBasicInfo mNetBasicInfo;
 
-    public BasicInfoFragment(Context c)
+    public BasicInfoFragment()
     {
-        super(c);
     }
 
     private String mTitle;

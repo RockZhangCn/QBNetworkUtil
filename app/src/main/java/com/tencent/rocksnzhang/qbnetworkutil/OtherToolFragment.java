@@ -1,9 +1,7 @@
 package com.tencent.rocksnzhang.qbnetworkutil;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +12,9 @@ import android.widget.TextView;
  */
 public class OtherToolFragment extends CommonFragment
 {
-    private Context mContext;
-
-    public OtherToolFragment(Context c)
+    public OtherToolFragment()
     {
-        super(c);
+
     }
 
     @Override

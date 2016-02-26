@@ -1,8 +1,8 @@
 package com.tencent.rocksnzhang.qbnetworkutil;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 
 import com.tencent.rocksnzhang.utils.IDataPersist;
 
@@ -16,16 +16,18 @@ public abstract class CommonFragment extends Fragment implements IDataPersist
 {
     protected Context mContext;
 
-    CommonFragment(Context c)
+    @Override
+    public void onCreate(Bundle savedInstanceState)
     {
-        mContext = c;
-        Log.e("TAG", "mContext is " + mContext);
+        super.onCreate(savedInstanceState);
+        mContext = getActivity();
     }
 
     @Override
     public final File saveToFile()
     {
-        File saveFile = new File(mContext.getFilesDir(), saveFileName());
+        //getFileDir() no permission to read.
+        File saveFile = new File(mContext.getExternalCacheDir(), saveFileName());
 
         try
         {

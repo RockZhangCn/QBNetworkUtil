@@ -8,17 +8,24 @@ import android.content.Context;
  */
 public class NetworkUtilApp extends Application
 {
-    public static Context mAppContext;
+    private static Context mAppContext;
+    private static NetworkUtilApp m_singleInstance;
 
     @Override
     public void onCreate()
     {
         super.onCreate();
-        mAppContext = this;
+        m_singleInstance = this;
+        mAppContext = this.getApplicationContext();
     }
 
     public Context getApplicationContext()
     {
         return mAppContext;
+    }
+
+    public static NetworkUtilApp getInstance()
+    {
+        return m_singleInstance;
     }
 }

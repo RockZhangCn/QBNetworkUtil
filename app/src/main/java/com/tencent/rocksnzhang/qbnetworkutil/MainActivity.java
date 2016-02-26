@@ -1,7 +1,7 @@
 package com.tencent.rocksnzhang.qbnetworkutil;
 
-import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -51,13 +51,13 @@ public class MainActivity extends AppCompatActivity
 
     private void initData()
     {
-        CommonFragment basicInfo = new BasicInfoFragment(this);
+        CommonFragment basicInfo = new BasicInfoFragment();
         mFragmentList.add(basicInfo);
 
-        CommonFragment basicInfo2 = new NetDetectorFragment(this);
+        CommonFragment basicInfo2 = new NetDetectorFragment();
         mFragmentList.add(basicInfo2);
 
-        CommonFragment basicInfo3 = new OtherToolFragment(this);
+        CommonFragment basicInfo3 = new OtherToolFragment();
         mFragmentList.add(basicInfo3);
 
         pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager())
@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings)
         {
-
             Toast.makeText(MainActivity.this, "This is menu response", Toast.LENGTH_LONG).show();
             return true;
         }
@@ -151,7 +150,7 @@ public class MainActivity extends AppCompatActivity
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
             Toast.makeText(MainActivity.this, mFragmentList.get(mCurrentFragmentIndex).saveToFile().toURI().toString(), Toast.LENGTH_LONG).show();
-            shareIntent.putExtra(Intent.EXTRA_STREAM, mFragmentList.get(mCurrentFragmentIndex).saveToFile().toURI());
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(mFragmentList.get(mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
             shareIntent.setType("text/plain");
             startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
             return true;

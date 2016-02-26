@@ -1,13 +1,6 @@
 package com.tencent.rocksnzhang.qbnetworkutil.netinfo;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
-import android.telephony.TelephonyManager;
-
-import java.net.NetworkInterface;
-import java.net.SocketException;
 
 /**
  * Created by rock on 16-2-25.

@@ -3,11 +3,8 @@ package com.tencent.rocksnzhang.qbnetworkutil.netinfo;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Message;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
-import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 
