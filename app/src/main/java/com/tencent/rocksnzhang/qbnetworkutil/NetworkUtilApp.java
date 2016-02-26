@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.tencent.rocksnzhang.utils.NetworkUtils;
+
 /**
  * Created by rock on 16-2-25.
  */
@@ -19,6 +21,7 @@ public class NetworkUtilApp extends Application
         m_singleInstance = this;
         Log.e("TAG", "onCreate() + instance is " + m_singleInstance);
         mAppContext = m_singleInstance;
+        NetworkUtils.setApplicationContext(mAppContext);
     }
 
     public Context getApplicationContext()

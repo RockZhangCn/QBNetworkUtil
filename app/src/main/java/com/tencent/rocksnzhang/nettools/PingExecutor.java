@@ -1,6 +1,5 @@
 package com.tencent.rocksnzhang.nettools;
 
-import android.os.Message;
 import android.util.Log;
 
 import com.tencent.rocksnzhang.utils.DetectResultListener;
@@ -18,6 +17,12 @@ public class PingExecutor extends DetectTask
     public PingExecutor(DetectResultListener l, String host)
     {
         super(l, host);
+    }
+
+    @Override
+    public int detectTaskID()
+    {
+        return TASK_ICMPPING;
     }
 
     @Override

@@ -1,99 +1,33 @@
-package com.tencent.rocksnzhang.nettools;
+package com.tencent.rocksnzhang.utils;
 
 import android.content.Context;
-import android.util.Log;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
-public class NetInfoUtils
+public class NetworkUtils
 {
+    private static Context mContext;
 
-    Context context;
-
-    public NetInfoUtils(Context c)
+    private NetworkUtils()
     {
-        context = c;
     }
 
-    private boolean canGetHtmlCode(String httpUrl)
+    public static void setApplicationContext(Context c)
     {
-        String htmlCode = "";
-        try
-        {
-            InputStream in;
-            URL url = new URL(httpUrl);
-            HttpURLConnection connection = (HttpURLConnection) url
-                    .openConnection();
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestProperty("User-Agent", "Mozilla/4.0");
-            connection.connect();
-            in = connection.getInputStream();
-            byte[] buffer = new byte[60];
-            in.read(buffer);
-            htmlCode = new String(buffer);
-            Log.e("ROCK", "HTML code is " + htmlCode);
-        }
-        catch (Exception e)
-        {
-        }
-        if (htmlCode == null || htmlCode.equals(""))
-        {
-            return false;
-        }
-        return true;
+        mContext = c;
     }
 
-    private static String pingIP(String IP)
+    public static boolean isNetworkConnected()
     {
-        BufferedReader in = null;
-        Runtime rt = Runtime.getRuntime();
-        boolean FoundMatch = false;
-        String pingCommand = "ping " + IP + " -w " + 3000;
-        try
-        {
-            Process pro = rt.exec(pingCommand);
-            in = new BufferedReader(new InputStreamReader(pro.getInputStream()));
-            String line = in.readLine();
-            while (line != null)
-            {
-                Log.e("ROCK", "line is : " + line);
-                try
-                {
-                    Pattern Regex = Pattern.compile("(T|t){2}(L|l)",
-                            Pattern.CANON_EQ);
-                    Matcher RegexMatcher = Regex.matcher(line);
-                    FoundMatch = RegexMatcher.find();
-                    if (FoundMatch)
-                    {
-                        pro.destroy();
-                        return IP.trim();
-                    }
-                }
-                catch (PatternSyntaxException ex)
-                {
-                    // Syntax error in the regular expression
-                    ex.getMessage();
-                }
-                line = in.readLine();
-            }
-        }
-        catch (IOException e)
-        {
-            // TODO Auto-generated catch block
-            System.out.println(e.getMessage());
-        }
-        return null;
+        ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo         activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private void getLocalHost()

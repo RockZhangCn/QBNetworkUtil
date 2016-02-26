@@ -13,9 +13,11 @@ import android.widget.Toast;
 import com.tencent.rocksnzhang.nettools.DNSResolver;
 import com.tencent.rocksnzhang.nettools.NetConnectable;
 import com.tencent.rocksnzhang.nettools.PingExecutor;
+import com.tencent.rocksnzhang.utils.DebugToast;
 import com.tencent.rocksnzhang.utils.DetectResultListener;
 import com.tencent.rocksnzhang.utils.DetectTask;
 import com.tencent.rocksnzhang.utils.IPDomainValidator;
+import com.tencent.rocksnzhang.utils.NetworkUtils;
 
 /**
  * Created by rock on 16-2-19.
@@ -72,6 +74,8 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         netavailablebtn = (Button)view.findViewById(R.id.netavaiable);
         netavailablebtn.setOnClickListener(this);
 
+        //netavailablebtn.setBackgroundColor(0xff00ff00);
+
         pingbtn = (Button) view.findViewById(R.id.pingaction);
         pingbtn.setOnClickListener(this);
 
@@ -95,10 +99,19 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         super.onCreate(savedInstanceState);
     }
 
+
     @Override
     public void onClick(View view)
     {
-        mDetectResultView.setText("");
+  
+        if(!NetworkUtils.isNetworkConnected())
+        {
+            DebugToast.showToast("没有可用的网络连接");
+            return;
+        }
+		
+		mDetectResultView.setText("");
+        
         switch (view.getId())
         {
             case R.id.netavaiable:
@@ -158,14 +171,14 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     @Override
     public void onDetectStarted(DetectTask task)
     {
-        Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect started", Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect started", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDetectFinished(DetectTask task)
     {
         mDetectResultView.setText(task.detectResultData());
-        Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect " + (task.isSuccess() ? "successed" : "failed"), Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect " + (task.isSuccess() ? "successed" : "failed"), Toast.LENGTH_SHORT).show();
     }
 
 

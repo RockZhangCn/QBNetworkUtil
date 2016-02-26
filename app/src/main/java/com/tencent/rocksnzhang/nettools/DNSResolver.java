@@ -1,7 +1,5 @@
 package com.tencent.rocksnzhang.nettools;
 
-import android.os.Message;
-
 import com.tencent.rocksnzhang.utils.DetectResultListener;
 import com.tencent.rocksnzhang.utils.DetectTask;
 
@@ -37,6 +35,12 @@ public class DNSResolver extends DetectTask
     public DNSResolver(DetectResultListener listener, String host)
     {
         super(listener, host);
+    }
+
+    @Override
+    public int detectTaskID()
+    {
+        return TASK_DNSPARSE;
     }
 
     @Override

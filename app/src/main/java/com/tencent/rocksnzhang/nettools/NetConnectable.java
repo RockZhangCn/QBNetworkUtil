@@ -1,7 +1,5 @@
 package com.tencent.rocksnzhang.nettools;
 
-import android.util.Log;
-
 import com.tencent.rocksnzhang.utils.DetectResultListener;
 import com.tencent.rocksnzhang.utils.DetectTask;
 
@@ -19,6 +17,12 @@ public class NetConnectable extends DetectTask
     public NetConnectable(DetectResultListener l, String host)
     {
         super(l, host);
+    }
+
+    @Override
+    public int detectTaskID()
+    {
+        return TASK_CONNECT;
     }
 
     @Override

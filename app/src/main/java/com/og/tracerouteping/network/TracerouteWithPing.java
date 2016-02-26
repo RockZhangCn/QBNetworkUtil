@@ -20,14 +20,12 @@ along with TraceroutePing.  If not, see <http://www.gnu.org/licenses/>.
 package com.og.tracerouteping.network;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.tencent.rocksnzhang.nettools.TraceRoute;
+import com.tencent.rocksnzhang.utils.NetworkUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -77,7 +75,7 @@ public class TracerouteWithPing {
 		this.finishedTasks = 0;
 		this.traces = new ArrayList<TracerouteContainer>();
 
-		new ExecutePingAsyncTask(40).execute();
+		new ExecutePingAsyncTask(TraceRoute.MAX_TTL).execute();
 	}
 
 	/**
@@ -253,7 +251,6 @@ public class TracerouteWithPing {
 									new ExecutePingAsyncTask(maxTtl).execute();
 								}
 							}
-//							context.refreshList(traces);
 						}
 					}
 					finishedTasks++;
@@ -379,11 +376,6 @@ public class TracerouteWithPing {
 	 * @return true if there is a connectivity, false otherwise
 	 */
 	public boolean hasConnectivity() {
-		/*
-		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
-		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-		*/
-		return true;
+        return NetworkUtils.isNetworkConnected();
 	}
 }
