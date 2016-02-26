@@ -1,6 +1,7 @@
 package com.tencent.rocksnzhang.qbnetworkutil;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tencent.rocksnzhang.qbnetworkutil.netinfo.NetBasicInfo;
+import com.tencent.rocksnzhang.qbnetworkutil.netinfo.SystemBasicInfo;
 
 /**
  * Created by rock on 16-2-19.
@@ -34,10 +36,13 @@ public class BasicInfoFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.basicinfo, container, false);
         mTextView = (TextView) view.findViewById(R.id.basicinfo_tv);
+        mTextView.setTextIsSelectable(true);
+
         mTextView.setText(mNetBasicInfo.getApnInfo()
                 + "\r\nMac address : \r\n"
                 + "wlan0 :\t" + mNetBasicInfo.getMacAddress("wlan0")
-                + "\np2p0 :\t " + mNetBasicInfo.getMacAddress("p2p0"));
+                + "\np2p0 :\t " + mNetBasicInfo.getMacAddress("p2p0")
+                + "\n\n" + SystemBasicInfo.getBuildInfo());
         return view;
     }
 
@@ -47,15 +52,10 @@ public class BasicInfoFragment extends Fragment
         super.onCreate(savedInstanceState);
         mContext = getActivity();
         mNetBasicInfo = NetBasicInfo.getInstance(mContext);
-        Bundle arguments = getArguments();
-        if (arguments != null)
-        {
-            mTitle = arguments.getString("title");
-        }
-        else
-        {
-            mTitle = "Default content";
-        }
+    }
 
+    public void uploadBasicInfo()
+    {
+        mTextView.getText();
     }
 }
