@@ -3,10 +3,7 @@ package com.tencent.rocksnzhang.utils;
 import org.apache.commons.validator.routines.DomainValidator;
 import org.apache.commons.validator.routines.InetAddressValidator;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-public class IPDomainVlidator
+public class IPDomainValidator
 {
     public static boolean isValidDomainOrIPAddr(String input)
     {

@@ -14,6 +14,7 @@
 
     <EditText
         android:id="@+id/ipdomain"
+        android:text="192.243.115.223"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
@@ -41,4 +42,22 @@
         android:text="三次握手"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:scrollbars="none">
+    <TextView
+        android:id="@+id/result_tv"
+        android:text="no detect result"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:background="@android:color/holo_blue_dark"
+        android:layout_height="match_parent"
+        android:textColor="#ff000000"
+        android:textSize="16sp"
+
+        />
+    </ScrollView>
 </LinearLayout>

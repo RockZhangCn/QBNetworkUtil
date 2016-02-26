@@ -131,25 +131,6 @@ public class NetInfoUtils
 
     StringBuilder textView = new StringBuilder();
 
-    public void initNetworkInfo()
-    {
-        ConnectivityManager mag = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        // 此处输出当前可用网络
-        textView.append("\nActive:\n");
-        NetworkInfo info = mag.getActiveNetworkInfo();
-        textView.append("ExtraInfo=" + info.getExtraInfo() + "\n");
-        textView.append("SubtypeName=" + info.getSubtypeName() + " SubType = " + info.getSubtype() + "\n");
-        textView.append("TypeName=" + info.getTypeName() + " Type = " + info.getType() + "\n");
-
-        NetworkInfo mobInfo = mag.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        textView.append("\nMobile:\n");
-        textView.append("ExtraInfo=" + mobInfo.getExtraInfo() + "\n");
-        textView.append("SubtypeName=" + mobInfo.getSubtypeName() + " SubType = " + mobInfo.getSubtype() + "\n");
-        textView.append("TypeName=" + mobInfo.getTypeName() + " Type = " + mobInfo.getType() + "\n");
-        Log.e("NETWORK", textView.toString());
-
-    }
-
 
     public static boolean postStrContent(String content)
     {

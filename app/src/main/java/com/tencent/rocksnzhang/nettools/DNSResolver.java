@@ -13,11 +13,7 @@ import java.net.InetAddress;
  */
 public class DNSResolver extends DetectTask
 {
-    private String mHost;
-    private String mResult;
 
-    private static final int MSG_FINISH = 0;
-    private static final int MSG_ERROR = 1;
 
     protected Handler mHandler = new Handler()
     {
@@ -27,13 +23,13 @@ public class DNSResolver extends DetectTask
             switch (msg.what)
             {
                 case MSG_FINISH:
-                    mResult = (String) msg.obj;
+                    mDetectResultData = (String) msg.obj;
                     mIsSuccess = true;
                     mDetectListener.onDetectFinished(DNSResolver.this);
                     break;
 
                 case MSG_ERROR:
-                    mResult = (String) msg.obj;
+                    mDetectResultData = (String) msg.obj;
                     mIsSuccess = false;
                     mDetectListener.onDetectFinished(DNSResolver.this);
                     break;
@@ -45,9 +41,7 @@ public class DNSResolver extends DetectTask
 
     public DNSResolver(DetectResultListener listener, String host)
     {
-        super(listener);
-        mHost = host;
-
+        super(listener, host);
     }
 
     @Override
@@ -61,18 +55,6 @@ public class DNSResolver extends DetectTask
     public String detectName()
     {
         return "DNS Resolve";
-    }
-
-    @Override
-    public String detectResultData()
-    {
-        return mResult;
-    }
-
-    @Override
-    public boolean isSuccess()
-    {
-        return mIsSuccess;
     }
 
     private class ResolverThread extends Thread

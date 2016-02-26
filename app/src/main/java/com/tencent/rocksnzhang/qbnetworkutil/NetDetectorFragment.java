@@ -1,6 +1,5 @@
 package com.tencent.rocksnzhang.qbnetworkutil;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -8,18 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.rocksnzhang.nettools.DNSResolver;
+import com.tencent.rocksnzhang.nettools.PingExecutor;
 import com.tencent.rocksnzhang.utils.DetectTask;
 import com.tencent.rocksnzhang.utils.DetectResultListener;
-import com.tencent.rocksnzhang.utils.IPDomainVlidator;
+import com.tencent.rocksnzhang.utils.IPDomainValidator;
 
 /**
  * Created by rock on 16-2-19.
  */
 public class NetDetectorFragment extends CommonFragment implements View.OnClickListener, DetectResultListener
 {
+    private TextView mDetectResultView;
     private String mStrDomainIP;
     private EditText domainipedit;
     private Button netavailablebtn;
@@ -49,6 +51,8 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.networktool, container, false);
+
+        mDetectResultView = (TextView)view.findViewById(R.id.result_tv);
 
         domainipedit = (EditText) view.findViewById(R.id.ipdomain);
         domainipedit.setOnFocusChangeListener(new View.OnFocusChangeListener()
@@ -91,6 +95,16 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                 DNSResolver dnsResolver = new DNSResolver(this, mStrDomainIP);
                 dnsResolver.startDetect();
                 break;
+
+            case R.id.pingaction:
+                if (!checkDomainIPValidate())
+                {
+                    Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                PingExecutor pingExecutor = new PingExecutor(this, mStrDomainIP);
+                pingExecutor.startDetect();
+                break;
         }
     }
 
@@ -103,6 +117,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     @Override
     public void onDetectFinished(DetectTask task)
     {
+        mDetectResultView.setText(task.detectResultData());
         Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect " + (task.isSuccess() ? "successed" : "failed"), Toast.LENGTH_LONG).show();
     }
 
@@ -110,7 +125,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     private boolean checkDomainIPValidate()
     {
         mStrDomainIP = domainipedit.getText().toString();
-        return IPDomainVlidator.isValidDomainOrIPAddr(mStrDomainIP);
+        return IPDomainValidator.isValidDomainOrIPAddr(mStrDomainIP);
     }
 }
 
