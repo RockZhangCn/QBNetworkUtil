@@ -12,13 +12,25 @@ import android.widget.TextView;
 /**
  * Created by rock on 16-2-19.
  */
-public class OtherToolFragment extends Fragment
+public class OtherToolFragment extends CommonFragment
 {
     private Context mContext;
 
-    public OtherToolFragment()
+    public OtherToolFragment(Context c)
     {
+        super(c);
+    }
 
+    @Override
+    public String saveFileName()
+    {
+        return null;
+    }
+
+    @Override
+    public String contentToSave()
+    {
+        return null;
     }
 
     private String mTitle;

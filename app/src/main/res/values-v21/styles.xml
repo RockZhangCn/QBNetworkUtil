@@ -43,5 +43,4 @@
     <style name="tablayouttextsize" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
         <item name="android:textSize">18sp</item>
     </style>
-    tablayouttextsize
 </resources>

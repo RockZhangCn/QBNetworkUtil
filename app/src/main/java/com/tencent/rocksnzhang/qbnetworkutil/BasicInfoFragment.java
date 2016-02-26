@@ -11,20 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.tencent.rocksnzhang.io.FileUtils;
 import com.tencent.rocksnzhang.qbnetworkutil.netinfo.NetBasicInfo;
 import com.tencent.rocksnzhang.qbnetworkutil.netinfo.SystemBasicInfo;
+import com.tencent.rocksnzhang.utils.IDataPersist;
+
+import org.apache.commons.io.IOUtils;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by rock on 16-2-19.
  */
-public class BasicInfoFragment extends Fragment
+public class BasicInfoFragment extends CommonFragment
 {
-    private Context mContext;
     private NetBasicInfo mNetBasicInfo;
 
-    public BasicInfoFragment()
+    public BasicInfoFragment(Context c)
     {
-
+        super(c);
     }
 
     private String mTitle;
@@ -50,12 +56,19 @@ public class BasicInfoFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        mContext = getActivity();
         mNetBasicInfo = NetBasicInfo.getInstance(mContext);
     }
 
-    public void uploadBasicInfo()
+
+    @Override
+    public String contentToSave()
     {
-        mTextView.getText();
+        return mTextView.getText().toString();
+    }
+
+    @Override
+    public String saveFileName()
+    {
+        return "basic_info.txt";
     }
 }

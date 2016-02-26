@@ -18,7 +18,7 @@ import com.tencent.rocksnzhang.utils.IPDomainVlidator;
 /**
  * Created by rock on 16-2-19.
  */
-public class NetDetectorFragment extends Fragment implements View.OnClickListener
+public class NetDetectorFragment extends CommonFragment implements View.OnClickListener
 {
     private Context mContext;
 
@@ -30,9 +30,21 @@ public class NetDetectorFragment extends Fragment implements View.OnClickListene
     private Button handshakebtn;
     private Button traceroutebtn;
 
-    public NetDetectorFragment()
+    public NetDetectorFragment(Context c )
     {
+        super(c);
+    }
 
+    @Override
+    public String saveFileName()
+    {
+        return "net_detector.txt";
+    }
+
+    @Override
+    public String contentToSave()
+    {
+        return "this is the content";
     }
 
     @Nullable

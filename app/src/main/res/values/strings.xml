@@ -2,4 +2,5 @@
     <string name="app_name">飞的更高</string>
     <string name="title_activity_main">FlyHigher</string>
     <string name="action_settings">设置</string>
+    <string name="send_to">发送到</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.tencent.rocksnzhang.qbnetworkutil;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,26 +11,22 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener
+public class MainActivity extends AppCompatActivity
 {
-    private ImageView refresh;
     private ViewPager viewPager;
     private FragmentPagerAdapter pagerAdapter;
 
     private TabLayout tabLayout;
-    private List<Fragment> datas = new ArrayList<Fragment>();
+    private List<CommonFragment> mFragmentList = new ArrayList<CommonFragment>();
+    private int mCurrentFragmentIndex = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,35 +51,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initData()
     {
-        Fragment basicInfo = new BasicInfoFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", "BasicInfo1");
-        basicInfo.setArguments(bundle);
-        datas.add(basicInfo);
+        CommonFragment basicInfo = new BasicInfoFragment(this);
+        mFragmentList.add(basicInfo);
 
-        Fragment basicInfo2 = new NetDetectorFragment();
-        Bundle bundle2 = new Bundle();
-        bundle2.putString("title", "BasicInfo2");
-        basicInfo2.setArguments(bundle2);
-        datas.add(basicInfo2);
+        CommonFragment basicInfo2 = new NetDetectorFragment(this);
+        mFragmentList.add(basicInfo2);
 
-        Fragment basicInfo3 = new OtherToolFragment();
-        Bundle bundle3 = new Bundle();
-        bundle3.putString("title", "BasicInfo3");
-        basicInfo3.setArguments(bundle3);
-        datas.add(basicInfo3);
+        CommonFragment basicInfo3 = new OtherToolFragment(this);
+        mFragmentList.add(basicInfo3);
+
         pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager())
         {
             @Override
             public Fragment getItem(int position)
             {
-                return datas.get(position);
+                return mFragmentList.get(position);
             }
 
             @Override
             public int getCount()
             {
-                return datas.size();
+                return mFragmentList.size();
             }
         };
 
@@ -100,7 +90,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onTabSelected(TabLayout.Tab tab)
                 {
-                    viewPager.setCurrentItem(tab.getPosition());
+                    mCurrentFragmentIndex = tab.getPosition();
+                    viewPager.setCurrentItem(mCurrentFragmentIndex);
                 }
 
                 @Override
@@ -113,6 +104,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                 }
             });
+
+            //default the first is selected.
+            mCurrentFragmentIndex = 0;
         }
         else
         {
@@ -120,15 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
             tabLayout.setupWithViewPager(viewPager);
         }
-        
-		tabLayout.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Toast.makeText(MainActivity.this, "Tab is selected", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     private void initView()
@@ -157,72 +142,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings)
         {
+
             Toast.makeText(MainActivity.this, "This is menu response", Toast.LENGTH_LONG).show();
             return true;
         }
-        else if (id == R.id.menu_refresh)
+        else if (id == R.id.menu_share)
         {
-            Toast.makeText(MainActivity.this, "This is refresh response", Toast.LENGTH_LONG).show();
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            Toast.makeText(MainActivity.this, mFragmentList.get(mCurrentFragmentIndex).saveToFile().toURI().toString(), Toast.LENGTH_LONG).show();
+            shareIntent.putExtra(Intent.EXTRA_STREAM, mFragmentList.get(mCurrentFragmentIndex).saveToFile().toURI());
+            shareIntent.setType("text/plain");
+            startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
-            case R.id.menu_refresh:
-                break;
-
-
-        }
-
-        //if(view.getId() == R.id.menu_refresh)
-        Toast.makeText(MainActivity.this, "This is my response", Toast.LENGTH_LONG).show();
-        Log.i("TEST", "--- DVB Mac Address : ");
-        
-		new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                Log.i("TEST", "--- DVB Mac Address : ");
-                getMacAddress();
-            }
-        }).start();
-    }
-
-
-    private String getMacAddress()
-    {
-        String strMacAddr = "";
-        byte[] b;
-        try
-        {
-            NetworkInterface NIC = NetworkInterface.getByName("wlan0");
-            b = NIC.getHardwareAddress();
-            StringBuffer buffer = new StringBuffer();
-            for (int i = 0; i < b.length; i++)
-            {
-                if (i != 0)
-                {
-                    buffer.append(':');
-                }
-                String str = Integer.toHexString(b[i] & 0xFF);
-                buffer.append(str.length() == 1 ? 0 + str : str);
-            }
-            strMacAddr = buffer.toString().toUpperCase();
-        }
-        catch (SocketException e)
-        {
-            e.printStackTrace();
-        }
-        Log.i("TEST", "--- DVB Mac Address : " + strMacAddr);
-
-        return strMacAddr;
-    }
-
 }
