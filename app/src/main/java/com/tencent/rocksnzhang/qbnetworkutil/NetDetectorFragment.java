@@ -11,15 +11,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.tencent.rocksnzhang.nettools.DNSResolver;
+import com.tencent.rocksnzhang.utils.DetectTask;
+import com.tencent.rocksnzhang.utils.DetectResultListener;
 import com.tencent.rocksnzhang.utils.IPDomainVlidator;
 
 /**
  * Created by rock on 16-2-19.
  */
-public class NetDetectorFragment extends CommonFragment implements View.OnClickListener
+public class NetDetectorFragment extends CommonFragment implements View.OnClickListener, DetectResultListener
 {
-    private Context mContext;
-
     private String mStrDomainIP;
     private EditText domainipedit;
     private Button netavailablebtn;
@@ -88,11 +88,25 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                     Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
                     return;
                 }
-                DNSResolver dnsResolver = new DNSResolver(mStrDomainIP);
-                dnsResolver.detectStart();
+                DNSResolver dnsResolver = new DNSResolver(this, mStrDomainIP);
+                dnsResolver.startDetect();
                 break;
         }
     }
+
+    @Override
+    public void onDetectStarted(DetectTask task)
+    {
+
+    }
+
+    @Override
+    public void onDetectFinished(DetectTask task)
+    {
+
+    }
+
+
 
     private boolean checkDomainIPValidate()
     {
@@ -100,3 +114,4 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         return  IPDomainVlidator.isValidDomainOrIPAddr(mStrDomainIP);
     }
 }
+

@@ -149,7 +149,6 @@ public class MainActivity extends AppCompatActivity
         {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            Toast.makeText(MainActivity.this, mFragmentList.get(mCurrentFragmentIndex).saveToFile().toURI().toString(), Toast.LENGTH_LONG).show();
             shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(mFragmentList.get(mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
             shareIntent.setType("text/plain");
             startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));

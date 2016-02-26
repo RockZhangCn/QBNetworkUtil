@@ -3,6 +3,7 @@ package com.tencent.rocksnzhang.nettools;
 import android.os.Handler;
 import android.os.Message;
 
+import com.tencent.rocksnzhang.utils.DetectResultListener;
 import com.tencent.rocksnzhang.utils.DetectTask;
 
 import java.net.InetAddress;
@@ -40,15 +41,17 @@ public class DNSResolver extends DetectTask
         }
     };
 
-    public DNSResolver(String host)
+    public DNSResolver(DetectResultListener listener, String host)
     {
+        super(listener);
         mHost = host;
 
     }
 
-    String getResolvedResult()
+    @Override
+    public void startDetect()
     {
-        return mResult;
+        new ResolverThread().start();
     }
 
     @Override
@@ -58,9 +61,9 @@ public class DNSResolver extends DetectTask
     }
 
     @Override
-    public void detectStart()
+    public String detectResultData()
     {
-        new ResolverThread().start();
+        return mResult;
     }
 
     @Override

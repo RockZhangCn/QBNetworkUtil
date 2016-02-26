@@ -36,7 +36,8 @@ public class BasicInfoFragment extends CommonFragment
                 + "\r\nMac address : \r\n"
                 + "wlan0 :\t" + mNetBasicInfo.getMacAddress("wlan0")
                 + "\np2p0 :\t " + mNetBasicInfo.getMacAddress("p2p0")
-                + "\n\n" + SystemBasicInfo.getBuildInfo());
+                + "\n\n" + SystemBasicInfo.getBuildInfo()
+                + "\n");
         return view;
     }
 
