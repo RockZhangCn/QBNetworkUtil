@@ -20,7 +20,7 @@ public class OtherToolFragment extends CommonFragment
     @Override
     public String saveFileName()
     {
-        return null;
+        return "OtherTool.txt";
     }
 
     @Override
@@ -31,12 +31,13 @@ public class OtherToolFragment extends CommonFragment
 
     private String mTitle;
     private TextView mTextView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.basicinfo, container, false);
-        mTextView = (TextView)view.findViewById(R.id.basicinfo_tv);
+        mTextView = (TextView) view.findViewById(R.id.basicinfo_tv);
         mTextView.setText(mTitle);
         return view;
     }
@@ -46,10 +47,14 @@ public class OtherToolFragment extends CommonFragment
     {
         super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
-        if(arguments!= null)
+        if (arguments != null)
+        {
             mTitle = arguments.getString("title");
+        }
         else
+        {
             mTitle = "Default content";
+        }
 
     }
 }

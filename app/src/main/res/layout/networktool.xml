@@ -5,59 +5,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:showIn="@layout/activity_main">
 
     <EditText
         android:id="@+id/ipdomain"
-        android:text="192.243.115.223"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/netavaiable"
-        android:text="网络联通性"
+        android:layout_height="wrap_content"
+        android:text="192.243.115.223"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/pingaction"
-        android:text="Ping"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/netavaiable"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="网络联通性"/>
+
+        <Button
+            android:id="@+id/pingaction"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ping"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/resolveaction"
-        android:text="DNS解析"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/resolveaction"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DNS解析"/>
+
+        <Button
+            android:id="@+id/traceroute"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TraceRoute"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/traceroute"
-        android:text="TraceRoute"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/connectable"
-        android:text="三次握手"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/connectable"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="三次握手"/>
+
+        <Button
+            android:id="@+id/spdyping"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SPDY Ping"/>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:scrollbars="none">
-    <TextView
-        android:id="@+id/result_tv"
-        android:text="no detect result"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:background="@android:color/holo_blue_dark"
-        android:layout_height="match_parent"
-        android:textColor="#ff000000"
-        android:textSize="16sp"
 
-        />
+        <TextView
+            android:id="@+id/result_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:background="@android:color/holo_blue_dark"
+            android:text="no detect result"
+            android:textColor="#ff000000"
+            android:textSize="16sp"
+
+            />
     </ScrollView>
 </LinearLayout>

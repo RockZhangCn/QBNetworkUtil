@@ -11,9 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.rocksnzhang.nettools.DNSResolver;
+import com.tencent.rocksnzhang.nettools.NetConnectable;
 import com.tencent.rocksnzhang.nettools.PingExecutor;
-import com.tencent.rocksnzhang.utils.DetectTask;
 import com.tencent.rocksnzhang.utils.DetectResultListener;
+import com.tencent.rocksnzhang.utils.DetectTask;
 import com.tencent.rocksnzhang.utils.IPDomainValidator;
 
 /**
@@ -29,6 +30,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     private Button dnsresolvebtn;
     private Button handshakebtn;
     private Button traceroutebtn;
+    private Button spdypingbtn;
 
     public NetDetectorFragment()
     {
@@ -66,11 +68,24 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                 }
             }
         });
+
+        netavailablebtn = (Button)view.findViewById(R.id.netavaiable);
+        netavailablebtn.setOnClickListener(this);
+
         pingbtn = (Button) view.findViewById(R.id.pingaction);
         pingbtn.setOnClickListener(this);
 
         dnsresolvebtn = (Button) view.findViewById(R.id.resolveaction);
         dnsresolvebtn.setOnClickListener(this);
+
+        traceroutebtn = (Button) view.findViewById(R.id.traceroute);
+        traceroutebtn.setOnClickListener(this);
+
+        handshakebtn = (Button)view.findViewById(R.id.connectable);
+        handshakebtn.setOnClickListener(this);
+
+        spdypingbtn = (Button)view.findViewById(R.id.spdyping);
+        spdypingbtn.setOnClickListener(this);
         return view;
     }
 
@@ -83,17 +98,12 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     @Override
     public void onClick(View view)
     {
+        mDetectResultView.setText("");
         switch (view.getId())
         {
-            case R.id.resolveaction:
-                //new DNSResolver();
-                if (!checkDomainIPValidate())
-                {
-                    Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                DNSResolver dnsResolver = new DNSResolver(this, mStrDomainIP);
-                dnsResolver.startDetect();
+            case R.id.netavaiable:
+                NetConnectable netConnectable = new NetConnectable(this, mStrDomainIP);
+                netConnectable.startDetect();
                 break;
 
             case R.id.pingaction:
@@ -104,6 +114,43 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                 }
                 PingExecutor pingExecutor = new PingExecutor(this, mStrDomainIP);
                 pingExecutor.startDetect();
+                break;
+
+            case R.id.resolveaction:
+                if (!checkDomainIPValidate())
+                {
+                    Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                DNSResolver dnsResolver = new DNSResolver(this, mStrDomainIP);
+                dnsResolver.startDetect();
+                break;
+
+            case R.id.traceroute:
+                if (!checkDomainIPValidate())
+                {
+                    Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                break;
+
+            case R.id.connectable:
+                if (!checkDomainIPValidate())
+                {
+                    Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                break;
+
+            case R.id.spdyping:
+                if (!checkDomainIPValidate())
+                {
+                    Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 break;
         }
     }

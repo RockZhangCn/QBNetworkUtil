@@ -3,4 +3,5 @@
     <string name="title_activity_main">FlyHigher</string>
     <string name="action_settings">设置</string>
     <string name="send_to">发送到</string>
+    <string name="no_connectivity">No connectivity</string>
 </resources>
