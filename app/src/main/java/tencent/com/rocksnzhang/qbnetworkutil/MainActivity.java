@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
@@ -24,6 +25,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         refresh = (ImageView)toolbar.findViewById(R.id.refreshid);
         refresh.setOnClickListener(this);
         setSupportActionBar(toolbar);
+
+
+
+
+
+
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
+
+        //Make progress bar appear when you need it
+        progressBar.setVisibility(View.VISIBLE);
+
 
         setTitle("网络连通性诊断工具");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
