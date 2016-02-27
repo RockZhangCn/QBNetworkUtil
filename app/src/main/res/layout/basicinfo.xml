@@ -9,6 +9,15 @@
     android:orientation="vertical"
     tools:showIn="@layout/activity_main">
 
+    <WebView
+        android:id="@+id/gateway_tv"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ff000000"
+        android:textSize="12sp"
+        />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

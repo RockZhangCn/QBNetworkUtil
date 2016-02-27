@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity
         {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(mFragmentList.get(mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///" + mFragmentList.get(mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
             shareIntent.setType("text/plain");
             startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
             return true;
