@@ -18,10 +18,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.tencent.rocksnzhang.utils.IProgressChangedListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,
+        IProgressChangedListener
 {
     private ViewPager viewPager;
     private ProgressBar titleProgressBar;
@@ -37,36 +40,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        ImageView refresh = (ImageView)toolbar.findViewById(R.id.refreshid);
-        refresh.setOnClickListener(this);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         initView();
         initData();
     }
 
     private void initData()
     {
-        CommonFragment basicInfo = new BasicInfoFragment();
-        mFragmentList.add(basicInfo);
+        CommonFragment basicInfoFragment = new BasicInfoFragment();
+        mFragmentList.add(basicInfoFragment);
 
-        CommonFragment basicInfo2 = new NetDetectorFragment();
-        mFragmentList.add(basicInfo2);
+        CommonFragment netDetectorFragment = new NetDetectorFragment();
+        netDetectorFragment.setProgressChangedListener(this);
+        mFragmentList.add(netDetectorFragment);
 
-        CommonFragment basicInfo3 = new OtherToolFragment();
-        mFragmentList.add(basicInfo3);
+        CommonFragment otherToolFragment = new OtherToolFragment();
+        mFragmentList.add(otherToolFragment);
 
         pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager())
         {
@@ -126,8 +114,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView()
     {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ImageView refresh = (ImageView)toolbar.findViewById(R.id.sharebtn_send);
+        refresh.setOnClickListener(this);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
         titleProgressBar = (ProgressBar) findViewById(R.id.progress_spinner);
-        titleProgressBar.setVisibility(View.VISIBLE);
+        hideProgress();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
     }
@@ -156,18 +160,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }
 
-        /*
-        else if (id == R.id.menu_share)
-        {
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
-                    "file:///" + mFragmentList.get(mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
-            shareIntent.setType("text/plain");
-            startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
-            return true;
-        }
-        */
         return super.onOptionsItemSelected(item);
     }
 
@@ -180,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v)
     {
-        if(v.getId() == R.id.refreshid)
+        if(v.getId() == R.id.sharebtn_send)
         {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
@@ -192,5 +184,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
         }
 
+    }
+
+
+
+    @Override
+    public void showProgress()
+    {
+        if(titleProgressBar != null)
+            titleProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress()
+    {
+        if(titleProgressBar != null)
+            titleProgressBar.setVisibility(View.GONE);
     }
 }

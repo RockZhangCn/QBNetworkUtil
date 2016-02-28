@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.tencent.rocksnzhang.utils.IDataPersist;
+import com.tencent.rocksnzhang.utils.IProgressChangedListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.io.IOException;
 public abstract class CommonFragment extends Fragment implements IDataPersist
 {
     protected Context mContext;
+    protected  IProgressChangedListener mIProgressChangedListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -43,6 +45,12 @@ public abstract class CommonFragment extends Fragment implements IDataPersist
 
     }
 
+
+
+    public void setProgressChangedListener(IProgressChangedListener iProgressChangedListener)
+    {
+        mIProgressChangedListener = iProgressChangedListener;
+    }
 
     public abstract String saveFileName();
     public abstract String contentToSave();

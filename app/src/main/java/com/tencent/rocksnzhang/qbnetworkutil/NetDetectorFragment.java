@@ -74,8 +74,6 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         netavailablebtn = (Button)view.findViewById(R.id.netavaiable);
         netavailablebtn.setOnClickListener(this);
 
-        //netavailablebtn.setBackgroundColor(0xff00ff00);
-
         pingbtn = (Button) view.findViewById(R.id.pingaction);
         pingbtn.setOnClickListener(this);
 
@@ -171,12 +169,16 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     @Override
     public void onDetectStarted(DetectTask task)
     {
+        if(mIProgressChangedListener != null)
+            mIProgressChangedListener.showProgress();
         Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect started", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDetectFinished(DetectTask task)
     {
+        if(mIProgressChangedListener != null)
+            mIProgressChangedListener.hideProgress();
         mDetectResultView.setText(task.detectResultData());
         Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect " + (task.isSuccess() ? "successed" : "failed"), Toast.LENGTH_SHORT).show();
     }
