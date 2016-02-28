@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
     tools:context="com.tencent.rocksnzhang.qbnetworkutil.MainActivity">
 
@@ -13,16 +12,72 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout"
-        app:tabTextAppearance="@style/tablayouttextsize"
-        style="@style/customtablayout"
+	
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabBackground="@color/tab_backgroud"
-        app:tabMode="scrollable"
-        />
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@drawable/icon"/>-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="网络诊断神器"
+                android:textSize="18sp"
+                android:textColor="#000000"
+                android:paddingLeft="10dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <ProgressBar
+                android:id="@+id/progress_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:indeterminate="true"
+                android:visibility="gone" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_height="wrap_content"
+                android:id="@+id/refreshid"
+                android:src="@android:drawable/ic_menu_share"/>
+
+        </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            app:tabTextAppearance="@style/tablayouttextsize"
+            style="@style/customtablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabBackground="@color/tab_backgroud"
+            app:tabMode="scrollable"
+            />
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

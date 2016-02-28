@@ -9,8 +9,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +33,12 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActionBar supportActionBar = getSupportActionBar();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //ImageView refresh = (ImageView)toolbar.findViewById(R.id.refreshid);
+        //refresh.setOnClickListener(this);
+        setSupportActionBar(toolbar);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
@@ -145,16 +150,31 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(MainActivity.this, "This is menu response", Toast.LENGTH_LONG).show();
             return true;
         }
+
+        /*
         else if (id == R.id.menu_share)
         {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///" + mFragmentList.get(mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
+                    "file:///" + mFragmentList.get(mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
             shareIntent.setType("text/plain");
             startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
             return true;
         }
-
+        */
         return super.onOptionsItemSelected(item);
     }
+	
+	public void onClick()
+	{
+	  Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
+                    "file:///" + mFragmentList.get(mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
+            shareIntent.setType("text/plain");
+            startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
+
+			
+			}
 }
