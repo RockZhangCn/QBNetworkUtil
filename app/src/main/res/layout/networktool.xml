@@ -80,19 +80,20 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:scrollbars="none">
 
         <TextView
             android:id="@+id/result_tv"
+            android:textIsSelectable="true"
             android:layout_width="match_parent"
+            android:layout_margin="4dp"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
             android:background="@android:color/holo_blue_dark"
             android:text="no detect result"
             android:textColor="#ff000000"
-            android:textSize="16sp"
+            android:textSize="14sp"
 
             />
     </ScrollView>
