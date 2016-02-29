@@ -60,13 +60,12 @@ public class NetConnectable extends DetectTask
 
         if (htmlCode == null || htmlCode.equals(""))
         {
-            finishedTask(false, "get empty content");
+            finishedTask(false, "网络不通，获取了空的内容。");
             return;
         }
 
-        finishedTask(true, htmlCode);
+        finishedTask(true, "恭喜，网络通畅。");
 
 
     }
-
 }

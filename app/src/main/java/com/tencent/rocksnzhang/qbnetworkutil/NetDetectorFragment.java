@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.rocksnzhang.nettools.DNSResolver;
+import com.tencent.rocksnzhang.nettools.HandShakeExecutor;
 import com.tencent.rocksnzhang.nettools.NetConnectable;
 import com.tencent.rocksnzhang.nettools.PingExecutor;
 import com.tencent.rocksnzhang.utils.DebugToast;
@@ -152,7 +153,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                     Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
                     return;
                 }
-
+                new HandShakeExecutor(this, mStrDomainIP).startDetect();
                 break;
 
             case R.id.spdyping:
@@ -161,7 +162,6 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                     Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
                     return;
                 }
-
                 break;
         }
     }

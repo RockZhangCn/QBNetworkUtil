@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.tencent.rocksnzhang.utils.DebugToast;
 import com.tencent.rocksnzhang.utils.IProgressChangedListener;
 
 import java.util.ArrayList;
@@ -179,6 +180,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
                     "file:///" + mFragmentList.get(
                             mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
+
+            DebugToast.showToast(mFragmentList.get(
+                    mCurrentFragmentIndex).saveToFile().getAbsolutePath());
             shareIntent.setType("text/plain");
             startActivity(
                     Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));

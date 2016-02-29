@@ -148,18 +148,32 @@ public class NetBasicInfo
         try
         {
             NetworkInterface NIC = NetworkInterface.getByName(netInterface);
-            b = NIC.getHardwareAddress();
-            StringBuffer buffer = new StringBuffer();
-            for (int i = 0; i < b.length; i++)
+
+            if (NIC == null)
             {
-                if (i != 0)
-                {
-                    buffer.append(':');
-                }
-                String str = Integer.toHexString(b[i] & 0xFF);
-                buffer.append(str.length() == 1 ? 0 + str : str);
+                NIC = NetworkInterface.getByName("rmnet0");//小米关掉Wifi后只剩下此网卡。
+                strMacAddr = "没有 " + netInterface + " 网卡";
             }
-            strMacAddr = buffer.toString().toUpperCase();
+
+            if (NIC != null)
+            {
+                b = NIC.getHardwareAddress();
+
+                if(b == null)
+                    return strMacAddr;
+
+                StringBuffer buffer = new StringBuffer();
+                for (int i = 0; i < b.length; i++)
+                {
+                    if (i != 0)
+                    {
+                        buffer.append(':');
+                    }
+                    String str = Integer.toHexString(b[i] & 0xFF);
+                    buffer.append(str.length() == 1 ? 0 + str : str);
+                }
+                strMacAddr = buffer.toString().toUpperCase();
+            }
         }
         catch (SocketException e)
         {
