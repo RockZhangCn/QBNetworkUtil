@@ -35,347 +35,406 @@ import java.util.List;
 
 /**
  * This class contain everything needed to launch a traceroute using the ping command
- * 
+ *
  * @author Olivier Goutay
- * 
  */
-public class TracerouteWithPing {
+public class TraceRouteWithPing
+{
 
-	private static final String PING = "PING";
-	private static final String FROM_PING = "From";
-	private static final String SMALL_FROM_PING = "from";
-	private static final String PARENTHESE_OPEN_PING = "(";
-	private static final String PARENTHESE_CLOSE_PING = ")";
-	private static final String TIME_PING = "time=";
-	private static final String EXCEED_PING = "exceed";
-	private static final String UNREACHABLE_PING = "100%";
+    private static final String PING                  = "PING";
+    private static final String FROM_PING             = "From";
+    private static final String SMALL_FROM_PING       = "from";
+    private static final String PARENTHESE_OPEN_PING  = "(";
+    private static final String PARENTHESE_CLOSE_PING = ")";
+    private static final String TIME_PING             = "time=";
+    private static final String EXCEED_PING           = "exceed";
+    private static final String UNREACHABLE_PING      = "100%";
 
-	private List<TracerouteContainer> traces;
-	private int ttl;
-	private int finishedTasks;
-	private String urlToPing;
-	private String ipToPing;
-	private float elapsedTime;
+    private List<TraceRouteContainer> traces;
+    private int                       ttl;
+    private int                       finishedTasks;
+    private String                    urlToPing;
+    private String                    ipToPing;
+    private float                     elapsedTime;
 
-	// timeout handling
-	private static final int TIMEOUT = 30000;
-	private Handler handlerTimeout;
-	private static Runnable runnableTimeout;
+    // timeout handling
+    private static final int TIMEOUT = 30000;
+    private        Handler  handlerTimeout;
+    private static Runnable runnableTimeout;
 
-	public TracerouteWithPing(String host) {
-		urlToPing = host;
-	}
+    public TraceRouteWithPing(String host)
+    {
+        urlToPing = host;
+    }
 
-	/**
-	 * Launches the Traceroute
-	 *
-	 */
-	public void executeTraceroute() {
-		this.ttl = 1;
-		this.finishedTasks = 0;
-		this.traces = new ArrayList<TracerouteContainer>();
+    /**
+     * Launches the TraceRoute
+     */
+    public void executeTraceRoute()
+    {
+        this.ttl = 1;
+        this.finishedTasks = 0;
+        this.traces = new ArrayList<TraceRouteContainer>();
 
-		new ExecutePingAsyncTask(TraceRoute.MAX_TTL).execute();
-	}
+        new ExecutePingAsyncTask(TraceRoute.MAX_TTL).execute();
+    }
 
-	/**
-	 * Allows to timeout the ping if TIMEOUT exceeds. (-w and -W are not always supported on Android)
-	 */
-	private class TimeOutAsyncTask extends AsyncTask<Void, Void, Void> {
+    /**
+     * Allows to timeout the ping if TIMEOUT exceeds. (-w and -W are not always supported on Android)
+     */
+    private class TimeOutAsyncTask extends AsyncTask<Void, Void, Void>
+    {
 
-		private ExecutePingAsyncTask task;
-		private int ttlTask;
+        private ExecutePingAsyncTask task;
+        private int                  ttlTask;
 
-		public TimeOutAsyncTask(ExecutePingAsyncTask task, int ttlTask) {
-			this.task = task;
-			this.ttlTask = ttlTask;
-		}
+        public TimeOutAsyncTask(ExecutePingAsyncTask task, int ttlTask)
+        {
+            this.task = task;
+            this.ttlTask = ttlTask;
+        }
 
-		@Override
-		protected Void doInBackground(Void... arg0) {
-			return null;
-		}
+        @Override
+        protected Void doInBackground(Void... arg0)
+        {
+            return null;
+        }
 
-		@Override
-		protected void onPostExecute(Void result) {
-			if (handlerTimeout == null) {
-				handlerTimeout = new Handler();
-			}
+        @Override
+        protected void onPostExecute(Void result)
+        {
+            if (handlerTimeout == null)
+            {
+                handlerTimeout = new Handler();
+            }
 
-			// stop old timeout
-			if (runnableTimeout != null) {
-				handlerTimeout.removeCallbacks(runnableTimeout);
-			}
-			// define timeout
-			runnableTimeout = new Runnable() {
-				@Override
-				public void run() {
-					if (task != null) {
-						if (ttlTask == finishedTasks) {
-							task.setCancelled(true);
-							task.cancel(true);
+            // stop old timeout
+            if (runnableTimeout != null)
+            {
+                handlerTimeout.removeCallbacks(runnableTimeout);
+            }
+            // define timeout
+            runnableTimeout = new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    if (task != null)
+                    {
+                        if (ttlTask == finishedTasks)
+                        {
+                            task.setCancelled(true);
+                            task.cancel(true);
 
-						}
-					}
-				}
-			};
-			// launch timeout after a delay
-			handlerTimeout.postDelayed(runnableTimeout, TIMEOUT);
+                        }
+                    }
+                }
+            };
+            // launch timeout after a delay
+            handlerTimeout.postDelayed(runnableTimeout, TIMEOUT);
 
-			super.onPostExecute(result);
-		}
-	}
-	
-	/**
-	 * The task that ping an ip, with increasing time to live (ttl) value
-	 */
-	private class ExecutePingAsyncTask extends AsyncTask<Void, Void, String> {
+            super.onPostExecute(result);
+        }
+    }
 
-		private boolean isCancelled;
-		private int maxTtl;
+    /**
+     * The task that ping an ip, with increasing time to live (ttl) value
+     */
+    private class ExecutePingAsyncTask extends AsyncTask<Void, Void, String>
+    {
 
-		public ExecutePingAsyncTask(int maxTtl) {
-			this.maxTtl = maxTtl;
-		}
+        private boolean isCancelled;
+        private int     maxTtl;
 
-		/**
-		 * Launches the ping, launches InetAddress to retrieve url if there is one, store trace
-		 */
-		@Override
-		protected String doInBackground(Void... params) {
-			if (hasConnectivity()) {
-				try {
-					String res = launchPing(urlToPing);
+        public ExecutePingAsyncTask(int maxTtl)
+        {
+            this.maxTtl = maxTtl;
+        }
 
-					TracerouteContainer trace;
+        /**
+         * Launches the ping, launches InetAddress to retrieve url if there is one, store trace
+         */
+        @Override
+        protected String doInBackground(Void... params)
+        {
+            if (hasConnectivity())
+            {
+                try
+                {
+                    String res = launchPing(urlToPing);
 
-					if (res.contains(UNREACHABLE_PING) && !res.contains(EXCEED_PING)) {
-						// Create the TracerouteContainer object when ping
-						// failed
-						trace = new TracerouteContainer("", parseIpFromPing(res), elapsedTime, false);
-					} else {
-						// Create the TracerouteContainer object when succeed
-						trace = new TracerouteContainer("", parseIpFromPing(res), ttl == maxTtl ? Float.parseFloat(parseTimeFromPing(res))
-								: elapsedTime, true);
-					}
+                    TraceRouteContainer trace;
 
-					// Get the host name from ip (unix ping do not support
-					// hostname resolving)
-					InetAddress inetAddr = InetAddress.getByName(trace.getIp());
-					String hostname = inetAddr.getHostName();
-					String canonicalHostname = inetAddr.getCanonicalHostName();
-					trace.setHostname(hostname);
+                    if (res.contains(UNREACHABLE_PING) && !res.contains(EXCEED_PING))
+                    {
+                        // Create the TraceRouteContainer object when ping
+                        // failed
+                        trace = new TraceRouteContainer("", parseIpFromPing(res), elapsedTime,
+                                false);
+                    }
+                    else
+                    {
+                        // Create the TraceRouteContainer object when succeed
+                        trace = new TraceRouteContainer("", parseIpFromPing(res),
+                                ttl == maxTtl ? Float.parseFloat(parseTimeFromPing(res))
+                                        : elapsedTime, true);
+                    }
 
-					return res;
-				} catch (final Exception e) {
-					e.printStackTrace();
-				}
-			} else {
-				return "no connectivity";
-			}
-			return "";
-		}
+                    // Get the host name from ip (unix ping do not support
+                    // hostname resolving)
+                    InetAddress inetAddr = InetAddress.getByName(trace.getIp());
+                    String hostname = inetAddr.getHostName();
+                    String canonicalHostname = inetAddr.getCanonicalHostName();
+                    trace.setHostname(hostname);
 
-		/**
-		 * Launches ping command
-		 * 
-		 * @param url
-		 *            The url to ping
-		 * @return The ping string
-		 */
-		@SuppressLint("NewApi")
-		private String launchPing(String url) throws Exception {
-			// Build ping command with parameters
-			Process p;
-			String command = "";
+                    return res;
+                }
+                catch (final Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                return "no connectivity";
+            }
+            return "";
+        }
 
-			String format = "ping -c 1 -t %d ";
-			command = String.format(format, ttl);
+        /**
+         * Launches ping command
+         *
+         * @param url The url to ping
+         * @return The ping string
+         */
+        @SuppressLint("NewApi")
+        private String launchPing(String url) throws Exception
+        {
+            // Build ping command with parameters
+            Process p;
+            String  command = "";
 
-			long startTime = System.nanoTime();
-			// timeout task
-			new TimeOutAsyncTask(this, ttl).execute();
-			// Launch command
-			p = Runtime.getRuntime().exec(command + url);
-			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String format = "ping -c 1 -t %d ";
+            command = String.format(format, ttl);
 
-			// Construct the response from ping
-			String s;
-			String res = "";
-			while ((s = stdInput.readLine()) != null) {
-				res += s + "\n";
-				if (s.contains(FROM_PING) || s.contains(SMALL_FROM_PING)) {
-					// We store the elapsedTime when the line from ping comes
-					elapsedTime = (System.nanoTime() - startTime) / 1000000.0f;
-				}
-			}
+            long startTime = System.nanoTime();
+            // timeout task
+            new TimeOutAsyncTask(this, ttl).execute();
+            // Launch command
+            p = Runtime.getRuntime().exec(command + url);
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
-			p.destroy();
+            // Construct the response from ping
+            String s;
+            String res = "";
+            while ((s = stdInput.readLine()) != null)
+            {
+                res += s + "\n";
+                if (s.contains(FROM_PING) || s.contains(SMALL_FROM_PING))
+                {
+                    // We store the elapsedTime when the line from ping comes
+                    elapsedTime = (System.nanoTime() - startTime) / 1000000.0f;
+                }
+            }
 
-			if (res.equals("")) {
-				throw new IllegalArgumentException();
-			}
+            p.destroy();
 
-			// Store the wanted ip adress to compare with ping result
-			if (ttl == 1) {
-				ipToPing = parseIpToPingFromPing(res);
-			}
+            if (res.equals(""))
+            {
+                throw new IllegalArgumentException();
+            }
 
-			Log.e("TAG", "launch ping reture is " + res);
-			return res;
-		}
+            // Store the wanted ip adress to compare with ping result
+            if (ttl == 1)
+            {
+                ipToPing = parseIpToPingFromPing(res);
+            }
 
-		/**
-		 * Treat the previous ping (launches a ttl+1 if it is not the final ip, refresh the list on view etc...)
-		 */
-		@Override
-		protected void onPostExecute(String result) {
-			if (!isCancelled) {
-				try {
-					if (!"".equals(result)) {
-						if ("No connectivity".equals(result)) {
-							Log.e("TAG", "No connection");
-						} else {
+            Log.e("TAG", "launch ping reture is " + res);
+            return res;
+        }
 
-							if (traces.size() > 0 && traces.get(traces.size() - 1).getIp().equals(ipToPing)) {
-								if (ttl < maxTtl) {
-									ttl = maxTtl;
-									traces.remove(traces.size() - 1);
-									new ExecutePingAsyncTask(maxTtl).execute();
-								} else {
+        /**
+         * Treat the previous ping (launches a ttl+1 if it is not the final ip, refresh the list on view etc...)
+         */
+        @Override
+        protected void onPostExecute(String result)
+        {
+            if (!isCancelled)
+            {
+                try
+                {
+                    if (!"".equals(result))
+                    {
+                        if ("No connectivity".equals(result))
+                        {
+                            Log.e("TAG", "No connection");
+                        }
+                        else
+                        {
 
-								}
-							} else {
-								if (ttl < maxTtl) {
-									ttl++;
-									new ExecutePingAsyncTask(maxTtl).execute();
-								}
-							}
-						}
-					}
-					finishedTasks++;
-				} catch (final Exception e) {
-				e.printStackTrace();
-				}
-			}
+                            if (traces.size() > 0 && traces.get(traces.size() - 1).getIp().equals(
+                                    ipToPing))
+                            {
+                                if (ttl < maxTtl)
+                                {
+                                    ttl = maxTtl;
+                                    traces.remove(traces.size() - 1);
+                                    new ExecutePingAsyncTask(maxTtl).execute();
+                                }
+                                else
+                                {
 
-			super.onPostExecute(result);
-		}
+                                }
+                            }
+                            else
+                            {
+                                if (ttl < maxTtl)
+                                {
+                                    ttl++;
+                                    new ExecutePingAsyncTask(maxTtl).execute();
+                                }
+                            }
+                        }
+                    }
+                    finishedTasks++;
+                }
+                catch (final Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
 
-		/**
-		 * Handles exception on ping
-		 * 
-		 * @param e
-		 *            The exception thrown
-		 */
-		private void onException(Exception e) {
+            super.onPostExecute(result);
+        }
+
+        /**
+         * Handles exception on ping
+         *
+         * @param e The exception thrown
+         */
+        private void onException(Exception e)
+        {
+            if (e instanceof IllegalArgumentException)
+            {
+                //no ping
+            }
+            else
+            {
+                // error
+            }
 
 
-			if (e instanceof IllegalArgumentException) {
-				//no ping
-			} else {
-				// error
-			}
+            finishedTasks++;
+        }
 
+        public void setCancelled(boolean isCancelled)
+        {
+            this.isCancelled = isCancelled;
+        }
 
+    }
 
-			finishedTasks++;
-		}
+    /**
+     * Gets the ip from the string returned by a ping
+     *
+     * @param ping The string returned by a ping command
+     * @return The ip contained in the ping
+     */
+    private String parseIpFromPing(String ping)
+    {
+        String ip = "";
+        if (ping.contains(FROM_PING))
+        {
+            // Get ip when ttl exceeded
+            int index = ping.indexOf(FROM_PING);
 
-		public void setCancelled(boolean isCancelled) {
-			this.isCancelled = isCancelled;
-		}
+            ip = ping.substring(index + 5);
+            if (ip.contains(PARENTHESE_OPEN_PING))
+            {
+                // Get ip when in parenthese
+                int indexOpen = ip.indexOf(PARENTHESE_OPEN_PING);
+                int indexClose = ip.indexOf(PARENTHESE_CLOSE_PING);
 
-	}
+                ip = ip.substring(indexOpen + 1, indexClose);
+            }
+            else
+            {
+                // Get ip when after from
+                ip = ip.substring(0, ip.indexOf("\n"));
+                if (ip.contains(":"))
+                {
+                    index = ip.indexOf(":");
+                }
+                else
+                {
+                    index = ip.indexOf(" ");
+                }
 
-	/**
-	 * Gets the ip from the string returned by a ping
-	 * 
-	 * @param ping
-	 *            The string returned by a ping command
-	 * @return The ip contained in the ping
-	 */
-	private String parseIpFromPing(String ping) {
-		String ip = "";
-		if (ping.contains(FROM_PING)) {
-			// Get ip when ttl exceeded
-			int index = ping.indexOf(FROM_PING);
+                ip = ip.substring(0, index);
+            }
+        }
+        else
+        {
+            // Get ip when ping succeeded
+            int indexOpen = ping.indexOf(PARENTHESE_OPEN_PING);
+            int indexClose = ping.indexOf(PARENTHESE_CLOSE_PING);
 
-			ip = ping.substring(index + 5);
-			if (ip.contains(PARENTHESE_OPEN_PING)) {
-				// Get ip when in parenthese
-				int indexOpen = ip.indexOf(PARENTHESE_OPEN_PING);
-				int indexClose = ip.indexOf(PARENTHESE_CLOSE_PING);
+            ip = ping.substring(indexOpen + 1, indexClose);
+        }
 
-				ip = ip.substring(indexOpen + 1, indexClose);
-			} else {
-				// Get ip when after from
-				ip = ip.substring(0, ip.indexOf("\n"));
-				if (ip.contains(":")) {
-					index = ip.indexOf(":");
-				} else {
-					index = ip.indexOf(" ");
-				}
+        return ip;
+    }
 
-				ip = ip.substring(0, index);
-			}
-		} else {
-			// Get ip when ping succeeded
-			int indexOpen = ping.indexOf(PARENTHESE_OPEN_PING);
-			int indexClose = ping.indexOf(PARENTHESE_CLOSE_PING);
+    /**
+     * Gets the final ip we want to ping (example: if user fullfilled google.fr, final ip could be 8.8.8.8)
+     *
+     * @param ping The string returned by a ping command
+     * @return The ip contained in the ping
+     */
+    private String parseIpToPingFromPing(String ping)
+    {
+        String ip = "";
+        if (ping.contains(PING))
+        {
+            // Get ip when ping succeeded
+            int indexOpen = ping.indexOf(PARENTHESE_OPEN_PING);
+            int indexClose = ping.indexOf(PARENTHESE_CLOSE_PING);
 
-			ip = ping.substring(indexOpen + 1, indexClose);
-		}
+            ip = ping.substring(indexOpen + 1, indexClose);
+        }
 
-		return ip;
-	}
+        return ip;
+    }
 
-	/**
-	 * Gets the final ip we want to ping (example: if user fullfilled google.fr, final ip could be 8.8.8.8)
-	 * 
-	 * @param ping
-	 *            The string returned by a ping command
-	 * @return The ip contained in the ping
-	 */
-	private String parseIpToPingFromPing(String ping) {
-		String ip = "";
-		if (ping.contains(PING)) {
-			// Get ip when ping succeeded
-			int indexOpen = ping.indexOf(PARENTHESE_OPEN_PING);
-			int indexClose = ping.indexOf(PARENTHESE_CLOSE_PING);
+    /**
+     * Gets the time from ping command (if there is)
+     *
+     * @param ping The string returned by a ping command
+     * @return The time contained in the ping
+     */
+    private String parseTimeFromPing(String ping)
+    {
+        String time = "";
+        if (ping.contains(TIME_PING))
+        {
+            int index = ping.indexOf(TIME_PING);
 
-			ip = ping.substring(indexOpen + 1, indexClose);
-		}
+            time = ping.substring(index + 5);
+            index = time.indexOf(" ");
+            time = time.substring(0, index);
+        }
 
-		return ip;
-	}
+        return time;
+    }
 
-	/**
-	 * Gets the time from ping command (if there is)
-	 * 
-	 * @param ping
-	 *            The string returned by a ping command
-	 * @return The time contained in the ping
-	 */
-	private String parseTimeFromPing(String ping) {
-		String time = "";
-		if (ping.contains(TIME_PING)) {
-			int index = ping.indexOf(TIME_PING);
-
-			time = ping.substring(index + 5);
-			index = time.indexOf(" ");
-			time = time.substring(0, index);
-		}
-
-		return time;
-	}
-
-	/**
-	 * Check for connectivity (wifi and mobile)
-	 * 
-	 * @return true if there is a connectivity, false otherwise
-	 */
-	public boolean hasConnectivity() {
+    /**
+     * Check for connectivity (wifi and mobile)
+     *
+     * @return true if there is a connectivity, false otherwise
+     */
+    public boolean hasConnectivity()
+    {
         return NetworkUtils.isNetworkConnected();
-	}
+    }
 }

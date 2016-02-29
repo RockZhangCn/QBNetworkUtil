@@ -1,6 +1,6 @@
 package com.tencent.rocksnzhang.nettools;
 
-import com.og.tracerouteping.network.TracerouteWithPing;
+import com.og.tracerouteping.network.TraceRouteWithPing;
 import com.tencent.rocksnzhang.utils.DetectResultListener;
 import com.tencent.rocksnzhang.utils.DetectTask;
 
@@ -30,8 +30,8 @@ public class TraceRoute extends DetectTask
     @Override
     public void taskRun()
     {
-        TracerouteWithPing  tracerouteWithPing = new TracerouteWithPing(mHost);
-        tracerouteWithPing.executeTraceroute();
+        TraceRouteWithPing traceRouteWithPing = new TraceRouteWithPing(mHost);
+        traceRouteWithPing.executeTraceRoute();
     }
 
 

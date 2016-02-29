@@ -26,7 +26,7 @@ public class OtherToolFragment extends CommonFragment
     @Override
     public String contentToSave()
     {
-        return null;
+        return "Temp content to save";
     }
 
     private String mTitle;
