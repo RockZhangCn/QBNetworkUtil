@@ -31,7 +31,6 @@ public abstract class DetectTask
 
     public final void  startDetect()
     {
-
         mDetectListener.onDetectStarted(this);
         new DetectThread().start();
     }

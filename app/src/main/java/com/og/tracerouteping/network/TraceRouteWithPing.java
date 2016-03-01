@@ -62,6 +62,8 @@ public class TraceRouteWithPing
     private        Handler  handlerTimeout;
     private static Runnable runnableTimeout;
 
+    public static final String PING_CMD_FORMMAT = "ping -c 1 -t %d ";
+
     public TraceRouteWithPing(String host)
     {
         urlToPing = host;
@@ -212,11 +214,9 @@ public class TraceRouteWithPing
         {
             // Build ping command with parameters
             Process p;
-            String  command = "";
+            String  command = String.format(PING_CMD_FORMMAT, ttl);
 
-            String format = "ping -c 1 -t %d ";
-            command = String.format(format, ttl);
-
+            Log.e("TAG", "The command is : " + command + url );
             long startTime = System.nanoTime();
             // timeout task
             new TimeOutAsyncTask(this, ttl).execute();
@@ -250,7 +250,7 @@ public class TraceRouteWithPing
                 ipToPing = parseIpToPingFromPing(res);
             }
 
-            Log.e("TAG", "launch ping reture is " + res);
+            Log.e("TAG", "launch ping result is : " + res);
             return res;
         }
 

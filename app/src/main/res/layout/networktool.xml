@@ -9,9 +9,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true"
     tools:showIn="@layout/activity_main">
+    <!--android:descendantFocusability="beforeDescendants"-->
+    <!--android:focusableInTouchMode="true"-->
 
     <EditText
         android:id="@+id/ipdomain"
@@ -83,15 +83,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="@android:color/holo_blue_dark"
         android:scrollbars="none">
 
         <TextView
             android:id="@+id/result_tv"
             android:textIsSelectable="true"
             android:layout_width="match_parent"
-            android:layout_margin="4dp"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_blue_dark"
+            android:minHeight="120dp"
+            android:layout_margin="4dp"
             android:text="no detect result"
             android:textColor="#ff000000"
             android:textSize="14sp"
