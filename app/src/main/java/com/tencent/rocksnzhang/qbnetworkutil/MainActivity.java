@@ -181,13 +181,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     "file:///" + mFragmentList.get(
                             mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
 
-            DebugToast.showToast(mFragmentList.get(
-                    mCurrentFragmentIndex).saveToFile().getAbsolutePath());
             shareIntent.setType("text/plain");
             startActivity(
                     Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
         }
-
     }
 
 

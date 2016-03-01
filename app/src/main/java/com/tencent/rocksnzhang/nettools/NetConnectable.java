@@ -65,7 +65,5 @@ public class NetConnectable extends DetectTask
         }
 
         finishedTask(true, "恭喜，网络通畅。");
-
-
     }
 }
