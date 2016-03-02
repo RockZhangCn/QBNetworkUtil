@@ -5,7 +5,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
@@ -37,6 +37,16 @@
 
     <style name="customtablayout" parent="Widget.Design.TabLayout">>
         <item name="tabIndicatorHeight">4dp</item>
+    </style>
+
+    <style name="SplashTheme" >
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- don't display the title bar. -->
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>  <!-- no black screen when start app or switch activities -->
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="tablayouttextsize" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">

@@ -1,11 +1,17 @@
 package com.tencent.rocksnzhang.qbnetworkutil;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.tencent.rocksnzhang.qbnetworkutil.netinfo.NetBasicInfo;
@@ -43,6 +49,50 @@ public class BasicInfoFragment extends CommonFragment
                 + "\n");
 
         mGatewayInfoTextView = (WebView)view.findViewById(R.id.gateway_tv);
+        Log.e("TAG", "Before set webview client");
+
+        mGatewayInfoTextView.setWebViewClient(new WebViewClient()
+        {
+            private boolean mError;
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon)
+            {
+                Log.e("TAG", "onPageStarted ");
+                super.onPageStarted(view, url, favicon);
+                mError = false;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
+            {
+                mError = true;
+                //super.onReceivedError(view, request, error);
+                Log.e("TAG", "Received error " + error + " request is " + request);
+                mGatewayInfoTextView.loadData("<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8");
+            }
+
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse)
+            {
+                //super.onReceivedHttpError(view, request, errorResponse);
+                mError = true;
+                Log.e("TAG", "Received errorResponse " + errorResponse + " request is " + request);
+                mGatewayInfoTextView.loadData("<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8");
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+                Log.e("TAG", "onPageFinished ");
+                if(mError)
+                    mGatewayInfoTextView.loadData("<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8");
+
+                mError = false;
+                //super.onPageFinished(view, url);
+            }
+        });
+
         mGatewayInfoTextView.loadUrl(GATEWAY_IP_URL);
 
         return view;

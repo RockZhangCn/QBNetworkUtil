@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.tencent.rocksnzhang.utils.DebugToast;
 import com.tencent.rocksnzhang.utils.IProgressChangedListener;
 
 import java.util.ArrayList;

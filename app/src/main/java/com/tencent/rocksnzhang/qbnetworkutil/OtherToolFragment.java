@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -29,16 +30,37 @@ public class OtherToolFragment extends CommonFragment
         return "Temp content to save";
     }
 
-    private String mTitle;
-    private TextView mTextView;
+    private TextView mTokenUrl;
+    private Button mTokenShare;
+    private Handler mHandler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            switch (msg.what)
+            {
+                case 0:
+                    mTokenUrl.setText("upload text");
+                    break;
+            }
+        }
+    };
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.basicinfo, container, false);
-        mTextView = (TextView) view.findViewById(R.id.basicinfo_tv);
-        mTextView.setText(mTitle);
+        View view = inflater.inflate(R.layout.othertools, container, false);
+        mTokenUrl = (TextView)view.findViewById(R.id.token_url);
+        mTokenShare = (Button)view.findViewById(R.id.token_share);
+        mTokenShare.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                MttLogOpenHelper.testMethod();
+            }
+        });
         return view;
     }
 
@@ -46,15 +68,7 @@ public class OtherToolFragment extends CommonFragment
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Bundle arguments = getArguments();
-        if (arguments != null)
-        {
-            mTitle = arguments.getString("title");
-        }
-        else
-        {
-            mTitle = "Default content";
-        }
-
     }
+
+   
 }

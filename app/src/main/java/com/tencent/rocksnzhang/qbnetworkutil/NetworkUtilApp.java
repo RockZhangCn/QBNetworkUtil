@@ -3,7 +3,6 @@ package com.tencent.rocksnzhang.qbnetworkutil;
 import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 import com.tencent.rocksnzhang.utils.NetworkUtils;
 
@@ -23,7 +22,6 @@ public class NetworkUtilApp extends Application
     {
         super.onCreate();
         m_singleInstance = this;
-        Log.e("TAG", "onCreate() + instance is " + m_singleInstance);
         mAppContext = m_singleInstance;
         NetworkUtils.setApplicationContext(mAppContext);
         checkStorageDirectory();
