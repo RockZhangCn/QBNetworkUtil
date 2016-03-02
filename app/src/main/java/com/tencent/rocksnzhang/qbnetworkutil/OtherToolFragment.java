@@ -32,19 +32,7 @@ public class OtherToolFragment extends CommonFragment
 
     private TextView mTokenUrl;
     private Button mTokenShare;
-    private Handler mHandler = new Handler()
-    {
-        @Override
-        public void handleMessage(Message msg)
-        {
-            switch (msg.what)
-            {
-                case 0:
-                    mTokenUrl.setText("upload text");
-                    break;
-            }
-        }
-    };
+
 
     @Nullable
     @Override
@@ -58,7 +46,7 @@ public class OtherToolFragment extends CommonFragment
             @Override
             public void onClick(View view)
             {
-                MttLogOpenHelper.testMethod();
+
             }
         });
         return view;
