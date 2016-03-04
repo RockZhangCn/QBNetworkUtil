@@ -35,7 +35,8 @@ public class HandShakeExecutor extends DetectTask
     {
         Socket socket = new Socket();
 
-        try{
+        try
+        {
             InetAddress addr = InetAddress.getByName(mHost);
             socket.connect(new InetSocketAddress(addr, 80), 30000);
             finishedTask(true, "三次握手成功。\n" + socket.toString());

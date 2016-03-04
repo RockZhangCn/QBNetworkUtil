@@ -15,20 +15,15 @@ public class NetBasicInfo
 {
     public static final String WIFI_NETINTERFACE = "wlan0";
     public static final String MOBILE_NETINTERFACE = "p2p0";
-
-    private String mNetInterface = WIFI_NETINTERFACE;
     public final static String APN_CMWAP = "cmwap";
     public final static String APN_CMNET = "cmnet";
     public final static String APN_UNIWAP = "uniwap";
     public final static String APN_UNINET = "uninet";
     public final static String APN_UNI3gWAP = "3gwap";
     public final static String APN_UNI3gNET = "3gnet";
-
-
     public final static String APN_CTWAP = "ctwap";
     public final static String APN_CTNET = "ctnet";
     public final static String APN_CTLTE = "ctlte";
-
     /**
      * Network type is unknown
      */
@@ -93,11 +88,8 @@ public class NetBasicInfo
      * Current network is HSPA+
      */
     public static final int NETWORK_TYPE_HSPAP = 15;
-
     public static final int NETWORK_TYPE_SCDMA = 17;
-
     public static final int NETWOR_TYPE_TDS_HSDPA = 18;  //china mobile 3G
-
     /**
      * Unknown network class. {@hide}
      */
@@ -114,9 +106,14 @@ public class NetBasicInfo
      * Class of broadly defined "4G" networks. {@hide}
      */
     public static final int NETWORK_CLASS_4_G = 3;
-
-
     private static volatile NetBasicInfo m_Instance = null;
+    private String mNetInterface = WIFI_NETINTERFACE;
+    private Context mContext;
+
+    private NetBasicInfo(Context context)
+    {
+        mContext = context;
+    }
 
     public static NetBasicInfo getInstance(Context context)
     {
@@ -133,57 +130,6 @@ public class NetBasicInfo
 
         return m_Instance;
     }
-
-    private Context mContext;
-
-    private NetBasicInfo(Context context)
-    {
-        mContext = context;
-    }
-
-    public String getMacAddress(String netInterface)
-    {
-        String strMacAddr = "";
-        byte[] b;
-        try
-        {
-            NetworkInterface NIC = NetworkInterface.getByName(netInterface);
-
-            if (NIC == null)
-            {
-                NIC = NetworkInterface.getByName("rmnet0");//小米关掉Wifi后只剩下此网卡。
-                strMacAddr = "没有 " + netInterface + " 网卡";
-            }
-
-            if (NIC != null)
-            {
-                b = NIC.getHardwareAddress();
-
-                if(b == null)
-                    return strMacAddr;
-
-                StringBuffer buffer = new StringBuffer();
-                for (int i = 0; i < b.length; i++)
-                {
-                    if (i != 0)
-                    {
-                        buffer.append(':');
-                    }
-                    String str = Integer.toHexString(b[i] & 0xFF);
-                    buffer.append(str.length() == 1 ? 0 + str : str);
-                }
-                strMacAddr = buffer.toString().toUpperCase();
-            }
-        }
-        catch (SocketException e)
-        {
-            e.printStackTrace();
-        }
-
-
-        return strMacAddr;
-    }
-
 
     public static int getNetworkClass(int networkType)
     {
@@ -212,6 +158,51 @@ public class NetBasicInfo
             default:
                 return NETWORK_CLASS_UNKNOWN;
         }
+    }
+
+    public String getMacAddress(String netInterface)
+    {
+        String strMacAddr = "";
+        byte[] b;
+        try
+        {
+            NetworkInterface NIC = NetworkInterface.getByName(netInterface);
+
+            if (NIC == null)
+            {
+                NIC = NetworkInterface.getByName("rmnet0");//小米关掉Wifi后只剩下此网卡。
+                strMacAddr = "没有 " + netInterface + " 网卡";
+            }
+
+            if (NIC != null)
+            {
+                b = NIC.getHardwareAddress();
+
+                if (b == null)
+                {
+                    return strMacAddr;
+                }
+
+                StringBuffer buffer = new StringBuffer();
+                for (int i = 0; i < b.length; i++)
+                {
+                    if (i != 0)
+                    {
+                        buffer.append(':');
+                    }
+                    String str = Integer.toHexString(b[i] & 0xFF);
+                    buffer.append(str.length() == 1 ? 0 + str : str);
+                }
+                strMacAddr = buffer.toString().toUpperCase();
+            }
+        }
+        catch (SocketException e)
+        {
+            e.printStackTrace();
+        }
+
+
+        return strMacAddr;
     }
 
     public String getApnInfo()
@@ -306,7 +297,6 @@ public class NetBasicInfo
                     break;
             }
         }
-
 
 
         mOutputString.append("ExtraInfo=" + mobInfo.getExtraInfo() + "\n");

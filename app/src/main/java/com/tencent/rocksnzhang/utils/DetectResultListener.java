@@ -5,6 +5,7 @@ package com.tencent.rocksnzhang.utils;
  */
 public interface DetectResultListener
 {
-     void onDetectStarted(DetectTask task);
-     void onDetectFinished(DetectTask task);
+    void onDetectStarted(DetectTask task);
+
+    void onDetectFinished(DetectTask task);
 }

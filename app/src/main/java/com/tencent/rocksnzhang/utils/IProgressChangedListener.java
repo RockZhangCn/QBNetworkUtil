@@ -6,6 +6,7 @@ package com.tencent.rocksnzhang.utils;
 public interface IProgressChangedListener
 {
     void showProgress();
+
     void hideProgress();
 
 }

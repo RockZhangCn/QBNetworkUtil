@@ -1,6 +1,7 @@
 package com.tencent.rocksnzhang.qbnetworkutil;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.tencent.rocksnzhang.utils.IProgressChangedListener;
+import com.tencent.rocksnzhang.utils.ShareUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView()
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        ImageView refresh = (ImageView)toolbar.findViewById(R.id.sharebtn_send);
+        ImageView refresh = (ImageView) toolbar.findViewById(R.id.sharebtn_send);
         refresh.setOnClickListener(this);
         setSupportActionBar(toolbar);
 
@@ -172,33 +174,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v)
     {
-        if(v.getId() == R.id.sharebtn_send)
+        if (v.getId() == R.id.sharebtn_send)
         {
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
-                    "file:///" + mFragmentList.get(
-                            mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
+            ActivityInfo activityInfo = ShareUtils.getWeChatOrMobileQQShareActivity(ShareUtils.SHARE_THROUGH_MOBILEQQ);
+            if (activityInfo == null)
+            {
+                activityInfo = ShareUtils.getWeChatOrMobileQQShareActivity(ShareUtils.SHARE_THROUGH_WECHAT);
+            }
 
-            shareIntent.setType("text/plain");
-            startActivity(
-                    Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
+            if (activityInfo != null)
+            {
+                Intent addIntent = new Intent();
+                addIntent.setAction(Intent.ACTION_SEND);
+                addIntent.setType("text/plain");
+
+                addIntent.setPackage(activityInfo.packageName);
+
+                addIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
+                        "file:///" + mFragmentList.get(
+                                mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
+
+                startActivity(addIntent);
+                return;
+            }
         }
     }
-
 
 
     @Override
     public void showProgress()
     {
-        if(titleProgressBar != null)
+        if (titleProgressBar != null)
+        {
             titleProgressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void hideProgress()
     {
-        if(titleProgressBar != null)
+        if (titleProgressBar != null)
+        {
             titleProgressBar.setVisibility(View.GONE);
+        }
     }
 }

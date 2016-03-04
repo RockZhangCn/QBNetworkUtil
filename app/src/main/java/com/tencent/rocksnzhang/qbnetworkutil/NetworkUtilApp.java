@@ -13,9 +13,14 @@ import java.io.File;
  */
 public class NetworkUtilApp extends Application
 {
-    private static Context        mAppContext;
+    private static Context mAppContext;
     private static NetworkUtilApp m_singleInstance;
-    private        File           mAppStoreDir;
+    private File mAppStoreDir;
+
+    public static NetworkUtilApp getInstance()
+    {
+        return m_singleInstance;
+    }
 
     @Override
     public void onCreate()
@@ -30,11 +35,6 @@ public class NetworkUtilApp extends Application
     public Context getApplicationContext()
     {
         return mAppContext;
-    }
-
-    public static NetworkUtilApp getInstance()
-    {
-        return m_singleInstance;
     }
 
     private void checkStorageDirectory()
@@ -54,7 +54,9 @@ public class NetworkUtilApp extends Application
 
         mAppStoreDir = new File(sdRootDir.getPath() + "/TrippleF");
         if (!mAppStoreDir.exists())
+        {
             mAppStoreDir.mkdir();
+        }
     }
 
     public File getAppStoreDirFile()

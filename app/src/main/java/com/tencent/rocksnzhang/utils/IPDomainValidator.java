@@ -7,8 +7,10 @@ public class IPDomainValidator
 {
     public static boolean isValidDomainOrIPAddr(String input)
     {
-        if((input == null) || input.equals(""))
+        if ((input == null) || input.equals(""))
+        {
             return false;
+        }
 
         boolean domain = DomainValidator.getInstance().isValid(input);
         boolean ip = InetAddressValidator.getInstance().isValid(input);

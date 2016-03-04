@@ -25,13 +25,11 @@ public class BasicInfoFragment extends CommonFragment
     public static final String GATEWAY_IP_URL = "http://1212.ip138.com/ic.asp";
 
     private NetBasicInfo mNetBasicInfo;
-
+    private TextView mBasicInfoTextView;
+    private WebView mGatewayInfoTextView;
     public BasicInfoFragment()
     {
     }
-
-    private TextView mBasicInfoTextView;
-    private WebView mGatewayInfoTextView;
 
     @Nullable
     @Override
@@ -48,7 +46,7 @@ public class BasicInfoFragment extends CommonFragment
                 + "\n\n" + SystemBasicInfo.getBuildInfo()
                 + "\n");
 
-        mGatewayInfoTextView = (WebView)view.findViewById(R.id.gateway_tv);
+        mGatewayInfoTextView = (WebView) view.findViewById(R.id.gateway_tv);
         Log.e("TAG", "Before set webview client");
 
         mGatewayInfoTextView.setWebViewClient(new WebViewClient()
@@ -85,8 +83,10 @@ public class BasicInfoFragment extends CommonFragment
             public void onPageFinished(WebView view, String url)
             {
                 Log.e("TAG", "onPageFinished ");
-                if(mError)
+                if (mError)
+                {
                     mGatewayInfoTextView.loadData("<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8");
+                }
 
                 mError = false;
                 //super.onPageFinished(view, url);

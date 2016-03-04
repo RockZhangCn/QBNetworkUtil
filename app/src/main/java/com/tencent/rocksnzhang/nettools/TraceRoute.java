@@ -10,6 +10,7 @@ import com.tencent.rocksnzhang.utils.DetectTask;
 public class TraceRoute extends DetectTask
 {
     public static final int MAX_TTL = 40;
+
     public TraceRoute(DetectResultListener l, String host)
     {
         super(l, host);

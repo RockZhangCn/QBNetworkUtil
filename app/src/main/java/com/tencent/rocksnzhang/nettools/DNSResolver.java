@@ -10,6 +10,11 @@ import java.net.InetAddress;
  */
 public class DNSResolver extends DetectTask
 {
+    public DNSResolver(DetectResultListener listener, String host)
+    {
+        super(listener, host);
+    }
+
     @Override
     public void taskRun()
     {
@@ -30,11 +35,6 @@ public class DNSResolver extends DetectTask
         {
             finishedTask(false, e.toString());
         }
-    }
-
-    public DNSResolver(DetectResultListener listener, String host)
-    {
-        super(listener, host);
     }
 
     @Override

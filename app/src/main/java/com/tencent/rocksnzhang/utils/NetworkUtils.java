@@ -13,6 +13,7 @@ import java.net.URL;
 public class NetworkUtils
 {
     private static Context mContext;
+    StringBuilder textView = new StringBuilder();
 
     private NetworkUtils()
     {
@@ -26,43 +27,9 @@ public class NetworkUtils
     public static boolean isNetworkConnected()
     {
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo         activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-
-    private void getLocalHost()
-    {
-        try
-        {
-            InetAddress iAdd = InetAddress.getLocalHost();
-            String line = "";
-            String hostName = iAdd.getHostName();
-            if (hostName != null)
-            {
-                InetAddress[] adds = InetAddress.getAllByName(hostName);
-                for (int i = 0; i < adds.length; i++)
-                {
-                    iAdd = adds[i];
-                    line = "HostName=" + iAdd.getHostName() + "\n";
-                    textView.append(line);
-                    line = "CanonicalHostName=" + iAdd.getCanonicalHostName()
-                            + "\n";
-                    textView.append(line);
-                    line = "HostAddress=" + iAdd.getHostAddress() + "\n";
-                    textView.append(line);
-                    textView.append("\n");
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-
-        }
-    }
-
-    StringBuilder textView = new StringBuilder();
-
 
     public static boolean postStrContent(String content)
     {
@@ -106,6 +73,36 @@ public class NetworkUtils
         }
     }
 
+    private void getLocalHost()
+    {
+        try
+        {
+            InetAddress iAdd = InetAddress.getLocalHost();
+            String line = "";
+            String hostName = iAdd.getHostName();
+            if (hostName != null)
+            {
+                InetAddress[] adds = InetAddress.getAllByName(hostName);
+                for (int i = 0; i < adds.length; i++)
+                {
+                    iAdd = adds[i];
+                    line = "HostName=" + iAdd.getHostName() + "\n";
+                    textView.append(line);
+                    line = "CanonicalHostName=" + iAdd.getCanonicalHostName()
+                            + "\n";
+                    textView.append(line);
+                    line = "HostAddress=" + iAdd.getHostAddress() + "\n";
+                    textView.append(line);
+                    textView.append("\n");
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+
+        }
+    }
 
     boolean uploadFile(String uploadUrl)
     {

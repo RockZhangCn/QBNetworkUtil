@@ -15,6 +15,9 @@ import com.tencent.rocksnzhang.utils.MttLogOpenHelper;
  */
 public class OtherToolFragment extends CommonFragment
 {
+    private TextView mTokenUrl;
+    private Button mTokenShare;
+
     public OtherToolFragment()
     {
 
@@ -32,17 +35,13 @@ public class OtherToolFragment extends CommonFragment
         return "Temp content to save";
     }
 
-    private TextView mTokenUrl;
-    private Button mTokenShare;
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.othertools, container, false);
-        mTokenUrl = (TextView)view.findViewById(R.id.token_url);
-        mTokenShare = (Button)view.findViewById(R.id.token_share);
+        mTokenUrl = (TextView) view.findViewById(R.id.token_url);
+        mTokenShare = (Button) view.findViewById(R.id.token_share);
         mTokenShare.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -60,5 +59,5 @@ public class OtherToolFragment extends CommonFragment
         super.onCreate(savedInstanceState);
     }
 
-   
+
 }

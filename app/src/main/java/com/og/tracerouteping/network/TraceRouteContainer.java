@@ -29,9 +29,9 @@ public class TraceRouteContainer implements Serializable
 
     private static final long serialVersionUID = 1034744411998219581L;
 
-    private String  hostname;
-    private String  ip;
-    private float   ms;
+    private String hostname;
+    private String ip;
+    private float ms;
     private boolean isSuccessful;
 
     public TraceRouteContainer(String hostname, String ip, float ms, boolean isSuccessful)

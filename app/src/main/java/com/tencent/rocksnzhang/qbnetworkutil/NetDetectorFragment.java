@@ -58,7 +58,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     {
         View view = inflater.inflate(R.layout.networktool, container, false);
 
-        mDetectResultView = (TextView)view.findViewById(R.id.result_tv);
+        mDetectResultView = (TextView) view.findViewById(R.id.result_tv);
 
         domainipedit = (EditText) view.findViewById(R.id.ipdomain);
         domainipedit.setOnFocusChangeListener(new View.OnFocusChangeListener()
@@ -73,7 +73,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
             }
         });
 
-        netavailablebtn = (Button)view.findViewById(R.id.netavaiable);
+        netavailablebtn = (Button) view.findViewById(R.id.netavaiable);
         netavailablebtn.setOnClickListener(this);
 
         pingbtn = (Button) view.findViewById(R.id.pingaction);
@@ -85,10 +85,10 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         traceroutebtn = (Button) view.findViewById(R.id.traceroute);
         traceroutebtn.setOnClickListener(this);
 
-        handshakebtn = (Button)view.findViewById(R.id.connectable);
+        handshakebtn = (Button) view.findViewById(R.id.connectable);
         handshakebtn.setOnClickListener(this);
 
-        spdypingbtn = (Button)view.findViewById(R.id.spdyping);
+        spdypingbtn = (Button) view.findViewById(R.id.spdyping);
         spdypingbtn.setOnClickListener(this);
         return view;
     }
@@ -103,15 +103,15 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     @Override
     public void onClick(View view)
     {
-  
-        if(!NetworkUtils.isNetworkConnected())
+
+        if (!NetworkUtils.isNetworkConnected())
         {
             DebugToast.showToast("没有可用的网络连接");
             return;
         }
-		
-		mDetectResultView.setText("");
-        
+
+        mDetectResultView.setText("");
+
         switch (view.getId())
         {
             case R.id.netavaiable:
@@ -170,16 +170,20 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     @Override
     public void onDetectStarted(DetectTask task)
     {
-        if(mIProgressChangedListener != null)
+        if (mIProgressChangedListener != null)
+        {
             mIProgressChangedListener.showProgress();
+        }
         Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect started", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDetectFinished(DetectTask task)
     {
-        if(mIProgressChangedListener != null)
+        if (mIProgressChangedListener != null)
+        {
             mIProgressChangedListener.hideProgress();
+        }
         mDetectResultView.setText(task.detectResultData());
         Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect " + (task.isSuccess() ? "successed" : "failed"), Toast.LENGTH_SHORT).show();
     }

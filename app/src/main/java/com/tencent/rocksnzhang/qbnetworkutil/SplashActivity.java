@@ -21,19 +21,22 @@ public class SplashActivity extends Activity
     ImageView mSplashImage;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        mSplashImage = (ImageView)findViewById(R.id.iv_entry);
+        mSplashImage = (ImageView) findViewById(R.id.iv_entry);
         animateImage();
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
         super.onPostCreate(savedInstanceState);
     }
 
-    private void animateImage() {
+    private void animateImage()
+    {
         ObjectAnimator animatorX = ObjectAnimator.ofFloat(mSplashImage, "scaleX", 1f, SCALE_END);
         ObjectAnimator animatorY = ObjectAnimator.ofFloat(mSplashImage, "scaleY", 1f, SCALE_END);
 
@@ -41,9 +44,11 @@ public class SplashActivity extends Activity
         set.setDuration(ANIMATION_DURATION).play(animatorX).with(animatorY);
         set.start();
 
-        set.addListener(new AnimatorListenerAdapter() {
+        set.addListener(new AnimatorListenerAdapter()
+        {
             @Override
-            public void onAnimationEnd(Animator animation) {
+            public void onAnimationEnd(Animator animation)
+            {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

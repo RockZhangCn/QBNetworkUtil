@@ -12,11 +12,13 @@ public class DebugToast
 {
     public static void showToast(String info)
     {
-        if(info == null || info.equals(""))
+        if (info == null || info.equals(""))
+        {
             return;
+        }
         else
         {
-            Log.e("TAG", " NetworkUtilApp.getInstance().getApplicationContext() is " + NetworkUtilApp.getInstance().getApplicationContext() );
+            Log.e("TAG", " NetworkUtilApp.getInstance().getApplicationContext() is " + NetworkUtilApp.getInstance().getApplicationContext());
             Toast.makeText(NetworkUtilApp.getInstance().getApplicationContext(), info, Toast.LENGTH_SHORT).show();
         }
 

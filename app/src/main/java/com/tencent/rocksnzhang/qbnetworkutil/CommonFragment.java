@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public abstract class CommonFragment extends Fragment implements IDataPersist
 {
-    protected Context                  mContext;
+    protected Context mContext;
     protected IProgressChangedListener mIProgressChangedListener;
 
     @Override
