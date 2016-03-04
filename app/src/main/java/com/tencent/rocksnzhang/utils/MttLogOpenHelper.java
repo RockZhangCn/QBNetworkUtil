@@ -1,17 +1,13 @@
 package com.tencent.rocksnzhang.utils;
 
 import android.content.ClipData;
-
 import android.content.Context;
 import android.os.Build;
-import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
-import android.webkit.WebView;
 
 import com.tencent.rocksnzhang.qbnetworkutil.NetworkUtilApp;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
@@ -47,17 +43,17 @@ public class MttLogOpenHelper
     private static String generateSafeToken()
     {
         Date date = new Date();
-        int minutes = date.getMinutes();
+        int hour = date.getHours();
 
-        int halfHour = minutes / 30;
-        Log.e("TAG", " halfHour is " + halfHour);
+        int evenHour = hour / 2;
+        Log.e("TAG", " halfHour is " + evenHour);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:0");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd 0");
         String time = dateFormat.format(date);
-        String seeds = time + String.valueOf(halfHour);
+        String seeds = time + String.valueOf(evenHour) + ":11";//padding
 
         String generatedSafeToken = Encript(seeds);
-        Log.e("TAG", "generatedSafeToken is " + generatedSafeToken);
+        Log.e("TAG", "seeds is " + seeds + " generatedSafeToken is " + generatedSafeToken);
 
         return generatedSafeToken;
     }

@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.tencent.rocksnzhang.utils.MttLogOpenHelper;
+
 /**
  * Created by rock on 16-2-19.
  */
@@ -46,7 +48,7 @@ public class OtherToolFragment extends CommonFragment
             @Override
             public void onClick(View view)
             {
-
+                MttLogOpenHelper.testMethod();
             }
         });
         return view;
