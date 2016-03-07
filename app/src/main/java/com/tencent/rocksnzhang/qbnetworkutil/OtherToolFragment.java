@@ -24,13 +24,13 @@ public class OtherToolFragment extends CommonFragment
     }
 
     @Override
-    public String saveFileName()
+    protected String saveFileName()
     {
         return "OtherTool.txt";
     }
 
     @Override
-    public String contentToSave()
+    protected String contentToSave()
     {
         return "Temp content to save";
     }

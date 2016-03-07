@@ -7,5 +7,5 @@ import java.io.File;
  */
 public interface IDataPersist
 {
-    public File saveToFile();
+    File saveToFile();
 }

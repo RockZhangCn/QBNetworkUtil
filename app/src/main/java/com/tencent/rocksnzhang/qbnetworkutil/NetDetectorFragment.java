@@ -15,6 +15,7 @@ import com.tencent.rocksnzhang.nettools.DNSResolver;
 import com.tencent.rocksnzhang.nettools.HandShakeExecutor;
 import com.tencent.rocksnzhang.nettools.NetConnectable;
 import com.tencent.rocksnzhang.nettools.PingExecutor;
+import com.tencent.rocksnzhang.nettools.SPDYPing;
 import com.tencent.rocksnzhang.utils.DebugToast;
 import com.tencent.rocksnzhang.utils.DetectResultListener;
 import com.tencent.rocksnzhang.utils.DetectTask;
@@ -41,13 +42,13 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     }
 
     @Override
-    public String saveFileName()
+    protected String saveFileName()
     {
         return "net_detector.txt";
     }
 
     @Override
-    public String contentToSave()
+    protected String contentToSave()
     {
         return "this is the content";
     }
@@ -163,6 +164,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                     Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
                     return;
                 }
+                new SPDYPing(this, mStrDomainIP).startDetect();
                 break;
         }
     }

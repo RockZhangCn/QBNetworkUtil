@@ -107,13 +107,13 @@ public class BasicInfoFragment extends CommonFragment
 
 
     @Override
-    public String contentToSave()
+    protected String contentToSave()
     {
         return mBasicInfoTextView.getText().toString();
     }
 
     @Override
-    public String saveFileName()
+    protected String saveFileName()
     {
         return "basic_info.txt";
     }

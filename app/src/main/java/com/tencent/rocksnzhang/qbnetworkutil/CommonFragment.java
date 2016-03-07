@@ -51,7 +51,7 @@ public abstract class CommonFragment extends Fragment implements IDataPersist
         mIProgressChangedListener = iProgressChangedListener;
     }
 
-    public abstract String saveFileName();
+    protected abstract String saveFileName();
 
-    public abstract String contentToSave();
+    protected abstract String contentToSave();
 }
