@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.tencent.rocksnzhang.utils.IProgressChangedListener;
 import com.tencent.rocksnzhang.utils.ShareUtils;
@@ -158,7 +157,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings)
         {
-            Toast.makeText(MainActivity.this, "This is menu response", Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivity.this, "This is menu response", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
             return true;
         }
 
