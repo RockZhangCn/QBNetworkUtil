@@ -13,9 +13,12 @@ import java.net.Socket;
  */
 public class HandShakeExecutor extends DetectTask
 {
-    public HandShakeExecutor(DetectResultListener l, String host)
+    private String mPorts = "8080";
+    public HandShakeExecutor(DetectResultListener l, String host, String port)
     {
         super(l, host);
+        mPorts = port;
+
     }
 
     @Override
@@ -34,11 +37,19 @@ public class HandShakeExecutor extends DetectTask
     public void taskRun()
     {
         Socket socket = new Socket();
+        int port = 8080;
+        try
+        {
+            port = Integer.parseInt(mPorts);
+        }catch (NumberFormatException e)
+        {
+            port = 8080;
+        }
 
         try
         {
             InetAddress addr = InetAddress.getByName(mHost);
-            socket.connect(new InetSocketAddress(addr, 80), 30000);
+            socket.connect(new InetSocketAddress(addr, port), 30000);
             finishedTask(true, "三次握手成功。\n" + socket.toString());
         }
         catch (Exception e)
