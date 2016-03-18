@@ -20,7 +20,9 @@ import android.widget.ProgressBar;
 
 import com.tencent.rocksnzhang.utils.IProgressChangedListener;
 import com.tencent.rocksnzhang.utils.ShareUtils;
+import com.tencent.rocksnzhang.utils.ZipHelper;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -177,6 +179,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         if (v.getId() == R.id.sharebtn_send)
         {
+            saveFragementDataToFile();
+            zipUploadData();
             ActivityInfo activityInfo = ShareUtils.getWeChatOrMobileQQShareActivity(ShareUtils.SHARE_THROUGH_MOBILEQQ);
             if (activityInfo == null)
             {
@@ -192,8 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 addIntent.setPackage(activityInfo.packageName);
 
                 addIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
-                        "file:///" + mFragmentList.get(
-                                mCurrentFragmentIndex).saveToFile().getAbsolutePath()));
+                        "file:///" + NetworkUtilApp.getInstance().getSingleFileStoreManager().getAppZipDataFile().getAbsolutePath()));
 
                 startActivity(addIntent);
                 return;
@@ -201,6 +204,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void saveFragementDataToFile()
+    {
+        for(CommonFragment fragment : mFragmentList)
+        {
+            fragment.saveToFile();
+        }
+    }
+
+
+    private void zipUploadData()
+    {
+        File tmpSaveDir = NetworkUtilApp.getInstance().getSingleFileStoreManager().getAppTmpStoreDirFile();
+        String[] files = tmpSaveDir.list();
+
+        final  String tmpSavePathString = tmpSaveDir.getAbsolutePath();
+        for (int i = 0; i < files.length ; i++)
+        {
+            files[i] = tmpSavePathString + File.separator + files[i];
+
+        }
+
+        ZipHelper zipHelper = new ZipHelper(files, NetworkUtilApp.getInstance().getSingleFileStoreManager().getAppZipDataFile().getAbsolutePath());
+        zipHelper.Zip();
+    }
 
     @Override
     public void showProgress()

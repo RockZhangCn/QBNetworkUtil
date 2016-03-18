@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.og.tracerouteping.network.TraceRouteWithPing;
+import com.tencent.rocksnzhang.filemanager.FileStoreManager;
 import com.tencent.rocksnzhang.nettools.DNSResolver;
 import com.tencent.rocksnzhang.nettools.HandShakeExecutor;
 import com.tencent.rocksnzhang.nettools.NetConnectable;
@@ -43,6 +44,20 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
 
     private static String[] portslist = {"80", "8080", "443"};
 
+    public static final int CONNECT   =   0;
+    public static final int DNS   =       1;
+    public static final int PING   =      2;
+    public static final int ROUTE   =     3;
+    public static final int HANDSHAKE   = 4;
+    public static final int SPDYPING   =  5;
+    public static final int DETECT_CNT   =  6;
+
+    public static final  String SAPARATOR_LINE = "\n===============================================\n";
+
+    private int mCurrentDetectType = -1;
+
+    private String[] detectResults = new String[]{ "", "", "", "", "", ""};
+
     public NetDetectorFragment()
     {
     }
@@ -50,13 +65,23 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
     @Override
     protected String saveFileName()
     {
-        return "net_detector.txt";
+        return FileStoreManager.NET_DETECT_FILENAME;
     }
 
     @Override
     protected String contentToSave()
     {
-        return "this is the content";
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < DETECT_CNT; i++)
+        {
+            if(detectResults[i] != null)
+            {
+                builder.append(detectResults[i]);
+                builder.append(SAPARATOR_LINE);
+            }
+        }
+
+        return  builder.toString();
     }
 
     @Nullable
@@ -98,7 +123,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         traceroutebtn = (Button) view.findViewById(R.id.traceroute);
         traceroutebtn.setOnClickListener(this);
 
-        handshakebtn = (Button) view.findViewById(R.id.connectable);
+        handshakebtn = (Button) view.findViewById(R.id.handshake);
         handshakebtn.setOnClickListener(this);
 
         spdypingbtn = (Button) view.findViewById(R.id.spdyping);
@@ -129,11 +154,13 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         switch (view.getId())
         {
             case R.id.netavaiable:
+                mCurrentDetectType = CONNECT;
                 NetConnectable netConnectable = new NetConnectable(this, mStrDomainIP);
                 netConnectable.startDetect();
                 break;
 
             case R.id.pingaction:
+                mCurrentDetectType = PING;
                 if (!checkDomainIPValidate())
                 {
                     Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
@@ -144,6 +171,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                 break;
 
             case R.id.resolveaction:
+                mCurrentDetectType = DNS;
                 if (!checkDomainIPValidate())
                 {
                     Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
@@ -154,6 +182,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                 break;
 
             case R.id.traceroute:
+                mCurrentDetectType = ROUTE;
                 if (!checkDomainIPValidate())
                 {
                     Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
@@ -162,7 +191,8 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                 new TraceRouteWithPing(mStrDomainIP).executeTraceRoute();
                 break;
 
-            case R.id.connectable:
+            case R.id.handshake:
+                mCurrentDetectType = HANDSHAKE;
                 if (!checkDomainIPValidate())
                 {
                     Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
@@ -170,11 +200,11 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                 }
 
                 String port = (String)spinner.getSelectedItem();
-                DebugToast.showToast("port is " + port);
                 new HandShakeExecutor(this, mStrDomainIP, port).startDetect();
                 break;
 
             case R.id.spdyping:
+                mCurrentDetectType = SPDYPING;
                 if (!checkDomainIPValidate())
                 {
                     Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
@@ -202,7 +232,9 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         {
             mIProgressChangedListener.hideProgress();
         }
+
         mDetectResultView.setText(task.detectResultData());
+        detectResults[mCurrentDetectType] += task.detectResultData() + SAPARATOR_LINE;
         Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect " + (task.isSuccess() ? "successed" : "failed"), Toast.LENGTH_SHORT).show();
     }
 
@@ -212,5 +244,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         mStrDomainIP = domainipedit.getText().toString();
         return IPDomainValidator.isValidDomainOrIPAddr(mStrDomainIP);
     }
+
+
 }
 

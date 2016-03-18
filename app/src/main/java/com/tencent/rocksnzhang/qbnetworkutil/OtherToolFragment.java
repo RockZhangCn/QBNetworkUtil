@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.tencent.rocksnzhang.filemanager.FileStoreManager;
 import com.tencent.rocksnzhang.utils.MttLogOpenHelper;
 
 /**
@@ -26,7 +27,7 @@ public class OtherToolFragment extends CommonFragment
     @Override
     protected String saveFileName()
     {
-        return "OtherTool.txt";
+        return FileStoreManager.OTHER_INFO_FILENAME;
     }
 
     @Override

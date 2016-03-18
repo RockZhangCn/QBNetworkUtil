@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.tencent.rocksnzhang.utils.DebugToast;
 import com.tencent.rocksnzhang.utils.IDataPersist;
 import com.tencent.rocksnzhang.utils.IProgressChangedListener;
 
@@ -30,8 +31,10 @@ public abstract class CommonFragment extends Fragment implements IDataPersist
     @Override
     public final File saveToFile()
     {
-        File saveFile = new File(NetworkUtilApp.getInstance().getAppStoreDirFile().getPath(),
-                saveFileName());
+        File tmpSaveDir = NetworkUtilApp.getInstance().getSingleFileStoreManager().getAppTmpStoreDirFile();
+        File saveFile = new File(tmpSaveDir,  saveFileName());
+		
+		DebugToast.showToast("TmpSaveDir is " + tmpSaveDir.getAbsolutePath() + " ave File is " + saveFile.getAbsolutePath());
 
         try
         {

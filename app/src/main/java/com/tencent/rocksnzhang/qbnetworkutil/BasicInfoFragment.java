@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.tencent.rocksnzhang.filemanager.FileStoreManager;
 import com.tencent.rocksnzhang.qbnetworkutil.netinfo.NetBasicInfo;
 import com.tencent.rocksnzhang.qbnetworkutil.netinfo.SystemBasicInfo;
 
@@ -115,6 +116,6 @@ public class BasicInfoFragment extends CommonFragment
     @Override
     protected String saveFileName()
     {
-        return "basic_info.txt";
+        return FileStoreManager.BASIC_INFO_FILENAME;
     }
 }

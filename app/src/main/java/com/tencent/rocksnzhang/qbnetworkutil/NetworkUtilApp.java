@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
 
+import com.tencent.rocksnzhang.filemanager.FileStoreManager;
 import com.tencent.rocksnzhang.utils.NetworkUtils;
 
 import java.io.File;
@@ -29,7 +30,7 @@ public class NetworkUtilApp extends Application
         m_singleInstance = this;
         mAppContext = m_singleInstance;
         NetworkUtils.setApplicationContext(mAppContext);
-        checkStorageDirectory();
+        getSingleFileStoreManager();
     }
 
     public Context getApplicationContext()
@@ -37,30 +38,9 @@ public class NetworkUtilApp extends Application
         return mAppContext;
     }
 
-    private void checkStorageDirectory()
+    public FileStoreManager getSingleFileStoreManager()
     {
-        boolean sdCardExist = Environment.getExternalStorageState()
-                .equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
-
-        File sdRootDir = null;
-        if (sdCardExist)
-        {
-            sdRootDir = Environment.getExternalStorageDirectory();//获取跟目录
-        }
-        else
-        {
-            sdRootDir = mAppContext.getExternalCacheDir();
-        }
-
-        mAppStoreDir = new File(sdRootDir.getPath() + "/TrippleF");
-        if (!mAppStoreDir.exists())
-        {
-            mAppStoreDir.mkdir();
-        }
+        return FileStoreManager.getInstance(mAppContext);
     }
 
-    public File getAppStoreDirFile()
-    {
-        return mAppStoreDir;
-    }
 }
