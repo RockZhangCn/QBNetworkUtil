@@ -1,4 +1,4 @@
-package com.tencent.rocksnzhang.nettools;
+package com.tencent.rocksnzhang.detectitem;
 
 import android.util.Log;
 
@@ -9,12 +9,8 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.net.URL;
-import java.util.Enumeration;
 
 /**
  * Created by rock on 16-2-25.

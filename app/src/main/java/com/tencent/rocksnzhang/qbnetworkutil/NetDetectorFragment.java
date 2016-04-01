@@ -14,11 +14,11 @@ import android.widget.Toast;
 
 import com.og.tracerouteping.network.TraceRouteWithPing;
 import com.tencent.rocksnzhang.filemanager.FileStoreManager;
-import com.tencent.rocksnzhang.nettools.DNSResolver;
-import com.tencent.rocksnzhang.nettools.HandShakeExecutor;
-import com.tencent.rocksnzhang.nettools.NetConnectable;
-import com.tencent.rocksnzhang.nettools.PingExecutor;
-import com.tencent.rocksnzhang.nettools.SPDYPing;
+import com.tencent.rocksnzhang.detectitem.DNSResolver;
+import com.tencent.rocksnzhang.detectitem.HandShakeExecutor;
+import com.tencent.rocksnzhang.detectitem.NetConnectable;
+import com.tencent.rocksnzhang.detectitem.PingExecutor;
+import com.tencent.rocksnzhang.detectitem.SPDYPing;
 import com.tencent.rocksnzhang.utils.DebugToast;
 import com.tencent.rocksnzhang.utils.DetectResultListener;
 import com.tencent.rocksnzhang.utils.DetectTask;

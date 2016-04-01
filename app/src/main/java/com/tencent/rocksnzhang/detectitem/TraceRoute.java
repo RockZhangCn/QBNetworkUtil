@@ -1,4 +1,4 @@
-package com.tencent.rocksnzhang.nettools;
+package com.tencent.rocksnzhang.detectitem;
 
 import com.og.tracerouteping.network.TraceRouteWithPing;
 import com.tencent.rocksnzhang.utils.DetectResultListener;

@@ -24,7 +24,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
 
-import com.tencent.rocksnzhang.nettools.TraceRoute;
+import com.tencent.rocksnzhang.detectitem.TraceRoute;
 import com.tencent.rocksnzhang.utils.NetworkUtils;
 
 import java.io.BufferedReader;

@@ -1,4 +1,4 @@
-package com.tencent.rocksnzhang.nettools;
+package com.tencent.rocksnzhang.detectitem;
 
 import com.tencent.rocksnzhang.utils.DetectResultListener;
 import com.tencent.rocksnzhang.utils.DetectTask;

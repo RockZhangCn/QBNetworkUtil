@@ -118,15 +118,18 @@ public class MttLogOpenHelper
             String[] commands = queryStr.split("&");
             for (String command : commands)
             {
-                String[] cmdParams = command.split("=");
+                int pos = command.indexOf("=");
+                if(pos == -1)
+                    break;
 
-                String cmdName = cmdParams[0];
-                String cmdValue = cmdParams[1];
+                String cmdName = command.substring(0, pos);
+                String cmdValue = command.substring(pos +1);
+
                 Log.e("TAG", "command is " + cmdName + " = " + cmdValue);
 
                 if (cmdName != null && (cmdName.length() > 0) && cmdValue != null && (cmdValue.length() > 0))
                 {
-                    instructions.put(cmdParams[0], cmdParams[1]);
+                    instructions.put(cmdName, cmdValue);
                 }
             }
 
