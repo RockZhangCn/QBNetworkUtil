@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.og.tracerouteping.network.TraceRouteWithPing;
+import com.tencent.rocksnzhang.detectitem.TraceRoute;
 import com.tencent.rocksnzhang.filemanager.FileStoreManager;
 import com.tencent.rocksnzhang.detectitem.DNSResolver;
 import com.tencent.rocksnzhang.detectitem.HandShakeExecutor;
@@ -189,7 +190,8 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
                     Toast.makeText(mContext, "输入不合法，请重新输入", Toast.LENGTH_LONG).show();
                     return;
                 }
-                new TraceRouteWithPing(mStrDomainIP).executeTraceRoute();
+                TraceRoute traceRoute = new TraceRoute(this, mStrDomainIP);
+                traceRoute.startDetect();
                 break;
 
             case R.id.handshake:

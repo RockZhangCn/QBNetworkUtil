@@ -31,7 +31,7 @@ public class TraceRoute extends DetectTask
     @Override
     public void taskRun()
     {
-        TraceRouteWithPing traceRouteWithPing = new TraceRouteWithPing(mHost);
+        TraceRouteWithPing traceRouteWithPing = new TraceRouteWithPing(mHost, this);
         traceRouteWithPing.executeTraceRoute();
     }
 

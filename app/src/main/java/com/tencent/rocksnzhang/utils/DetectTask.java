@@ -72,7 +72,7 @@ public abstract class DetectTask
         return mIsSuccess;
     }
 
-    protected void finishedTask(boolean isSuccess, String resultData)
+    public void finishedTask(boolean isSuccess, String resultData)
     {
         Message msg = mHandler.obtainMessage();
         msg.what = isSuccess ? MSG_FINISH : MSG_ERROR;

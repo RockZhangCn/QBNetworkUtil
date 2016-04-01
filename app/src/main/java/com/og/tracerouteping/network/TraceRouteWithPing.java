@@ -25,6 +25,8 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.tencent.rocksnzhang.detectitem.TraceRoute;
+import com.tencent.rocksnzhang.utils.DebugToast;
+import com.tencent.rocksnzhang.utils.DetectTask;
 import com.tencent.rocksnzhang.utils.NetworkUtils;
 
 import java.io.BufferedReader;
@@ -60,10 +62,14 @@ public class TraceRouteWithPing
     private String ipToPing;
     private float elapsedTime;
     private Handler handlerTimeout;
+    private DetectTask mTask;
 
-    public TraceRouteWithPing(String host)
+    private StringBuilder mTraceRouteResult = new StringBuilder();
+
+    public TraceRouteWithPing(String host, DetectTask task)
     {
         urlToPing = host;
+        mTask = task;
     }
 
     /**
@@ -242,7 +248,7 @@ public class TraceRouteWithPing
     /**
      * The task that ping an ip, with increasing time to live (ttl) value
      */
-    private class ExecutePingAsyncTask extends AsyncTask<Void, Void, String>
+    private class ExecutePingAsyncTask extends AsyncTask<Void, String, String>
     {
 
         private boolean isCancelled;
@@ -251,6 +257,13 @@ public class TraceRouteWithPing
         public ExecutePingAsyncTask(int maxTtl)
         {
             this.maxTtl = maxTtl;
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... values)
+        {
+            mTask.finishedTask(true, values[0]);
         }
 
         /**
@@ -264,9 +277,11 @@ public class TraceRouteWithPing
                 try
                 {
                     String res = launchPing(urlToPing);
-
+                    mTraceRouteResult.append(res);
+                    publishProgress(mTraceRouteResult.toString());
                     TraceRouteContainer trace;
 
+                    //ping 失败。
                     if (res.contains(UNREACHABLE_PING) && !res.contains(EXCEED_PING))
                     {
                         // Create the TraceRouteContainer object when ping
@@ -285,6 +300,7 @@ public class TraceRouteWithPing
                     // Get the host name from ip (unix ping do not support
                     // hostname resolving)
                     InetAddress inetAddr = InetAddress.getByName(trace.getIp());
+                    Log.e("TAG", "getIP is " + trace.getIp());
                     String hostname = inetAddr.getHostName();
                     String canonicalHostname = inetAddr.getCanonicalHostName();
                     trace.setHostname(hostname);
@@ -347,6 +363,7 @@ public class TraceRouteWithPing
             // Store the wanted ip adress to compare with ping result
             if (ttl == 1)
             {
+                Log.e("TAG", "ipToPings is : " + ipToPing + "res is:" + res);
                 ipToPing = parseIpToPingFromPing(res);
             }
 
