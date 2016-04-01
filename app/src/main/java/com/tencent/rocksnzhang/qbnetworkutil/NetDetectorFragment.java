@@ -77,7 +77,8 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
             if(detectResults[i] != null)
             {
                 builder.append(detectResults[i]);
-                builder.append(SAPARATOR_LINE);
+                if(!detectResults[i].trim().equals(""))
+                    builder.append(SAPARATOR_LINE);
             }
         }
 
@@ -234,8 +235,8 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         }
 
         mDetectResultView.setText(task.detectResultData());
-        detectResults[mCurrentDetectType] += task.detectResultData() + SAPARATOR_LINE;
-        Toast.makeText(mContext, "Detect Task " + task.detectName() + " detect " + (task.isSuccess() ? "successed" : "failed"), Toast.LENGTH_SHORT).show();
+        detectResults[mCurrentDetectType] += task.detectResultData();
+        Toast.makeText(mContext,  task.detectName() + " detect " + (task.isSuccess() ? "successed" : "failed"), Toast.LENGTH_SHORT).show();
     }
 
 

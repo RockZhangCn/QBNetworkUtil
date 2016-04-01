@@ -179,28 +179,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         if (v.getId() == R.id.sharebtn_send)
         {
-            saveFragementDataToFile();
-            zipUploadData();
-            ActivityInfo activityInfo = ShareUtils.getWeChatOrMobileQQShareActivity(ShareUtils.SHARE_THROUGH_MOBILEQQ);
-            if (activityInfo == null)
-            {
-                activityInfo = ShareUtils.getWeChatOrMobileQQShareActivity(ShareUtils.SHARE_THROUGH_WECHAT);
-            }
+            new Thread(){
+                public void run()
+                {
+                    saveFragementDataToFile();
+                    zipUploadData();
+                    ActivityInfo activityInfo = ShareUtils.getWeChatOrMobileQQShareActivity(ShareUtils.SHARE_THROUGH_MOBILEQQ);
+                    if (activityInfo == null)
+                    {
+                        activityInfo = ShareUtils.getWeChatOrMobileQQShareActivity(ShareUtils.SHARE_THROUGH_WECHAT);
+                    }
 
-            if (activityInfo != null)
-            {
-                Intent addIntent = new Intent();
-                addIntent.setAction(Intent.ACTION_SEND);
-                addIntent.setType("text/plain");
+                    if (activityInfo != null)
+                    {
+                        Intent addIntent = new Intent();
+                        addIntent.setAction(Intent.ACTION_SEND);
+                        addIntent.setType("text/plain");
 
-                addIntent.setPackage(activityInfo.packageName);
+                        addIntent.setPackage(activityInfo.packageName);
 
-                addIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
-                        "file:///" + NetworkUtilApp.getInstance().getSingleFileStoreManager().getAppZipDataFile().getAbsolutePath()));
+                        addIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
+                                "file:///" + NetworkUtilApp.getInstance().getSingleFileStoreManager().getAppZipDataFile().getAbsolutePath()));
 
-                startActivity(addIntent);
-                return;
-            }
+                        startActivity(addIntent);
+                        return;
+                    }
+                }
+            }.start();
         }
     }
 

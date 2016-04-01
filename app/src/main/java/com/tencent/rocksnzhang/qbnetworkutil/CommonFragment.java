@@ -34,8 +34,7 @@ public abstract class CommonFragment extends Fragment implements IDataPersist
         File tmpSaveDir = NetworkUtilApp.getInstance().getSingleFileStoreManager().getAppTmpStoreDirFile();
         File saveFile = new File(tmpSaveDir,  saveFileName());
 		
-		DebugToast.showToast("TmpSaveDir is " + tmpSaveDir.getAbsolutePath() + " ave File is " + saveFile.getAbsolutePath());
-
+		//DebugToast.showToast("TmpSaveDir is " + tmpSaveDir.getAbsolutePath() + " ave File is " + saveFile.getAbsolutePath());
         try
         {
             FileUtils.writeStringToFile(saveFile, contentToSave(), "utf-8");
