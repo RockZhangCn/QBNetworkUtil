@@ -1,4 +1,4 @@
-package com.taosoftware.android.packetcapture;
+package jp.co.taosoftware.android.packetcapture;
 
 import android.os.ParcelFileDescriptor;
 

@@ -9,10 +9,11 @@ import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Parcelable;
 
-import com.taosoftware.android.packetcapture.PacketCaptureService;
+
 
 import java.util.List;
 
+import jp.co.taosoftware.android.packetcapture.PacketCaptureService;
 
 
 public class Notify extends Activity{
@@ -89,7 +90,7 @@ public class Notify extends Activity{
 		    
 		    //检查是否存在此Action，其实就是判断是否是QB-Blink  启动QB
 		    if (resolveInfo.size() > 0) {
-				startActivity(in);
+				//startActivity(in);
 		    }
         }
         catch ( Exception e ) {

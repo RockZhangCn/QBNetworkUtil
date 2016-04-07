@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TableLayout;
 
 import com.tencent.rocksnzhang.utils.IProgressChangedListener;
 import com.tencent.rocksnzhang.utils.ShareUtils;
@@ -50,14 +49,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initData()
     {
-        CommonFragment basicInfoFragment = new BasicInfoFragment();
+        CommonFragment basicInfoFragment = new NetInfoFragment();
         mFragmentList.add(basicInfoFragment);
 
         CommonFragment netDetectorFragment = new NetDetectorFragment();
         netDetectorFragment.setProgressChangedListener(this);
         mFragmentList.add(netDetectorFragment);
 
-        CommonFragment otherToolFragment = new OtherToolFragment();
+        CommonFragment otherToolFragment = new NetCaptureFragment();
         mFragmentList.add(otherToolFragment);
 
         pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager())

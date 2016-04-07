@@ -16,7 +16,7 @@ import com.tencent.rocksnzhang.utils.MttLogOpenHelper;
 /**
  * Created by rock on 16-2-19.
  */
-public class OtherToolFragment extends CommonFragment
+public class NetCaptureFragment extends CommonFragment
 {
     private TextView mTokenUrl;
     private Button mTokenShare;
@@ -24,7 +24,7 @@ public class OtherToolFragment extends CommonFragment
     private Button mStartCapture;
     private Button mStopCapture;
 
-    public OtherToolFragment()
+    public NetCaptureFragment()
     {
 
     }
@@ -66,6 +66,8 @@ public class OtherToolFragment extends CommonFragment
                 notificationIntentStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 notificationIntentStart.setAction("com.tencent.mttpacketcapture.startCaputre");
                 startActivity(notificationIntentStart);
+                mStartCapture.setEnabled(false);
+                mStopCapture.setEnabled(true);
             }
         });
 
@@ -79,9 +81,14 @@ public class OtherToolFragment extends CommonFragment
                 notificationIntentStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 notificationIntentStart.setAction("com.tencent.mttpacketcapture.finishCapture");
                 startActivity(notificationIntentStart);
+                mStartCapture.setEnabled(true);
+                mStopCapture.setEnabled(false);
 
             }
         });
+
+        mStartCapture.setEnabled(true);
+        mStopCapture.setEnabled(false);
 
         return view;
     }

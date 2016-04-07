@@ -120,8 +120,8 @@ public class Utility {
 	
 	
 	public static String genPacketPath(){
-		final String logDirInSdcard = "QQBrowser/.logTmp";
-		final String logFileName = "qqpacketcapture.pcap";
+		final String logDirInSdcard = "TrippleF/.tmp";
+		final String logFileName = "x5packetcapture.pcap";
 		final int maxSize = 100 * 1024; // 100KB
 		// 1. make directories if not exist.
 		File dir = new File(Environment.getExternalStorageDirectory() + "/" + logDirInSdcard);

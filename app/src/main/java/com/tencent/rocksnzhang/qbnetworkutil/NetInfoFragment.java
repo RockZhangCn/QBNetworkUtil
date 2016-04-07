@@ -21,14 +21,14 @@ import com.tencent.rocksnzhang.qbnetworkutil.netinfo.SystemBasicInfo;
 /**
  * Created by rock on 16-2-19.
  */
-public class BasicInfoFragment extends CommonFragment
+public class NetInfoFragment extends CommonFragment
 {
     public static final String GATEWAY_IP_URL = "http://1212.ip138.com/ic.asp";
 
     private NetBasicInfo mNetBasicInfo;
     private TextView mBasicInfoTextView;
     private WebView mGatewayInfoTextView;
-    public BasicInfoFragment()
+    public NetInfoFragment()
     {
     }
 

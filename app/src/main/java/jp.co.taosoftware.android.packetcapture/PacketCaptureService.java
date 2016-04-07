@@ -1,7 +1,6 @@
-package com.taosoftware.android.packetcapture;
+package jp.co.taosoftware.android.packetcapture;
 
 import android.app.ActivityManager;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.VpnService;
