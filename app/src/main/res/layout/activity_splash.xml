@@ -21,28 +21,17 @@
             android:textSize="22sp"
             android:id="@+id/appnamestring"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="150dp"
+            android:layout_marginBottom="170dp"
             android:text="@string/splash_text"/>
-
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--android:id="@+id/tv_bxbxbai"-->
-            <!--android:gravity="center"-->
-            <!--android:layout_below="@id/appnamestring"-->
-           <!-- -->
-            <!--android:layout_marginBottom="300dp"-->
-            <!--android:textSize="16sp"-->
-            <!--android:text="rock.zhang.cn@gmail.com"/>-->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/holo_red_dark"
         android:id="@+id/tv_bxbxb2ai"
         android:layout_alignParentBottom="true"
         android:gravity="center"
+        android:textSize="18sp"
         android:layout_marginBottom="100dp"
         android:text="rock.zhang.cn@gmail.com"/>
 

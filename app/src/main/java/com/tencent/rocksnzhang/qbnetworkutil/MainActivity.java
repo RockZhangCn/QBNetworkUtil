@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TabLayout tabLayout;
     private List<CommonFragment> mFragmentList = new ArrayList<CommonFragment>();
-    private int mCurrentFragmentIndex = -1;
+    private int mCurrentFragmentIndex = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -80,15 +80,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             TabLayout.Tab tab1 = tabLayout.newTab();
             tab1.setText("基本信息");
-            tabLayout.addTab(tab1);
+            tabLayout.addTab(tab1, false);
 
             TabLayout.Tab tab2 = tabLayout.newTab();
             tab2.setText("网络诊断");
-            tabLayout.addTab(tab2);
+            tabLayout.addTab(tab2, true);
 
             TabLayout.Tab tab3 = tabLayout.newTab();
-            tab3.setText("其他工具");
-            tabLayout.addTab(tab3);
+            tab3.setText("抓包工具");
+            tabLayout.addTab(tab3, false);
 
 
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -114,8 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
 
-            //default the first is selected.
-            mCurrentFragmentIndex = 0;
+            //default the center fragment is selected.
+            viewPager.setCurrentItem(mCurrentFragmentIndex);
         }
         else
         {
