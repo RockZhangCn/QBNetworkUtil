@@ -2,6 +2,7 @@ package com.tencent.rocksnzhang.qbnetworkutil;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.tencent.rocksnzhang.utils.IProgressChangedListener;
 import com.tencent.rocksnzhang.utils.ShareUtils;
@@ -129,8 +131,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView()
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        ImageView refresh = (ImageView) toolbar.findViewById(R.id.sharebtn_send);
-        refresh.setOnClickListener(this);
+        ImageView wxShareBtn = (ImageView) toolbar.findViewById(R.id.wxbtn_send);
+        wxShareBtn.setOnClickListener(this);
+
+        ImageView qqShareBtn = (ImageView) toolbar.findViewById(R.id.qqbtn_send);
+        qqShareBtn.setOnClickListener(this);
+
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -187,7 +193,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v)
     {
-        if (v.getId() == R.id.sharebtn_send)
+        if (v.getId() == R.id.wxbtn_send)
+        {
+            new Thread(){
+                public void run()
+                {
+                    saveFragementDataToFile();
+                    zipUploadData();
+                    ActivityInfo activityInfo = ShareUtils.getWeChatOrMobileQQShareActivity(ShareUtils.SHARE_THROUGH_WECHAT);
+                    if (activityInfo == null)
+                    {
+                        Toast.makeText(MainActivity.this, "没有找到QQ。", Toast.LENGTH_SHORT).show();
+                    }
+
+                    if (activityInfo != null)
+                    {
+                        Intent addIntent = new Intent();
+                        addIntent.setAction(Intent.ACTION_SEND);
+                        addIntent.setType("text/plain");
+
+                        addIntent.setPackage(activityInfo.packageName);
+
+                        addIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
+                                "file:///" + NetworkUtilApp.getInstance().getSingleFileStoreManager().getAppZipDataFile().getAbsolutePath()));
+
+                        startActivity(addIntent);
+                        return;
+                    }
+                }
+            }.start();
+        }
+
+
+
+        if (v.getId() == R.id.qqbtn_send)
         {
             new Thread(){
                 public void run()
@@ -197,7 +236,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ActivityInfo activityInfo = ShareUtils.getWeChatOrMobileQQShareActivity(ShareUtils.SHARE_THROUGH_MOBILEQQ);
                     if (activityInfo == null)
                     {
-                        activityInfo = ShareUtils.getWeChatOrMobileQQShareActivity(ShareUtils.SHARE_THROUGH_WECHAT);
+                        Toast.makeText(MainActivity.this, "没有找到微信。", Toast.LENGTH_SHORT).show();
+                        return;
                     }
 
                     if (activityInfo != null)
