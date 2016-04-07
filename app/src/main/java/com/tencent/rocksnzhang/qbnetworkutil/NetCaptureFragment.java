@@ -46,6 +46,14 @@ public class NetCaptureFragment extends CommonFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.othertools, container, false);
+
+        initView(view);
+
+        return view;
+    }
+
+    private void initView(View view)
+    {
         mTokenUrl = (TextView) view.findViewById(R.id.token_url);
         mTokenShare = (Button) view.findViewById(R.id.token_share);
         mTokenShare.setOnClickListener(new View.OnClickListener()
@@ -89,8 +97,6 @@ public class NetCaptureFragment extends CommonFragment
 
         mStartCapture.setEnabled(true);
         mStopCapture.setEnabled(false);
-
-        return view;
     }
 
     @Override
