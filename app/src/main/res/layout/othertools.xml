@@ -42,4 +42,22 @@
             />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/startcapture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="开始抓包"
+        android:textSize="14sp"
+        />
+
+    <Button
+        android:id="@+id/stopcapture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="停止抓包"
+        android:textSize="14sp"
+        />
 </LinearLayout>

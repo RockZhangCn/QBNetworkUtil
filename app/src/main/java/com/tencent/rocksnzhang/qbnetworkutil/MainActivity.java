@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TableLayout;
 
 import com.tencent.rocksnzhang.utils.IProgressChangedListener;
 import com.tencent.rocksnzhang.utils.ShareUtils;
@@ -78,9 +79,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (true)
         {
-            tabLayout.addTab(tabLayout.newTab().setText("基本信息"));
-            tabLayout.addTab(tabLayout.newTab().setText("网络诊断"));
-            tabLayout.addTab(tabLayout.newTab().setText("其他工具"));
+            TabLayout.Tab tab1 = tabLayout.newTab();
+            tab1.setText("基本信息");
+            tabLayout.addTab(tab1);
+
+            TabLayout.Tab tab2 = tabLayout.newTab();
+            tab2.setText("网络诊断");
+            tabLayout.addTab(tab2);
+
+            TabLayout.Tab tab3 = tabLayout.newTab();
+            tab3.setText("其他工具");
+            tabLayout.addTab(tab3);
+
+
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
             viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -113,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
             tabLayout.setupWithViewPager(viewPager);
         }
+
     }
 
     private void initView()
@@ -159,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings)
         {
-            //Toast.makeText(MainActivity.this, "This is menu response", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, SettingActivity.class);
             startActivity(intent);
             return true;

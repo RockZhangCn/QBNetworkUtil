@@ -111,7 +111,7 @@ public class NetDetectorFragment extends CommonFragment implements View.OnClickL
         portsAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, portslist);
         portsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(portsAdapter);
-        spinner.setSelection(1);
+        spinner.setSelection(2);
 
         netavailablebtn = (Button) view.findViewById(R.id.netavaiable);
         netavailablebtn.setOnClickListener(this);

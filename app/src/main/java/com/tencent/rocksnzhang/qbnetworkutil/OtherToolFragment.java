@@ -1,5 +1,6 @@
 package com.tencent.rocksnzhang.qbnetworkutil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.tencent.mttpacketcapture.Notify;
 import com.tencent.rocksnzhang.filemanager.FileStoreManager;
 import com.tencent.rocksnzhang.utils.MttLogOpenHelper;
 
@@ -18,6 +20,9 @@ public class OtherToolFragment extends CommonFragment
 {
     private TextView mTokenUrl;
     private Button mTokenShare;
+
+    private Button mStartCapture;
+    private Button mStopCapture;
 
     public OtherToolFragment()
     {
@@ -51,6 +56,33 @@ public class OtherToolFragment extends CommonFragment
                 MttLogOpenHelper.testMethod();
             }
         });
+
+        mStartCapture = (Button)view.findViewById(R.id.startcapture);
+        mStartCapture.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+                Intent notificationIntentStart = new Intent(getActivity(), Notify.class);
+                notificationIntentStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                notificationIntentStart.setAction("com.tencent.mttpacketcapture.startCaputre");
+                startActivity(notificationIntentStart);
+            }
+        });
+
+
+        mStopCapture = (Button)view.findViewById(R.id.stopcapture);
+        mStopCapture.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+                Intent notificationIntentStart = new Intent(getActivity(), Notify.class);
+                notificationIntentStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                notificationIntentStart.setAction("com.tencent.mttpacketcapture.finishCapture");
+                startActivity(notificationIntentStart);
+
+            }
+        });
+
         return view;
     }
 
