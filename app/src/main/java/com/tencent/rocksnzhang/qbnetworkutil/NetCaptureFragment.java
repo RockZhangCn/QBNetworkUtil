@@ -75,6 +75,7 @@ public class NetCaptureFragment extends CommonFragment
             public void onClick(View view)
             {
                 Intent notificationIntentStart = new Intent(getActivity(), Notify.class);
+                //notificationIntentStart.putExtra("storepath", "QQBrowser/.logTmp");
                 notificationIntentStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 notificationIntentStart.setAction("com.tencent.mttpacketcapture.startCaputre");
                 startActivity(notificationIntentStart);

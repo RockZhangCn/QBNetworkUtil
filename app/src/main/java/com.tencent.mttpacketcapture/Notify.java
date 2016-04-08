@@ -39,11 +39,9 @@ public class Notify extends Activity{
 	private void sdkR14StartCapture(Intent intent)
 	{
 		mStorePath = (intent.getStringExtra("storepath") != null) ? intent.getStringExtra("storepath") :Utility.genPacketPath();
-		DebugToast.showToast("mStorePath is " + mStorePath);
+		DebugToast.showToast("start capture mStorePath is " + mStorePath);
 		Intent vpnintent = VpnService.prepare(this);
 		if (vpnintent != null) {
-
-
 			try{
 				startActivityForResult(vpnintent, 0);
 			}
@@ -73,7 +71,7 @@ public class Notify extends Activity{
 		else if(action.equalsIgnoreCase(mActionFinish))
 		{
 			Intent mItent = new Intent(this, PacketCaptureService.class);
-			mItent.putExtra("qguid", "rocksnzhang");
+			mItent.putExtra("stopcapture", "true");
 			startService(mItent);
 			finish();
 		}

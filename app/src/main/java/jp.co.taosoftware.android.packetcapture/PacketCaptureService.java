@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
+import android.util.Log;
 import android.widget.Toast;
 import java.io.File;
 import java.lang.reflect.Field;
@@ -21,8 +22,6 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
     private Thread mThread;
 
     private ParcelFileDescriptor mInterface;
-    private String mQUA = "";
-    private String mQGUID = "";
     
     public native void startCapture( int fd );
     public native void stopCapture();
@@ -50,10 +49,9 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
     public int onStartCommand(Intent intent, int flags, int startId) {
     	
     	mPcapFile = intent.getStringExtra("PcapPath");
-        mQUA = intent.getStringExtra("qua");
-        mQGUID = intent.getStringExtra("qguid");
+        String strStop = intent.getStringExtra("stopcapture");
         
-        if( mQGUID!= null && mQGUID.equals("rocksnzhang"))
+        if( strStop!= null && strStop.equals("true"))
         {
         	stopCapture();
         	stopSelf();
@@ -87,17 +85,6 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
     @Override
     public void onRevoke()
     {
-//    	try
-//		{
-//        	//clear the notification bar.
-//			final NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//			nm.cancel(MainActivity.NOTIFY_ID);
-//		}
-//		catch (SecurityException e)
-//		{
-//			e.printStackTrace();
-//		}
-    	
     	stopCapture();
     	stopSelf();
     }
@@ -112,7 +99,9 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
     
     @Override
     public synchronized void run() {
+
         try {
+
         	Builder builder = new Builder();
         	//builder.setMtu(1500);
         	builder.addAddress("10.8.0.1", 32);
@@ -143,6 +132,8 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
         	{
         		file.delete();
         	}
+
+            Log.e("TAG","Create store file " + file.getAbsolutePath());
         	        	
         	setPCapFileName(mPcapFile);
             startCapture( mInterface.getFd() );

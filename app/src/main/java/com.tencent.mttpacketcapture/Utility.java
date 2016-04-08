@@ -135,11 +135,11 @@ public class Utility {
 		String pcapPath = dir.getAbsolutePath() + "/" + logFileName;
 		// 2. make sure the target file is a normal file and is not too large,
 		// if so, delete it first.
-		DebugToast.showToast("Save url is " + pcapPath);
+		DebugToast.showToast("create file " + pcapPath);
 		File targetFile = new File(pcapPath);
 		if (targetFile.exists() && (!targetFile.isFile() ))
 		{
-		//TODO
+			//TODO
 			//targetFile.delete();
 		}
 		return pcapPath;
