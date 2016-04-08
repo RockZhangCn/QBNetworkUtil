@@ -7,11 +7,9 @@ import com.tencent.rocksnzhang.utils.DetectTask;
 
 import java.io.IOException;
 
-import io.netty.bootstrap.ChannelFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.internal.framed.Spdy3;
 
 
 /**

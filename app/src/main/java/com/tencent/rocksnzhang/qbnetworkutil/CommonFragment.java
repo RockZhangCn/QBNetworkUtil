@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.tencent.rocksnzhang.utils.DebugToast;
 import com.tencent.rocksnzhang.utils.IDataPersist;
 import com.tencent.rocksnzhang.utils.IProgressChangedListener;
 

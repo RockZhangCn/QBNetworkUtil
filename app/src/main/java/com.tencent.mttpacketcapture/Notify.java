@@ -3,16 +3,9 @@ package com.tencent.mttpacketcapture;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Parcelable;
-
-
-import com.tencent.rocksnzhang.utils.DebugToast;
-
-import java.util.List;
 
 import jp.co.taosoftware.android.packetcapture.PacketCaptureService;
 
@@ -30,8 +23,7 @@ public class Notify extends Activity{
 	private Intent getServiceIntent(){
 		if( mItent == null ){
 			mItent = new Intent(this, PacketCaptureService.class);
-			mItent.putExtra("PcapPath", Utility.genPacketPath());
-			//Need to change.
+			mItent.putExtra("PcapPath", mStorePath);
 		}
 		return mItent;
 	}
@@ -39,7 +31,6 @@ public class Notify extends Activity{
 	private void sdkR14StartCapture(Intent intent)
 	{
 		mStorePath = (intent.getStringExtra("storepath") != null) ? intent.getStringExtra("storepath") :Utility.genPacketPath();
-		DebugToast.showToast("start capture mStorePath is " + mStorePath);
 		Intent vpnintent = VpnService.prepare(this);
 		if (vpnintent != null) {
 			try{
@@ -82,27 +73,7 @@ public class Notify extends Activity{
         if (result == RESULT_OK) {
             startService(getServiceIntent());
         }
-		  
-		// 通知调用方（QB）开始抓包了
-        try {
-			Intent in = new Intent();
-			in.setAction("com.tencent.QQBrowser.action.NETPACKETCAPTURE");
-			in.putExtra("result", "NOTIFY_CLIENT_CAPTURE_START");
-			
-			final PackageManager packageManager = getPackageManager();
-		    List<ResolveInfo> resolveInfo =  
-		            packageManager.queryIntentActivities(in,  
-		                    PackageManager.MATCH_DEFAULT_ONLY);
-		    
-		    //检查是否存在此Action，其实就是判断是否是QB-Blink  启动QB
-		    if (resolveInfo.size() > 0) {
-				//startActivity(in);
-		    }
-        }
-        catch ( Exception e ) {
-        	e.printStackTrace();
-        }
-        
+
         finish();
 	}
 	

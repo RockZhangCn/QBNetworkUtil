@@ -10,10 +10,12 @@ import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.tencent.mttpacketcapture.Notify;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Iterator;
-import com.tencent.mttpacketcapture.Notify;
 
 public class PacketCaptureService extends VpnService implements Handler.Callback, Runnable {
     private static final String TAG = "mttVpnService";
@@ -133,7 +135,7 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
         		file.delete();
         	}
 
-            Log.e("TAG","Create store file " + file.getAbsolutePath());
+            Log.e("TAG", "Create store file " + file.getAbsolutePath());
         	        	
         	setPCapFileName(mPcapFile);
             startCapture( mInterface.getFd() );

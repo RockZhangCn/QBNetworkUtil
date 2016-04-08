@@ -25,7 +25,6 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.tencent.rocksnzhang.detectitem.TraceRoute;
-import com.tencent.rocksnzhang.utils.DebugToast;
 import com.tencent.rocksnzhang.utils.DetectTask;
 import com.tencent.rocksnzhang.utils.NetworkUtils;
 

@@ -2,7 +2,6 @@ package com.tencent.rocksnzhang.qbnetworkutil;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Environment;
 
 import com.tencent.rocksnzhang.filemanager.FileStoreManager;
 import com.tencent.rocksnzhang.utils.NetworkUtils;
