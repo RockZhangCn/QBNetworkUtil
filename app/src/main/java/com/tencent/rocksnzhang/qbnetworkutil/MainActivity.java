@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         qqShareBtn.setOnClickListener(this);
 
         setSupportActionBar(toolbar);
-        
+
         titleProgressBar = (ProgressBar) findViewById(R.id.progress_spinner);
         hideProgress();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
