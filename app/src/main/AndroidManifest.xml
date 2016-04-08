@@ -65,6 +65,16 @@
             </intent-filter>
         </service>
 
+        <receiver android:name=".NetCaptureFragment$CaptureReceiver">
+            <intent-filter>
+                <action android:name="com.tencent.x5.tcpdump.start"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="com.tencent.x5.tcpdump.stop"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

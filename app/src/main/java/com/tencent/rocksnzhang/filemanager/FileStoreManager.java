@@ -51,7 +51,7 @@ public class FileStoreManager
         //创建保存的ZIP File。
         mAppZipDataFile = new File(mAppRootStoreDir, APPZIPDATAFILE);
         //清空临时存储的目录。
-        clearExistStoreFile();
+        //clearExistStoreFile();
         //创建临时存储的目录。
         createAppTmpStoreDirFile();
     }

@@ -1,7 +1,18 @@
 package com.tencent.rocksnzhang.detectitem;
 
+import android.util.Log;
+
 import com.tencent.rocksnzhang.utils.DetectResultListener;
 import com.tencent.rocksnzhang.utils.DetectTask;
+
+import java.io.IOException;
+
+import io.netty.bootstrap.ChannelFactory;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.internal.framed.Spdy3;
+
 
 /**
  * Created by rock on 16-2-26.
@@ -28,6 +39,18 @@ public class SPDYPing extends DetectTask
     @Override
     public void taskRun()
     {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url("https://raw.github.com/square/okhttp/master/README.md").build();
+
+        try{
+            Response response = client.newCall(request).execute();
+            Log.e("TAG", response.body().string());
+        }catch (IOException e)
+        {
+
+        }
+
+
 
     }
 

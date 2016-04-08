@@ -25,8 +25,8 @@ public class DNSResolver extends DetectTask
     @Override
     public void taskRun()
     {
-        //nativeDnsResolve();
-        HttpDnsResolve();
+        nativeDnsResolve();
+        //HttpDnsResolve();
     }
 
     private void nativeDnsResolve()

@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
-            android:text="192.243.115.223"/>
+            android:text="m.baidu.com"/>
 
         <Spinner
             android:id="@+id/portspinner"

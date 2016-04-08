@@ -55,9 +55,6 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
         
         if( mQGUID!= null && mQGUID.equals("rocksnzhang"))
         {
-        	
-        	Toast.makeText(PacketCaptureService.this, "一切都结束了。", Toast.LENGTH_LONG).show();
-
         	stopCapture();
         	stopSelf();
         	return 0;

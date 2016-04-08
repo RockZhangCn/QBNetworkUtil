@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 
 
+import com.tencent.rocksnzhang.utils.DebugToast;
 
 import java.util.List;
 
@@ -23,19 +24,26 @@ public class Notify extends Activity{
 	
 	private Intent mItent = null;
 	public static Parcelable sVpnConfig = null;
+
+	private String mStorePath = Utility.genPacketPath() ;
 	
 	private Intent getServiceIntent(){
 		if( mItent == null ){
 			mItent = new Intent(this, PacketCaptureService.class);
 			mItent.putExtra("PcapPath", Utility.genPacketPath());
+			//Need to change.
 		}
 		return mItent;
 	}
 	
 	private void sdkR14StartCapture(Intent intent)
 	{
+		mStorePath = (intent.getStringExtra("storepath") != null) ? intent.getStringExtra("storepath") :Utility.genPacketPath();
+		DebugToast.showToast("mStorePath is " + mStorePath);
 		Intent vpnintent = VpnService.prepare(this);
 		if (vpnintent != null) {
+
+
 			try{
 				startActivityForResult(vpnintent, 0);
 			}

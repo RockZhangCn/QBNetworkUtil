@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import android.os.Environment;
 import android.util.Log;
 
+import com.tencent.rocksnzhang.utils.DebugToast;
+
 public class Utility {
 	public final static String TAG="Utility";
 
@@ -133,10 +135,12 @@ public class Utility {
 		String pcapPath = dir.getAbsolutePath() + "/" + logFileName;
 		// 2. make sure the target file is a normal file and is not too large,
 		// if so, delete it first.
+		DebugToast.showToast("Save url is " + pcapPath);
 		File targetFile = new File(pcapPath);
-		if (targetFile.exists() && (!targetFile.isFile() || targetFile.length() > maxSize))
+		if (targetFile.exists() && (!targetFile.isFile() ))
 		{
-			targetFile.delete();
+		//TODO
+			//targetFile.delete();
 		}
 		return pcapPath;
 	}
