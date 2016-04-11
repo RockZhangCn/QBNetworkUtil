@@ -102,7 +102,7 @@ public class NetCaptureFragment extends CommonFragment
             if(intent.getAction().equals("com.tencent.x5.tcpdump.start"))
             {
                 String path = intent.getStringExtra("storepath");
-                DebugToast.showToast("Received start broadcast");
+                DebugToast.showToast("开始网络抓包");
                 Intent notificationIntentStart = new Intent(context, Notify.class);
                 notificationIntentStart.putExtra("storepath", path);
                 notificationIntentStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -112,7 +112,7 @@ public class NetCaptureFragment extends CommonFragment
 
             if(intent.getAction().equals("com.tencent.x5.tcpdump.stop"))
             {
-                DebugToast.showToast("Received stop broadcast");
+                DebugToast.showToast("停止网络抓包");
                 Intent notificationIntentStart = new Intent(context, Notify.class);
                 notificationIntentStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 notificationIntentStart.setAction("com.tencent.mttpacketcapture.finishCapture");
