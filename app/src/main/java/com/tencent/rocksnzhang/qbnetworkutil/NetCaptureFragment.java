@@ -15,6 +15,7 @@ import com.tencent.mttpacketcapture.Notify;
 import com.tencent.rocksnzhang.filemanager.FileStoreManager;
 import com.tencent.rocksnzhang.utils.DebugToast;
 import com.tencent.rocksnzhang.utils.MttLogOpenHelper;
+import com.tencent.rocksnzhang.utils.SystemUtils;
 
 /**
  * Created by rock on 16-2-19.
@@ -64,7 +65,9 @@ public class NetCaptureFragment extends CommonFragment
             @Override
             public void onClick(View view)
             {
-                MttLogOpenHelper.testMethod();
+                String safeToken = MttLogOpenHelper.generateSafeToken();
+                SystemUtils.SetClipString(safeToken);
+                mTokenUrl.setText(safeToken);
             }
         });
 

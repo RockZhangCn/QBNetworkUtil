@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -42,11 +43,14 @@ public class NetInfoFragment extends CommonFragment
         mBasicInfoTextView.setText(mNetBasicInfo.getApnInfo()
                 + "\r\nMac address : \r\n"
                 + "wlan0 :\t" + mNetBasicInfo.getMacAddress("wlan0")
-                + "\np2p0 :\t " + mNetBasicInfo.getMacAddress("p2p0")
-                + "\n\n" + SystemBasicInfo.getBuildInfo()
-                + "\n");
+                + "\r\np2p0  :\t " + mNetBasicInfo.getMacAddress("p2p0")
+                + "\r\n\r\n" + SystemBasicInfo.getBuildInfo()
+                + "\r\n");
 
         mGatewayInfoTextView = (WebView) view.findViewById(R.id.gateway_tv);
+
+        //WebSettings settings = mGatewayInfoTextView.getSettings();
+        //settings.setTextZoom(90);
 
         mGatewayInfoTextView.setWebViewClient(new WebViewClient()
         {

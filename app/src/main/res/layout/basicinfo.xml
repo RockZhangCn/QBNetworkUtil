@@ -10,15 +10,17 @@
 
     <WebView
         android:id="@+id/gateway_tv"
-        android:layout_margin="8dp"
+        android:layout_margin="0dp"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
         android:textSize="12sp"
+        android:background="#ffffffff"
         />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#ffffffff"
         android:scrollbars="none">
     <TextView
         android:id="@+id/basicinfo_tv"
@@ -26,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#ff000000"
+        android:background="#ffffffff"
         android:textSize="16sp"
 
         />

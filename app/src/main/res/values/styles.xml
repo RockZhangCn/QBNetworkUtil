@@ -50,6 +50,6 @@
     </style>
 
     <style name="tablayouttextsize" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 </resources>

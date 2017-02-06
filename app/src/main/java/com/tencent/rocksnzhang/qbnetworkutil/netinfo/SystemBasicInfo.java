@@ -11,19 +11,19 @@ public class SystemBasicInfo
     {
         StringBuilder builder = new StringBuilder();
         builder.append("Product:" + Build.PRODUCT);
-        builder.append("\nTags:" + Build.TAGS);
-        builder.append("\nCPU_ABI:" + Build.CPU_ABI);
-        builder.append("\nVERSION_CODES.BASE:" + Build.VERSION_CODES.BASE);
-        builder.append("\nMODEL:" + Build.MODEL);
-        builder.append("\nSDK:" + Build.VERSION.SDK);
-        builder.append("\nVERSION.RELEASE:" + Build.VERSION.RELEASE);
-        builder.append("\nDEVICE:" + Build.DEVICE);
-        builder.append("\nBrand:" + Build.BRAND);
-        builder.append("\nBoard:" + Build.BOARD);
-        builder.append("\nFINGERPRINT:" + Build.FINGERPRINT);
-        builder.append("\nID:" + Build.ID);
-        builder.append("\nManufacturer:" + Build.MANUFACTURER);
-        builder.append("\nUser:" + Build.USER);
+        builder.append("\r\nTags:" + Build.TAGS);
+        builder.append("\r\nCPU_ABI:" + Build.CPU_ABI);
+        builder.append("\r\nVERSION_CODES.BASE:" + Build.VERSION_CODES.BASE);
+        builder.append("\r\nMODEL:" + Build.MODEL);
+        builder.append("\r\nSDK:" + Build.VERSION.SDK);
+        builder.append("\r\nVERSION.RELEASE:" + Build.VERSION.RELEASE);
+        builder.append("\r\nDEVICE:" + Build.DEVICE);
+        builder.append("\r\nBrand:" + Build.BRAND);
+        builder.append("\r\nBoard:" + Build.BOARD);
+        builder.append("\r\nFINGERPRINT:" + Build.FINGERPRINT);
+        builder.append("\r\nID:" + Build.ID);
+        builder.append("\r\nManufacturer:" + Build.MANUFACTURER);
+        builder.append("\r\nUser:" + Build.USER);
 
         return builder.toString();
     }

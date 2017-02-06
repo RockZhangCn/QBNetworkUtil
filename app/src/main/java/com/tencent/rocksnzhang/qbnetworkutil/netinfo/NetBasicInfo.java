@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
+import java.lang.reflect.Method;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 
@@ -205,6 +206,28 @@ public class NetBasicInfo
         return strMacAddr;
     }
 
+    public String getDnsServerInfo()
+    {
+        Class systemProperties = null;
+        Method getMethod = null;
+        String sCurrentDnsServer = null;
+        try
+        {
+            systemProperties = Class.forName("android.os.SystemProperties");
+            getMethod = systemProperties.getDeclaredMethod("get", String.class);
+            getMethod.setAccessible(true);
+
+            sCurrentDnsServer = (String)getMethod.invoke(null, "net.dns1");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            sCurrentDnsServer = "get_dns_failed";
+        }
+
+        return sCurrentDnsServer;
+    }
+
     public String getApnInfo()
     {
         TelephonyManager tel = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
@@ -236,10 +259,10 @@ public class NetBasicInfo
 
         StringBuilder mOutputString = new StringBuilder();
 
-        mOutputString.append("MNC Code Info:\n");
-        mOutputString.append("IMSI=" + opCode + "<" + operatorName + ">\n");
-
-        mOutputString.append("\nMobile Network Info:\n");
+        mOutputString.append("MNC Code Info:\r\n");
+        mOutputString.append("IMSI=" + opCode + "(" + operatorName + ")\r\n");
+        mOutputString.append("DNS Server：" + getDnsServerInfo() + "\r\n");
+        mOutputString.append("\r\nMobile Network Info:\r\n");
 
         //通过ExtraInfo 获取移动网络运营商信息
         if (mobInfo.getExtraInfo() != null)
@@ -261,52 +284,52 @@ public class NetBasicInfo
             }
             else
             {
-                mOutputString.append(operatorName);
+                mOutputString.append(operatorName+"\r\n");
             }
 
             if (mobInfo.getExtraInfo().contains("wap"))
             {
-                mOutputString.append("--Wap");
+                mOutputString.append("--Wap\r\n");
             }
             else if (mobInfo.getExtraInfo().contains("net"))
             {
-                mOutputString.append("--Net");
+                mOutputString.append("--Net\r\n");
             }
             else
             {
-                mOutputString.append("--Unkown");
+                mOutputString.append("--Unkown\r\n");
             }
 
 
-            mOutputString.append("\n网络类型：");
+            mOutputString.append("\r\n网络类型：\r\n");
 
             int netType = getNetworkClass(mobInfo.getSubtype());
             switch (netType)
             {
                 case NETWORK_CLASS_2_G:
-                    mOutputString.append("2G\n");
+                    mOutputString.append("2G\r\n");
                     break;
                 case NETWORK_CLASS_3_G:
-                    mOutputString.append("3G\n");
+                    mOutputString.append("3G\r\n");
                     break;
                 case NETWORK_CLASS_4_G:
-                    mOutputString.append("4G\n");
+                    mOutputString.append("4G\r\n");
                     break;
                 default:
-                    mOutputString.append("未知\n");
+                    mOutputString.append("未知\r\n");
                     break;
             }
         }
 
 
-        mOutputString.append("ExtraInfo=" + mobInfo.getExtraInfo() + "\n");
-        mOutputString.append("SubtypeName=" + mobInfo.getSubtypeName() + " SubType = " + mobInfo.getSubtype() + "\n");
-        mOutputString.append("TypeName=" + mobInfo.getTypeName() + " Type = " + mobInfo.getType() + "\n");
+        mOutputString.append("ExtraInfo=" + mobInfo.getExtraInfo() + "\r\n");
+        mOutputString.append("SubtypeName=" + mobInfo.getSubtypeName() + " SubType = " + mobInfo.getSubtype() + "\r\n");
+        mOutputString.append("TypeName=" + mobInfo.getTypeName() + " Type = " + mobInfo.getType() + "\r\n");
 
-        mOutputString.append("\nWIFI Network Info:\n");
-        mOutputString.append("ExtraInfo=" + wifiInfo.getExtraInfo() + "\n");
-        mOutputString.append("SubtypeName=" + wifiInfo.getSubtypeName() + " SubType = " + wifiInfo.getSubtype() + "\n");
-        mOutputString.append("TypeName=" + wifiInfo.getTypeName() + " Type = " + wifiInfo.getType() + "\n");
+        mOutputString.append("\r\nWIFI Network Info:\r\n");
+        mOutputString.append("ExtraInfo=" + wifiInfo.getExtraInfo() + "\r\n");
+        mOutputString.append("SubtypeName=" + wifiInfo.getSubtypeName() + " SubType = " + wifiInfo.getSubtype() + "\r\n");
+        mOutputString.append("TypeName=" + wifiInfo.getTypeName() + " Type = " + wifiInfo.getType() + "\r\n");
 
         return mOutputString.toString();
     }

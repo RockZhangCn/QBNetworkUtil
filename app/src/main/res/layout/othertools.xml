@@ -37,7 +37,7 @@
             android:id="@+id/token_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="发送URL"
+            android:text="复制加密Token"
             android:textSize="14sp"
             />
 
