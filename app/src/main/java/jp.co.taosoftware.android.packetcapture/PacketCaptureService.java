@@ -135,7 +135,6 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
         		file.delete();
         	}
 
-            Log.e("TAG", "Create store file " + file.getAbsolutePath());
         	        	
         	setPCapFileName(mPcapFile);
             startCapture( mInterface.getFd() );

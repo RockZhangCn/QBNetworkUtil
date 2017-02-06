@@ -38,7 +38,6 @@ public class PingExecutor extends DetectTask
         Runtime rt = Runtime.getRuntime();
         boolean FoundMatch = false;
         String pingCommand = "/system/bin/ping -c 3 " + mHost;
-        Log.e("TAG", "ping thread is running");
         try
         {
             Process pro = rt.exec(pingCommand);
@@ -54,7 +53,6 @@ public class PingExecutor extends DetectTask
             }
 
             finishedTask(true, sb.toString());
-
         }
         catch (IOException e)
         {

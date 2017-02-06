@@ -18,7 +18,6 @@ public class DebugToast
         }
         else
         {
-            Log.e("TAG", " NetworkUtilApp.getInstance().getApplicationContext() is " + NetworkUtilApp.getInstance().getApplicationContext());
             Toast.makeText(NetworkUtilApp.getInstance().getApplicationContext(), info, Toast.LENGTH_SHORT).show();
         }
 

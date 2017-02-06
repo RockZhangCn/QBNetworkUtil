@@ -299,7 +299,6 @@ public class TraceRouteWithPing
                     // Get the host name from ip (unix ping do not support
                     // hostname resolving)
                     InetAddress inetAddr = InetAddress.getByName(trace.getIp());
-                    Log.e("TAG", "getIP is " + trace.getIp());
                     String hostname = inetAddr.getHostName();
                     String canonicalHostname = inetAddr.getCanonicalHostName();
                     trace.setHostname(hostname);
@@ -331,7 +330,6 @@ public class TraceRouteWithPing
             Process p;
             String command = String.format(PING_CMD_FORMMAT, ttl);
 
-            Log.e("TAG", "The command is : " + command + url);
             long startTime = System.nanoTime();
             // timeout task
             new TimeOutAsyncTask(this, ttl).execute();
@@ -362,11 +360,9 @@ public class TraceRouteWithPing
             // Store the wanted ip adress to compare with ping result
             if (ttl == 1)
             {
-                Log.e("TAG", "ipToPings is : " + ipToPing + "res is:" + res);
                 ipToPing = parseIpToPingFromPing(res);
             }
 
-            Log.e("TAG", "launch ping result is : " + res);
             return res;
         }
 
@@ -384,7 +380,6 @@ public class TraceRouteWithPing
                     {
                         if ("No connectivity".equals(result))
                         {
-                            Log.e("TAG", "No connection");
                         }
                         else
                         {

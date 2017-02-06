@@ -64,7 +64,6 @@ public class DNSResolver extends DetectTask
 
                 in = connection.getInputStream();
                 htmlCode = IOUtils.toString(in, "UTF-8");
-                Log.e("ROCK", serverUrl + mHost  + " ==> " + htmlCode);
             } catch (Exception e)
             {
                 finishedTask(false, e.toString());

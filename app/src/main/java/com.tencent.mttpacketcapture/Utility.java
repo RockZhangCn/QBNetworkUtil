@@ -24,7 +24,6 @@ public class Utility {
 			outStream.close();			
 		}
 		catch(Exception ex){
-			Log.e(TAG, ex.toString());
 		}
 	}
 	
@@ -39,7 +38,6 @@ public class Utility {
 			proc.waitFor();
 		}
 		catch(Exception ex){
-			Log.e(TAG, ex.toString());
 		}
 	}
 	
@@ -62,7 +60,6 @@ public class Utility {
 			}
 			return 0;
 		} catch (Exception ex) {
-			Log.e(TAG, ex.toString());
 			return 0;
 		}
 	}

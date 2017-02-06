@@ -42,7 +42,6 @@ public class SPDYPing extends DetectTask
 
         try{
             Response response = client.newCall(request).execute();
-            Log.e("TAG", response.body().string());
         }catch (IOException e)
         {
 
