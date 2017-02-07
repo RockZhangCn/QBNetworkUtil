@@ -15,8 +15,8 @@ import android.widget.ImageView;
  */
 public class SplashActivity extends Activity
 {
-    private static final int ANIMATION_DURATION = 1500;
-    private static final float SCALE_END = 1.23F;
+    private static final int ANIMATION_DURATION = 2000;
+    private static final float SCALE_END = 1.18F;
 
     ImageView mSplashImage;
 
