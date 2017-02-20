@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
+import com.tencent.rocksnzhang.utils.DebugToast;
+
 import java.lang.reflect.Method;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -232,7 +234,16 @@ public class NetBasicInfo
     {
         TelephonyManager tel = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
         String simOperator = tel.getSimOperator();
-        String opCode = simOperator.substring(3, 5);
+        //int state = tel.getSimState();
+        String opCode = "-1";
+        if(simOperator == null || simOperator.length() < 5 )
+        {
+            opCode = "-1";
+        }
+        else
+        {
+            opCode = simOperator.substring(3, 5);
+        }
 
         String operatorName = "unkown";
         if (opCode.equals("01"))
@@ -249,7 +260,7 @@ public class NetBasicInfo
         }
         else
         {
-            operatorName = "未知";
+            operatorName = "SIM Card not found";
         }
 
         ConnectivityManager mag = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -58,18 +58,18 @@ public class NetCaptureFragment extends CommonFragment
 
     private void initView(View view)
     {
-        mTokenUrl = (TextView) view.findViewById(R.id.token_url);
-        mTokenShare = (Button) view.findViewById(R.id.token_share);
-        mTokenShare.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                String safeToken = MttLogOpenHelper.generateSafeToken();
-                SystemUtils.SetClipString(safeToken);
-                mTokenUrl.setText(safeToken);
-            }
-        });
+//        mTokenUrl = (TextView) view.findViewById(R.id.token_url);
+//        mTokenShare = (Button) view.findViewById(R.id.token_share);
+//        mTokenShare.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View view)
+//            {
+//                String safeToken = MttLogOpenHelper.generateSafeToken();
+//                SystemUtils.SetClipString(safeToken);
+//                mTokenUrl.setText(safeToken);
+//            }
+//        });
 
         mStartCapture = (Button)view.findViewById(R.id.startcapture);
         mStartCapture.setOnClickListener(new View.OnClickListener(){
