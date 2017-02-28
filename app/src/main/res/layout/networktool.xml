@@ -24,6 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
+            android:singleLine="true"
+            android:scrollHorizontally="true"
             android:text="m.baidu.com"/>
 
         <Spinner
