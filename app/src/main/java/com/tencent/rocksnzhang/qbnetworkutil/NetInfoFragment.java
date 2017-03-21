@@ -48,6 +48,7 @@ public class NetInfoFragment extends CommonFragment
                 + "\r\n");
 
         mGatewayInfoTextView = (WebView) view.findViewById(R.id.gateway_tv);
+        mGatewayInfoTextView.getSettings().setDefaultTextEncodingName("UTF-8");
 
         //WebSettings settings = mGatewayInfoTextView.getSettings();
         //settings.setTextZoom(90);
@@ -68,7 +69,7 @@ public class NetInfoFragment extends CommonFragment
             {
                 mError = true;
                 //super.onReceivedError(view, request, error);
-                mGatewayInfoTextView.loadData("<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8");
+                mGatewayInfoTextView.loadDataWithBaseURL(GATEWAY_IP_URL, "<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8", null);
             }
 
             @Override
@@ -76,7 +77,7 @@ public class NetInfoFragment extends CommonFragment
             {
                 //super.onReceivedHttpError(view, request, errorResponse);
                 mError = true;
-                mGatewayInfoTextView.loadData("<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8");
+                mGatewayInfoTextView.loadDataWithBaseURL(GATEWAY_IP_URL, "<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8", null);
             }
 
             @Override
@@ -84,7 +85,7 @@ public class NetInfoFragment extends CommonFragment
             {
                 if (mError)
                 {
-                    mGatewayInfoTextView.loadData("<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8");
+                    mGatewayInfoTextView.loadDataWithBaseURL(GATEWAY_IP_URL, "<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8", null);
                 }
 
                 mError = false;

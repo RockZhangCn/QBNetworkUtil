@@ -40,6 +40,19 @@ android {
     }
 }
 
+task clearApk(type: Delete){
+    delete '../release/' + APP_NAME + '_' + VERSION_NAME + '.apk'
+}
+
+task makeApk(type: Copy){
+    from('build/outputs/apk/')
+    into('../release/')
+    include('app-debug.apk')
+    rename('app-debug.apk', APP_NAME + '_' + VERSION_NAME + '.apk')
+}
+
+makeApk.dependsOn(clearApk, build)
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'

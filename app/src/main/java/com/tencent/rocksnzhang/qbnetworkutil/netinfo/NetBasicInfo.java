@@ -210,12 +210,15 @@ public class NetBasicInfo
 
     public String getDnsServerInfo()
     {
-        Class systemProperties = null;
+        Class<?> systemProperties = null;
         Method getMethod = null;
         String sCurrentDnsServer = null;
         try
         {
             systemProperties = Class.forName("android.os.SystemProperties");
+            if(systemProperties == null)
+                return "get_dns_failed";
+
             getMethod = systemProperties.getDeclaredMethod("get", String.class);
             getMethod.setAccessible(true);
 
