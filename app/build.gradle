@@ -2,6 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
 
+
+    lintOptions {
+        abortOnError false
+    }
+
+
     packagingOptions
     {
         exclude 'META-INF/DEPENDENCIES'
@@ -26,11 +32,13 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "0.8"
+        versionName "2.2.1"
     }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
