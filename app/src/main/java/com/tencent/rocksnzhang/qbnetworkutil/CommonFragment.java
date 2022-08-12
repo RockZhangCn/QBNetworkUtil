@@ -15,30 +15,24 @@ import java.io.IOException;
 /**
  * Created by rock on 16-2-26.
  */
-public abstract class CommonFragment extends Fragment implements IDataPersist
-{
+public abstract class CommonFragment extends Fragment implements IDataPersist {
     protected Context mContext;
     protected IProgressChangedListener mIProgressChangedListener;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
     }
 
     @Override
-    public final File saveToFile()
-    {
+    public final File saveToFile() {
         File tmpSaveDir = NetworkUtilApp.getInstance().getSingleFileStoreManager().getAppTmpStoreDirFile();
-        File saveFile = new File(tmpSaveDir,  saveFileName());
-		
-        try
-        {
+        File saveFile = new File(tmpSaveDir, saveFileName());
+
+        try {
             FileUtils.writeStringToFile(saveFile, contentToSave(), "utf-8");
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -46,8 +40,7 @@ public abstract class CommonFragment extends Fragment implements IDataPersist
     }
 
 
-    public void setProgressChangedListener(IProgressChangedListener iProgressChangedListener)
-    {
+    public void setProgressChangedListener(IProgressChangedListener iProgressChangedListener) {
         mIProgressChangedListener = iProgressChangedListener;
     }
 

@@ -10,31 +10,25 @@ import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
 
-public class NetworkUtils
-{
+public class NetworkUtils {
     private static Context mContext;
     StringBuilder textView = new StringBuilder();
 
-    private NetworkUtils()
-    {
+    private NetworkUtils() {
     }
 
-    public static void setApplicationContext(Context c)
-    {
+    public static void setApplicationContext(Context c) {
         mContext = c;
     }
 
-    public static boolean isNetworkConnected()
-    {
+    public static boolean isNetworkConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public static boolean postStrContent(String content)
-    {
-        try
-        {
+    public static boolean postStrContent(String content) {
+        try {
             // 建立连接
             URL url = new URL("http://szsdren.com/upload/dataup.php");
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
@@ -58,33 +52,24 @@ public class NetworkUtils
 
             // 获得响应状态
             int responseCode = httpConn.getResponseCode();
-            if (HttpURLConnection.HTTP_OK == responseCode)
-            {
+            if (HttpURLConnection.HTTP_OK == responseCode) {
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             return false;
         }
     }
 
-    private void getLocalHost()
-    {
-        try
-        {
+    private void getLocalHost() {
+        try {
             InetAddress iAdd = InetAddress.getLocalHost();
             String line = "";
             String hostName = iAdd.getHostName();
-            if (hostName != null)
-            {
+            if (hostName != null) {
                 InetAddress[] adds = InetAddress.getAllByName(hostName);
-                for (int i = 0; i < adds.length; i++)
-                {
+                for (int i = 0; i < adds.length; i++) {
                     iAdd = adds[i];
                     line = "HostName=" + iAdd.getHostName() + "\n";
                     textView.append(line);
@@ -96,21 +81,17 @@ public class NetworkUtils
                     textView.append("\n");
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
 
         }
     }
 
-    boolean uploadFile(String uploadUrl)
-    {
+    boolean uploadFile(String uploadUrl) {
         String end = "\r\n";
         String twoHyphens = "--";
         String boundary = "******";
-        try
-        {
+        try {
             URL url = new URL("http://szsdren.com/upload/upload.php");
             HttpURLConnection httpURLConnection = (HttpURLConnection) url
                     .openConnection();
@@ -141,8 +122,7 @@ public class NetworkUtils
             byte[] buffer = new byte[8192]; // 8k
             int count = 0;
             // 读取文件
-            while ((count = fis.read(buffer)) != -1)
-            {
+            while ((count = fis.read(buffer)) != -1) {
                 dos.write(buffer, 0, count);
             }
 
@@ -153,18 +133,13 @@ public class NetworkUtils
             dos.close();
 
             int responseCode = httpURLConnection.getResponseCode();
-            if (HttpURLConnection.HTTP_OK == responseCode)
-            {
+            if (HttpURLConnection.HTTP_OK == responseCode) {
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

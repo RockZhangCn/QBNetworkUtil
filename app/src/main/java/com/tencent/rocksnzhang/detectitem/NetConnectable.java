@@ -10,34 +10,28 @@ import java.net.URL;
 /**
  * Created by rock on 16-2-26.
  */
-public class NetConnectable extends DetectTask
-{
+public class NetConnectable extends DetectTask {
     private static final String HTTP_BAIDU = "https://m.baidu.com";
 
-    public NetConnectable(DetectResultListener l, String host)
-    {
+    public NetConnectable(DetectResultListener l, String host) {
         super(l, host);
     }
 
     @Override
-    public int detectTaskID()
-    {
+    public int detectTaskID() {
         return TASK_CONNECT;
     }
 
     @Override
-    public String detectName()
-    {
+    public String detectName() {
         return "Net Connectivity Detector";
     }
 
     @Override
-    public void taskRun()
-    {
+    public void taskRun() {
         String htmlCode = "";
         HttpURLConnection connection = null;
-        try
-        {
+        try {
             InputStream in;
             URL url = new URL(HTTP_BAIDU);
             connection = (HttpURLConnection) url
@@ -50,16 +44,13 @@ public class NetConnectable extends DetectTask
             in.read(buffer);
             htmlCode = new String(buffer);
             connection.disconnect();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             finishedTask(false, e.toString());
             connection.disconnect();
             return;
         }
 
-        if (htmlCode == null || htmlCode.equals(""))
-        {
+        if (htmlCode == null || htmlCode.equals("")) {
             finishedTask(false, "网络不通，获取了空的内容。");
             return;
         }

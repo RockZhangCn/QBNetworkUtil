@@ -27,8 +27,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="FitSystemWindows">
         <item name="android:fitsSystemWindows">true</item>
@@ -39,13 +40,14 @@
         <item name="tabIndicatorHeight">4dp</item>
     </style>
 
-    <style name="SplashTheme" >
+    <style name="SplashTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <!-- don't display the title bar. -->
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsTranslucent">true</item>  <!-- no black screen when start app or switch activities -->
+        <item name="android:windowIsTranslucent">true
+        </item>  <!-- no black screen when start app or switch activities -->
         <item name="android:windowContentOverlay">@null</item>
     </style>
 

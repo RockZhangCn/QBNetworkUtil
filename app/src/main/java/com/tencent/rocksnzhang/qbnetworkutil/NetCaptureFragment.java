@@ -14,41 +14,34 @@ import android.widget.TextView;
 import com.tencent.mttpacketcapture.Notify;
 import com.tencent.rocksnzhang.filemanager.FileStoreManager;
 import com.tencent.rocksnzhang.utils.DebugToast;
-import com.tencent.rocksnzhang.utils.MttLogOpenHelper;
-import com.tencent.rocksnzhang.utils.SystemUtils;
 
 /**
  * Created by rock on 16-2-19.
  */
-public class NetCaptureFragment extends CommonFragment
-{
+public class NetCaptureFragment extends CommonFragment {
     private TextView mTokenUrl;
     private Button mTokenShare;
 
     private Button mStartCapture;
     private Button mStopCapture;
 
-    public NetCaptureFragment()
-    {
+    public NetCaptureFragment() {
 
     }
 
     @Override
-    protected String saveFileName()
-    {
+    protected String saveFileName() {
         return FileStoreManager.OTHER_INFO_FILENAME;
     }
 
     @Override
-    protected String contentToSave()
-    {
+    protected String contentToSave() {
         return "Temp content to save";
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.othertools, container, false);
 
         initView(view);
@@ -56,8 +49,7 @@ public class NetCaptureFragment extends CommonFragment
         return view;
     }
 
-    private void initView(View view)
-    {
+    private void initView(View view) {
 //        mTokenUrl = (TextView) view.findViewById(R.id.token_url);
 //        mTokenShare = (Button) view.findViewById(R.id.token_share);
 //        mTokenShare.setOnClickListener(new View.OnClickListener()
@@ -71,11 +63,10 @@ public class NetCaptureFragment extends CommonFragment
 //            }
 //        });
 
-        mStartCapture = (Button)view.findViewById(R.id.startcapture);
-        mStartCapture.setOnClickListener(new View.OnClickListener(){
+        mStartCapture = (Button) view.findViewById(R.id.startcapture);
+        mStartCapture.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 Intent notificationIntentStart = new Intent(getActivity(), Notify.class);
                 //notificationIntentStart.putExtra("storepath", "/sdcard/QQBrowser/.logTmp/x5debugcapture.pcap");
                 notificationIntentStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -87,11 +78,10 @@ public class NetCaptureFragment extends CommonFragment
         });
 
 
-        mStopCapture = (Button)view.findViewById(R.id.stopcapture);
-        mStopCapture.setOnClickListener(new View.OnClickListener(){
+        mStopCapture = (Button) view.findViewById(R.id.stopcapture);
+        mStopCapture.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 Intent notificationIntentStart = new Intent(getActivity(), Notify.class);
                 notificationIntentStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 notificationIntentStart.setAction("com.tencent.mttpacketcapture.finishCapture");
@@ -107,19 +97,15 @@ public class NetCaptureFragment extends CommonFragment
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
 
-    public static class CaptureReceiver extends BroadcastReceiver
-    {
+    public static class CaptureReceiver extends BroadcastReceiver {
         @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            if(intent.getAction().equals("com.tencent.x5.tcpdump.start"))
-            {
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("com.tencent.x5.tcpdump.start")) {
                 String path = intent.getStringExtra("storepath");
                 DebugToast.showToast("开始网络抓包");
                 Intent notificationIntentStart = new Intent(context, Notify.class);
@@ -129,8 +115,7 @@ public class NetCaptureFragment extends CommonFragment
                 context.startActivity(notificationIntentStart);
             }
 
-            if(intent.getAction().equals("com.tencent.x5.tcpdump.stop"))
-            {
+            if (intent.getAction().equals("com.tencent.x5.tcpdump.stop")) {
                 DebugToast.showToast("停止网络抓包");
                 Intent notificationIntentStart = new Intent(context, Notify.class);
                 notificationIntentStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

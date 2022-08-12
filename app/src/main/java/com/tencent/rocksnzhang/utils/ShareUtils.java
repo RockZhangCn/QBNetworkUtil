@@ -9,8 +9,7 @@ import com.tencent.rocksnzhang.qbnetworkutil.NetworkUtilApp;
 
 import java.util.List;
 
-public class ShareUtils
-{
+public class ShareUtils {
     public static final int SHARE_THROUGH_MOBILEQQ = 1001;
     public static final int SHARE_THROUGH_WECHAT = 1002;
 
@@ -24,26 +23,21 @@ public class ShareUtils
     */
 
     @Nullable
-    public static ActivityInfo getWeChatOrMobileQQShareActivity(int appName)
-    {
+    public static ActivityInfo getWeChatOrMobileQQShareActivity(int appName) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
 
         List<ResolveInfo> resolveInfos = NetworkUtilApp.getInstance().getPackageManager().queryIntentActivities(shareIntent, 0);
-        if (!resolveInfos.isEmpty())
-        {
-            for (ResolveInfo info : resolveInfos)
-            {
+        if (!resolveInfos.isEmpty()) {
+            for (ResolveInfo info : resolveInfos) {
                 ActivityInfo activityInfo = info.activityInfo;
 
-                if ((SHARE_THROUGH_MOBILEQQ == appName) && activityInfo.name.equals("com.tencent.mobileqq.activity.JumpActivity"))
-                {
+                if ((SHARE_THROUGH_MOBILEQQ == appName) && activityInfo.name.equals("com.tencent.mobileqq.activity.JumpActivity")) {
                     return activityInfo;
                 }
 
-                if ((SHARE_THROUGH_WECHAT == appName) && activityInfo.name.equals("com.tencent.mm.ui.tools.ShareImgUI"))
-                {
+                if ((SHARE_THROUGH_WECHAT == appName) && activityInfo.name.equals("com.tencent.mm.ui.tools.ShareImgUI")) {
                     return activityInfo;
                 }
             }

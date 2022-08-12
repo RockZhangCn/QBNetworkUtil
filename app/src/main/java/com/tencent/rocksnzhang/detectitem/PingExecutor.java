@@ -1,7 +1,5 @@
 package com.tencent.rocksnzhang.detectitem;
 
-import android.util.Log;
-
 import com.tencent.rocksnzhang.utils.DetectResultListener;
 import com.tencent.rocksnzhang.utils.DetectTask;
 
@@ -12,49 +10,40 @@ import java.io.InputStreamReader;
 /**
  * Created by rock on 16-2-26.
  */
-public class PingExecutor extends DetectTask
-{
-    public PingExecutor(DetectResultListener l, String host)
-    {
+public class PingExecutor extends DetectTask {
+    public PingExecutor(DetectResultListener l, String host) {
         super(l, host);
     }
 
     @Override
-    public int detectTaskID()
-    {
+    public int detectTaskID() {
         return TASK_ICMPPING;
     }
 
     @Override
-    public String detectName()
-    {
+    public String detectName() {
         return "Ping Detector";
     }
 
     @Override
-    public void taskRun()
-    {
+    public void taskRun() {
         BufferedReader in = null;
         Runtime rt = Runtime.getRuntime();
         String pingCommand = "/system/bin/ping -c 3 " + mHost;
-        try
-        {
+        try {
             Process pro = rt.exec(pingCommand);
             in = new BufferedReader(new InputStreamReader(pro.getInputStream()));
 
             StringBuilder sb = new StringBuilder();
             String line = in.readLine();
 
-            while (line != null)
-            {
+            while (line != null) {
                 sb.append(line + "\n");
                 line = in.readLine();
             }
 
             finishedTask(true, sb.toString());
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             finishedTask(false, e.toString());
         }
     }

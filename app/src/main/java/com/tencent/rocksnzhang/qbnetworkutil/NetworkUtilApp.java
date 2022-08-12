@@ -11,20 +11,17 @@ import java.io.File;
 /**
  * Created by rock on 16-2-25.
  */
-public class NetworkUtilApp extends Application
-{
+public class NetworkUtilApp extends Application {
     private static Context mAppContext;
     private static NetworkUtilApp m_singleInstance;
     private File mAppStoreDir;
 
-    public static NetworkUtilApp getInstance()
-    {
+    public static NetworkUtilApp getInstance() {
         return m_singleInstance;
     }
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
         m_singleInstance = this;
         mAppContext = m_singleInstance;
@@ -32,13 +29,11 @@ public class NetworkUtilApp extends Application
         getSingleFileStoreManager();
     }
 
-    public Context getApplicationContext()
-    {
+    public Context getApplicationContext() {
         return mAppContext;
     }
 
-    public FileStoreManager getSingleFileStoreManager()
-    {
+    public FileStoreManager getSingleFileStoreManager() {
         return FileStoreManager.getInstance(mAppContext);
     }
 

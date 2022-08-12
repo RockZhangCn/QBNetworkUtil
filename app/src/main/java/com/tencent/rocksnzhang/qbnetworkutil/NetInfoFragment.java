@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -21,21 +20,19 @@ import com.tencent.rocksnzhang.qbnetworkutil.netinfo.SystemBasicInfo;
 /**
  * Created by rock on 16-2-19.
  */
-public class NetInfoFragment extends CommonFragment
-{
-    public static final String GATEWAY_IP_URL = "https://2022.ip138.com/";
+public class NetInfoFragment extends CommonFragment {
+    public static final String GATEWAY_IP_URL = "http://2022.ip138.com/";
 
     private NetBasicInfo mNetBasicInfo;
     private TextView mBasicInfoTextView;
     private WebView mGatewayInfoTextView;
-    public NetInfoFragment()
-    {
+
+    public NetInfoFragment() {
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.basicinfo, container, false);
         mBasicInfoTextView = (TextView) view.findViewById(R.id.basicinfo_tv);
         mBasicInfoTextView.setTextIsSelectable(true);
@@ -53,38 +50,32 @@ public class NetInfoFragment extends CommonFragment
         //WebSettings settings = mGatewayInfoTextView.getSettings();
         //settings.setTextZoom(90);
 
-        mGatewayInfoTextView.setWebViewClient(new WebViewClient()
-        {
+        mGatewayInfoTextView.setWebViewClient(new WebViewClient() {
             private boolean mError;
 
             @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon)
-            {
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 mError = false;
             }
 
             @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
-            {
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 mError = true;
                 //super.onReceivedError(view, request, error);
                 mGatewayInfoTextView.loadDataWithBaseURL(GATEWAY_IP_URL, "<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8", null);
             }
 
             @Override
-            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse)
-            {
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
                 //super.onReceivedHttpError(view, request, errorResponse);
                 mError = true;
                 mGatewayInfoTextView.loadDataWithBaseURL(GATEWAY_IP_URL, "<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8", null);
             }
 
             @Override
-            public void onPageFinished(WebView view, String url)
-            {
-                if (mError)
-                {
+            public void onPageFinished(WebView view, String url) {
+                if (mError) {
                     mGatewayInfoTextView.loadDataWithBaseURL(GATEWAY_IP_URL, "<h1> 获取网关地址失败，请退出重新进入</h1>", "text/html", "utf-8", null);
                 }
 
@@ -99,22 +90,19 @@ public class NetInfoFragment extends CommonFragment
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNetBasicInfo = NetBasicInfo.getInstance(mContext);
     }
 
 
     @Override
-    protected String contentToSave()
-    {
+    protected String contentToSave() {
         return mBasicInfoTextView.getText().toString();
     }
 
     @Override
-    protected String saveFileName()
-    {
+    protected String saveFileName() {
         return FileStoreManager.BASIC_INFO_FILENAME;
     }
 }

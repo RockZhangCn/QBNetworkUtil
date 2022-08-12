@@ -5,7 +5,6 @@ import java.io.File;
 /**
  * Created by rock on 16-2-26.
  */
-public interface IDataPersist
-{
+public interface IDataPersist {
     File saveToFile();
 }

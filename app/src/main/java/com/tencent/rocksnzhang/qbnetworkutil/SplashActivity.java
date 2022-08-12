@@ -13,16 +13,14 @@ import android.widget.ImageView;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class SplashActivity extends Activity
-{
+public class SplashActivity extends Activity {
     private static final int ANIMATION_DURATION = 2000;
     private static final float SCALE_END = 1.18F;
 
     ImageView mSplashImage;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         mSplashImage = (ImageView) findViewById(R.id.iv_entry);
@@ -30,13 +28,11 @@ public class SplashActivity extends Activity
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState)
-    {
+    protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
     }
 
-    private void animateImage()
-    {
+    private void animateImage() {
         ObjectAnimator animatorX = ObjectAnimator.ofFloat(mSplashImage, "scaleX", 1f, SCALE_END);
         ObjectAnimator animatorY = ObjectAnimator.ofFloat(mSplashImage, "scaleY", 1f, SCALE_END);
 
@@ -44,11 +40,9 @@ public class SplashActivity extends Activity
         set.setDuration(ANIMATION_DURATION).play(animatorX).with(animatorY);
         set.start();
 
-        set.addListener(new AnimatorListenerAdapter()
-        {
+        set.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationEnd(Animator animation)
-            {
+            public void onAnimationEnd(Animator animation) {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

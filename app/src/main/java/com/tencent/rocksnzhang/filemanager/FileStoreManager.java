@@ -11,37 +11,19 @@ import java.io.IOException;
 /**
  * Created by rock on 16-3-18.
  */
-public class FileStoreManager
-{
-    private static final String APPZIPDATAFILE = "compressData.zip" ;
-
+public class FileStoreManager {
     public static final String BASIC_INFO_FILENAME = "basic_info.txt";
     public static final String NET_DETECT_FILENAME = "net_detect.txt";
     public static final String OTHER_INFO_FILENAME = "other_info.txt";
-
+    private static final String APPZIPDATAFILE = "compressData.zip";
+    public static volatile FileStoreManager s_singleInstance = null;
     private final File mAppZipDataFile;
     private Context mContext;
-    public static volatile  FileStoreManager s_singleInstance = null;
     private File mAppRootStoreDir = null;
     private File mAppTmpStoreDirFile = null;
     private boolean mIsSdcardExist = false;
 
-    public static FileStoreManager getInstance(Context context)
-    {
-        if(s_singleInstance == null)
-        {
-            synchronized (FileStoreManager.class)
-            {
-                if(s_singleInstance == null)
-                    s_singleInstance = new FileStoreManager(context);
-            }
-        }
-
-        return s_singleInstance;
-    }
-
-    private FileStoreManager(Context context)
-    {
+    private FileStoreManager(Context context) {
         mContext = context;
         mIsSdcardExist = Environment.getExternalStorageState()
                 .equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
@@ -56,67 +38,62 @@ public class FileStoreManager
         createAppTmpStoreDirFile();
     }
 
+    public static FileStoreManager getInstance(Context context) {
+        if (s_singleInstance == null) {
+            synchronized (FileStoreManager.class) {
+                if (s_singleInstance == null)
+                    s_singleInstance = new FileStoreManager(context);
+            }
+        }
 
-    public File getAppStoreDirFile()
-    {
+        return s_singleInstance;
+    }
+
+    public File getAppStoreDirFile() {
         return mAppRootStoreDir;
     }
 
-    public File getAppZipDataFile()
-    {
+    public File getAppZipDataFile() {
         return mAppZipDataFile;
     }
 
-    public File getAppTmpStoreDirFile()
-    {
+    public File getAppTmpStoreDirFile() {
         return mAppTmpStoreDirFile;
     }
 
-    private void createAppRootStoreDirFile()
-    {
-        if (mIsSdcardExist)
-        {
+    private void createAppRootStoreDirFile() {
+        if (mIsSdcardExist) {
             mAppRootStoreDir = Environment.getExternalStorageDirectory();//获取跟目录
-        }
-        else
-        {
+        } else {
             mAppRootStoreDir = mContext.getExternalCacheDir();
         }
 
         mAppRootStoreDir = new File(mAppRootStoreDir.getPath() + "/TrippleF");
 
-        if (!mAppRootStoreDir.exists())
-        {
+        if (!mAppRootStoreDir.exists()) {
             mAppRootStoreDir.mkdir();
         }
     }
 
-    private void clearExistStoreFile()
-    {
+    private void clearExistStoreFile() {
         mAppTmpStoreDirFile = new File(mAppRootStoreDir.getPath() + "/.tmp");
-        if(mAppTmpStoreDirFile.exists())
-        {
+        if (mAppTmpStoreDirFile.exists()) {
             FileUtils.deleteQuietly(mAppTmpStoreDirFile);
         }
 
-        try
-        {
+        try {
             FileUtils.forceDelete(mAppZipDataFile);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void createAppTmpStoreDirFile()
-    {
-        if(mAppRootStoreDir == null)
+    private void createAppTmpStoreDirFile() {
+        if (mAppRootStoreDir == null)
             createAppRootStoreDirFile();
 
         mAppTmpStoreDirFile = new File(mAppRootStoreDir.getPath() + "/.tmp");
-        if (!mAppTmpStoreDirFile.exists())
-        {
+        if (!mAppTmpStoreDirFile.exists()) {
             mAppTmpStoreDirFile.mkdir();
         }
     }

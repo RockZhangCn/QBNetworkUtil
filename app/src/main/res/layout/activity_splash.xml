@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                style="@style/FitSystemWindows"
-                android:layout_height="match_parent"
-                tools:context="com.tencent.rocksnzhang.qbnetworkutil.SplashActivity">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:contentDescription="entry"
-            android:src="@drawable/flyhigher"
-            android:id="@+id/iv_entry"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/FitSystemWindows"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tencent.rocksnzhang.qbnetworkutil.SplashActivity">
+
+    <ImageView
+        android:id="@+id/iv_entry"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="entry"
+        android:scaleType="fitXY"
+        android:src="@drawable/flyhigher" />
 
     <!--
         <TextView
@@ -27,14 +28,14 @@
             -->
 
     <TextView
+        android:id="@+id/tv_bxbxb2ai"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_dark"
-        android:id="@+id/tv_bxbxb2ai"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:textSize="24sp"
         android:layout_marginBottom="100dp"
-        android:text="rock.zhang.cn@gmail.com"/>
+        android:gravity="center"
+        android:text="rock.zhang.cn@gmail.com"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="24sp" />
 
-    </RelativeLayout>
+</RelativeLayout>

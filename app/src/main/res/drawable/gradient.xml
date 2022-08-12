@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-<item>
-    <bitmap android:src="@drawable/ic_menu_share"/>
-</item>
-<item>
-    <shape xmlns:android="http://schemas.android.com/apk/res/android">
-        <gradient android:angle="90" android:startColor="#88d2d2e0" android:centerColor="#88c0c0dd" android:endColor="#88cfcfd1"/>
-    </shape>
-</item>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap android:src="@drawable/ic_menu_share" />
+    </item>
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <gradient
+                android:angle="90"
+                android:centerColor="#88c0c0dd"
+                android:endColor="#88cfcfd1"
+                android:startColor="#88d2d2e0" />
+        </shape>
+    </item>
 </layer-list>

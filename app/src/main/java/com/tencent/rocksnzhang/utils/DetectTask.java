@@ -6,8 +6,7 @@ import android.os.Message;
 /**
  * Created by rock on 16-2-25.
  */
-public abstract class DetectTask
-{
+public abstract class DetectTask {
     public static final int TASK_CONNECT = 0;
     public static final int TASK_ICMPPING = 1;
     public static final int TASK_DNSPARSE = 2;
@@ -20,13 +19,10 @@ public abstract class DetectTask
     protected boolean mIsSuccess = false;
     protected String mDetectResultData;
     protected DetectResultListener mDetectListener;
-    protected Handler mHandler = new Handler()
-    {
+    protected Handler mHandler = new Handler() {
         @Override
-        public void handleMessage(Message msg)
-        {
-            switch (msg.what)
-            {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
                 case MSG_FINISH:
                     mDetectResultData = (String) msg.obj;
                     mIsSuccess = true;
@@ -44,14 +40,12 @@ public abstract class DetectTask
         }
     };
 
-    public DetectTask(DetectResultListener listener, String host)
-    {
+    public DetectTask(DetectResultListener listener, String host) {
         mDetectListener = listener;
         mHost = host;
     }
 
-    public final void startDetect()
-    {
+    public final void startDetect() {
         mDetectListener.onDetectStarted(this);
         new DetectThread().start();
     }
@@ -62,29 +56,24 @@ public abstract class DetectTask
 
     public abstract void taskRun();
 
-    public final String detectResultData()
-    {
+    public final String detectResultData() {
         return mDetectResultData;
     }
 
-    public final boolean isSuccess()
-    {
+    public final boolean isSuccess() {
         return mIsSuccess;
     }
 
-    public void finishedTask(boolean isSuccess, String resultData)
-    {
+    public void finishedTask(boolean isSuccess, String resultData) {
         Message msg = mHandler.obtainMessage();
         msg.what = isSuccess ? MSG_FINISH : MSG_ERROR;
         msg.obj = resultData;
         mHandler.sendMessage(msg);
     }
 
-    private class DetectThread extends Thread
-    {
+    private class DetectThread extends Thread {
         @Override
-        public void run()
-        {
+        public void run() {
             DetectTask.this.taskRun();
         }
     }

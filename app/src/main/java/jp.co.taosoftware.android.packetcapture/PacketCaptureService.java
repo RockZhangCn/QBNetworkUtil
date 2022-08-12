@@ -8,10 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
-import android.util.Log;
 import android.widget.Toast;
-
-//import Notify;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -20,45 +17,44 @@ import java.util.Iterator;
 public class PacketCaptureService extends VpnService implements Handler.Callback, Runnable {
     private static final String TAG = "MyVpnService";
 
+    static {
+        System.loadLibrary("tPacketCapture");
+    }
+
+    public String mPcapFile = "packetcapture.pcap";
     private Handler mHandler;
     private Thread mThread;
-
     private ParcelFileDescriptor mInterface;
-    
-    public native void startCapture( int fd );
+
+    public static boolean isCapturing(Context ctx) {
+        ActivityManager am = (ActivityManager) ctx.getSystemService(ACTIVITY_SERVICE);
+        Iterator<ActivityManager.RunningServiceInfo> amit = am.getRunningServices(Integer.MAX_VALUE).iterator();
+        while (amit.hasNext()) {
+            ActivityManager.RunningServiceInfo info = amit.next();
+            if (PacketCaptureService.class.getCanonicalName().equals(info.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public native void startCapture(int fd);
+
     public native void stopCapture();
-    public native void setPCapFileName( String filename );
-    
-    public String mPcapFile = "packetcapture.pcap";
-    
-    static {
-    	System.loadLibrary("tPacketCapture");
-    }
-    
-    public static boolean isCapturing(Context ctx){
-    	ActivityManager am = (ActivityManager)ctx.getSystemService(ACTIVITY_SERVICE);
-    	Iterator<ActivityManager.RunningServiceInfo> amit = am.getRunningServices(Integer.MAX_VALUE).iterator();
-    	while( amit.hasNext() ){
-    		ActivityManager.RunningServiceInfo info = amit.next();
-    		if( PacketCaptureService.class.getCanonicalName().equals(info.service.getClassName()) ){
-    			return true;
-    		}
-    	}
-    	return false;
-    }
-    
+
+    public native void setPCapFileName(String filename);
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-    	
-    	mPcapFile = intent.getStringExtra("PcapPath");
+
+        mPcapFile = intent.getStringExtra("PcapPath");
         String strStop = intent.getStringExtra("stopcapture");
-        
-        if( strStop!= null && strStop.equals("true"))
-        {
-        	stopCapture();
-        	stopSelf();
-        	return 0;
-        	
+
+        if (strStop != null && strStop.equals("true")) {
+            stopCapture();
+            stopSelf();
+            return 0;
+
         }
         // The handler is only used to show messages.
         if (mHandler == null) {
@@ -69,11 +65,11 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
         if (mThread != null) {
             mThread.interrupt();
         }
-       
+
         // Start a new session by creating a new thread.
         mThread = new Thread(this, "MyVpnSrvThread");
         mThread.start();
-        
+
         return START_STICKY;
     }
 
@@ -83,12 +79,11 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
             mThread.interrupt();
         }
     }
-    
+
     @Override
-    public void onRevoke()
-    {
-    	stopCapture();
-    	stopSelf();
+    public void onRevoke() {
+        stopCapture();
+        stopSelf();
     }
 
     @Override
@@ -98,58 +93,57 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
         }
         return true;
     }
-    
+
     @Override
     public synchronized void run() {
 
         try {
 
-        	Builder builder = new Builder();
-        	//builder.setMtu(1500);
-        	builder.addAddress("10.8.0.1", 32);
-        	builder.addRoute("0.0.0.0",0);
-        	mInterface = builder.setSession("抓包插件").establish();
-        	
-			if (android.os.Build.VERSION.SDK_INT < 19) {
-				// hack the android version < 4.4
-				try {	
-					Field vpnCfg = builder.getClass().getDeclaredField(
-							"mConfig");
-					if (vpnCfg != null) {
-						vpnCfg.setAccessible(true);
-						Parcelable vc = (Parcelable) vpnCfg.get(builder);
-						Field userField = vc.getClass()
-								.getDeclaredField("user");
-						
-						userField.setAccessible(true);
-						userField.set(vc, "replace with your package");
-//						Notify.sVpnConfig = vc;
-					}
-				} catch (Exception e) {
-				}
-			}
-			
-        	File file = new File(mPcapFile);
-        	if(file.exists())
-        	{
-        		file.delete();
-        	}
+            Builder builder = new Builder();
+            //builder.setMtu(1500);
+            builder.addAddress("10.8.0.1", 32);
+            builder.addRoute("0.0.0.0", 0);
+            mInterface = builder.setSession("抓包插件").establish();
 
-        	        	
-        	setPCapFileName(mPcapFile);
-            startCapture( mInterface.getFd() );
-            
+            if (android.os.Build.VERSION.SDK_INT < 19) {
+                // hack the android version < 4.4
+                try {
+                    Field vpnCfg = builder.getClass().getDeclaredField(
+                            "mConfig");
+                    if (vpnCfg != null) {
+                        vpnCfg.setAccessible(true);
+                        Parcelable vc = (Parcelable) vpnCfg.get(builder);
+                        Field userField = vc.getClass()
+                                .getDeclaredField("user");
+
+                        userField.setAccessible(true);
+                        userField.set(vc, "replace with your package");
+//						Notify.sVpnConfig = vc;
+                    }
+                } catch (Exception e) {
+                }
+            }
+
+            File file = new File(mPcapFile);
+            if (file.exists()) {
+                file.delete();
+            }
+
+
+            setPCapFileName(mPcapFile);
+            startCapture(mInterface.getFd());
+
         } catch (Exception e) {
-         
+
         } finally {
             try {
-            
-            	mInterface.close();
+
+                mInterface.close();
             } catch (Exception e) {
-             
+
             }
         }
 
     }
-    
- }
+
+}

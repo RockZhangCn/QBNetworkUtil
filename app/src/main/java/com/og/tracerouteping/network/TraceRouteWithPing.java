@@ -22,7 +22,6 @@ package com.og.tracerouteping.network;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.util.Log;
 
 import com.tencent.rocksnzhang.detectitem.TraceRoute;
 import com.tencent.rocksnzhang.utils.DetectTask;
@@ -39,8 +38,7 @@ import java.util.List;
  *
  * @author Olivier Goutay
  */
-public class TraceRouteWithPing
-{
+public class TraceRouteWithPing {
 
     public static final String PING_CMD_FORMMAT = "ping -c 1 -t %d ";
     private static final String PING = "PING";
@@ -65,8 +63,7 @@ public class TraceRouteWithPing
 
     private StringBuilder mTraceRouteResult = new StringBuilder();
 
-    public TraceRouteWithPing(String host, DetectTask task)
-    {
+    public TraceRouteWithPing(String host, DetectTask task) {
         urlToPing = host;
         mTask = task;
     }
@@ -74,8 +71,7 @@ public class TraceRouteWithPing
     /**
      * Launches the TraceRoute
      */
-    public void executeTraceRoute()
-    {
+    public void executeTraceRoute() {
         this.ttl = 1;
         this.finishedTasks = 0;
         this.traces = new ArrayList<TraceRouteContainer>();
@@ -89,41 +85,31 @@ public class TraceRouteWithPing
      * @param ping The string returned by a ping command
      * @return The ip contained in the ping
      */
-    private String parseIpFromPing(String ping)
-    {
+    private String parseIpFromPing(String ping) {
         String ip = "";
-        if (ping.contains(FROM_PING))
-        {
+        if (ping.contains(FROM_PING)) {
             // Get ip when ttl exceeded
             int index = ping.indexOf(FROM_PING);
 
             ip = ping.substring(index + 5);
-            if (ip.contains(PARENTHESE_OPEN_PING))
-            {
+            if (ip.contains(PARENTHESE_OPEN_PING)) {
                 // Get ip when in parenthese
                 int indexOpen = ip.indexOf(PARENTHESE_OPEN_PING);
                 int indexClose = ip.indexOf(PARENTHESE_CLOSE_PING);
 
                 ip = ip.substring(indexOpen + 1, indexClose);
-            }
-            else
-            {
+            } else {
                 // Get ip when after from
                 ip = ip.substring(0, ip.indexOf("\n"));
-                if (ip.contains(":"))
-                {
+                if (ip.contains(":")) {
                     index = ip.indexOf(":");
-                }
-                else
-                {
+                } else {
                     index = ip.indexOf(" ");
                 }
 
                 ip = ip.substring(0, index);
             }
-        }
-        else
-        {
+        } else {
             // Get ip when ping succeeded
             int indexOpen = ping.indexOf(PARENTHESE_OPEN_PING);
             int indexClose = ping.indexOf(PARENTHESE_CLOSE_PING);
@@ -140,11 +126,9 @@ public class TraceRouteWithPing
      * @param ping The string returned by a ping command
      * @return The ip contained in the ping
      */
-    private String parseIpToPingFromPing(String ping)
-    {
+    private String parseIpToPingFromPing(String ping) {
         String ip = "";
-        if (ping.contains(PING))
-        {
+        if (ping.contains(PING)) {
             // Get ip when ping succeeded
             int indexOpen = ping.indexOf(PARENTHESE_OPEN_PING);
             int indexClose = ping.indexOf(PARENTHESE_CLOSE_PING);
@@ -161,11 +145,9 @@ public class TraceRouteWithPing
      * @param ping The string returned by a ping command
      * @return The time contained in the ping
      */
-    private String parseTimeFromPing(String ping)
-    {
+    private String parseTimeFromPing(String ping) {
         String time = "";
-        if (ping.contains(TIME_PING))
-        {
+        if (ping.contains(TIME_PING)) {
             int index = ping.indexOf(TIME_PING);
 
             time = ping.substring(index + 5);
@@ -181,55 +163,44 @@ public class TraceRouteWithPing
      *
      * @return true if there is a connectivity, false otherwise
      */
-    public boolean hasConnectivity()
-    {
+    public boolean hasConnectivity() {
         return NetworkUtils.isNetworkConnected();
     }
 
     /**
      * Allows to timeout the ping if TIMEOUT exceeds. (-w and -W are not always supported on Android)
      */
-    private class TimeOutAsyncTask extends AsyncTask<Void, Void, Void>
-    {
+    private class TimeOutAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private ExecutePingAsyncTask task;
         private int ttlTask;
 
-        public TimeOutAsyncTask(ExecutePingAsyncTask task, int ttlTask)
-        {
+        public TimeOutAsyncTask(ExecutePingAsyncTask task, int ttlTask) {
             this.task = task;
             this.ttlTask = ttlTask;
         }
 
         @Override
-        protected Void doInBackground(Void... arg0)
-        {
+        protected Void doInBackground(Void... arg0) {
             return null;
         }
 
         @Override
-        protected void onPostExecute(Void result)
-        {
-            if (handlerTimeout == null)
-            {
+        protected void onPostExecute(Void result) {
+            if (handlerTimeout == null) {
                 handlerTimeout = new Handler();
             }
 
             // stop old timeout
-            if (runnableTimeout != null)
-            {
+            if (runnableTimeout != null) {
                 handlerTimeout.removeCallbacks(runnableTimeout);
             }
             // define timeout
-            runnableTimeout = new Runnable()
-            {
+            runnableTimeout = new Runnable() {
                 @Override
-                public void run()
-                {
-                    if (task != null)
-                    {
-                        if (ttlTask == finishedTasks)
-                        {
+                public void run() {
+                    if (task != null) {
+                        if (ttlTask == finishedTasks) {
                             task.setCancelled(true);
                             task.cancel(true);
 
@@ -247,21 +218,18 @@ public class TraceRouteWithPing
     /**
      * The task that ping an ip, with increasing time to live (ttl) value
      */
-    private class ExecutePingAsyncTask extends AsyncTask<Void, String, String>
-    {
+    private class ExecutePingAsyncTask extends AsyncTask<Void, String, String> {
 
         private boolean isCancelled;
         private int maxTtl;
 
-        public ExecutePingAsyncTask(int maxTtl)
-        {
+        public ExecutePingAsyncTask(int maxTtl) {
             this.maxTtl = maxTtl;
         }
 
 
         @Override
-        protected void onProgressUpdate(String... values)
-        {
+        protected void onProgressUpdate(String... values) {
             mTask.finishedTask(true, values[0]);
         }
 
@@ -269,27 +237,21 @@ public class TraceRouteWithPing
          * Launches the ping, launches InetAddress to retrieve url if there is one, store trace
          */
         @Override
-        protected String doInBackground(Void... params)
-        {
-            if (hasConnectivity())
-            {
-                try
-                {
+        protected String doInBackground(Void... params) {
+            if (hasConnectivity()) {
+                try {
                     String res = launchPing(urlToPing);
                     mTraceRouteResult.append(res);
                     publishProgress(mTraceRouteResult.toString());
                     TraceRouteContainer trace;
 
                     //ping 失败。
-                    if (res.contains(UNREACHABLE_PING) && !res.contains(EXCEED_PING))
-                    {
+                    if (res.contains(UNREACHABLE_PING) && !res.contains(EXCEED_PING)) {
                         // Create the TraceRouteContainer object when ping
                         // failed
                         trace = new TraceRouteContainer("", parseIpFromPing(res), elapsedTime,
                                 false);
-                    }
-                    else
-                    {
+                    } else {
                         // Create the TraceRouteContainer object when succeed
                         trace = new TraceRouteContainer("", parseIpFromPing(res),
                                 ttl == maxTtl ? Float.parseFloat(parseTimeFromPing(res))
@@ -304,14 +266,10 @@ public class TraceRouteWithPing
                     trace.setHostname(hostname);
 
                     return res;
-                }
-                catch (final Exception e)
-                {
+                } catch (final Exception e) {
                     e.printStackTrace();
                 }
-            }
-            else
-            {
+            } else {
                 return "no connectivity";
             }
             return "";
@@ -324,8 +282,7 @@ public class TraceRouteWithPing
          * @return The ping string
          */
         @SuppressLint("NewApi")
-        private String launchPing(String url) throws Exception
-        {
+        private String launchPing(String url) throws Exception {
             // Build ping command with parameters
             Process p;
             String command = String.format(PING_CMD_FORMMAT, ttl);
@@ -340,11 +297,9 @@ public class TraceRouteWithPing
             // Construct the response from ping
             String s;
             String res = "";
-            while ((s = stdInput.readLine()) != null)
-            {
+            while ((s = stdInput.readLine()) != null) {
                 res += s + "\n";
-                if (s.contains(FROM_PING) || s.contains(SMALL_FROM_PING))
-                {
+                if (s.contains(FROM_PING) || s.contains(SMALL_FROM_PING)) {
                     // We store the elapsedTime when the line from ping comes
                     elapsedTime = (System.nanoTime() - startTime) / 1000000.0f;
                 }
@@ -352,14 +307,12 @@ public class TraceRouteWithPing
 
             p.destroy();
 
-            if (res.equals(""))
-            {
+            if (res.equals("")) {
                 throw new IllegalArgumentException();
             }
 
             // Store the wanted ip adress to compare with ping result
-            if (ttl == 1)
-            {
+            if (ttl == 1) {
                 ipToPing = parseIpToPingFromPing(res);
             }
 
@@ -370,38 +323,24 @@ public class TraceRouteWithPing
          * Treat the previous ping (launches a ttl+1 if it is not the final ip, refresh the list on view etc...)
          */
         @Override
-        protected void onPostExecute(String result)
-        {
-            if (!isCancelled)
-            {
-                try
-                {
-                    if (!"".equals(result))
-                    {
-                        if ("No connectivity".equals(result))
-                        {
-                        }
-                        else
-                        {
+        protected void onPostExecute(String result) {
+            if (!isCancelled) {
+                try {
+                    if (!"".equals(result)) {
+                        if ("No connectivity".equals(result)) {
+                        } else {
 
                             if (traces.size() > 0 && traces.get(traces.size() - 1).getIp().equals(
-                                    ipToPing))
-                            {
-                                if (ttl < maxTtl)
-                                {
+                                    ipToPing)) {
+                                if (ttl < maxTtl) {
                                     ttl = maxTtl;
                                     traces.remove(traces.size() - 1);
                                     new ExecutePingAsyncTask(maxTtl).execute();
-                                }
-                                else
-                                {
+                                } else {
 
                                 }
-                            }
-                            else
-                            {
-                                if (ttl < maxTtl)
-                                {
+                            } else {
+                                if (ttl < maxTtl) {
                                     ttl++;
                                     new ExecutePingAsyncTask(maxTtl).execute();
                                 }
@@ -409,9 +348,7 @@ public class TraceRouteWithPing
                         }
                     }
                     finishedTasks++;
-                }
-                catch (final Exception e)
-                {
+                } catch (final Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -424,14 +361,10 @@ public class TraceRouteWithPing
          *
          * @param e The exception thrown
          */
-        private void onException(Exception e)
-        {
-            if (e instanceof IllegalArgumentException)
-            {
+        private void onException(Exception e) {
+            if (e instanceof IllegalArgumentException) {
                 //no ping
-            }
-            else
-            {
+            } else {
                 // error
             }
 
@@ -439,8 +372,7 @@ public class TraceRouteWithPing
             finishedTasks++;
         }
 
-        public void setCancelled(boolean isCancelled)
-        {
+        public void setCancelled(boolean isCancelled) {
             this.isCancelled = isCancelled;
         }
 

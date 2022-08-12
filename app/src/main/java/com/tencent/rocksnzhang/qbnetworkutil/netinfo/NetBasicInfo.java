@@ -5,8 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-import com.tencent.rocksnzhang.utils.DebugToast;
-
 import java.lang.reflect.Method;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -14,8 +12,7 @@ import java.net.SocketException;
 /**
  * Created by rock on 16-2-25.
  */
-public class NetBasicInfo
-{
+public class NetBasicInfo {
     public static final String WIFI_NETINTERFACE = "wlan0";
     public static final String MOBILE_NETINTERFACE = "p2p0";
     public final static String APN_CMWAP = "cmwap";
@@ -113,19 +110,14 @@ public class NetBasicInfo
     private String mNetInterface = WIFI_NETINTERFACE;
     private Context mContext;
 
-    private NetBasicInfo(Context context)
-    {
+    private NetBasicInfo(Context context) {
         mContext = context;
     }
 
-    public static NetBasicInfo getInstance(Context context)
-    {
-        if (m_Instance == null)
-        {
-            synchronized (NetBasicInfo.class)
-            {
-                if (m_Instance == null)
-                {
+    public static NetBasicInfo getInstance(Context context) {
+        if (m_Instance == null) {
+            synchronized (NetBasicInfo.class) {
+                if (m_Instance == null) {
                     m_Instance = new NetBasicInfo(context);
                 }
             }
@@ -134,10 +126,8 @@ public class NetBasicInfo
         return m_Instance;
     }
 
-    public static int getNetworkClass(int networkType)
-    {
-        switch (networkType)
-        {
+    public static int getNetworkClass(int networkType) {
+        switch (networkType) {
             case NETWORK_TYPE_GPRS:
             case NETWORK_TYPE_EDGE:
             case NETWORK_TYPE_CDMA:
@@ -163,34 +153,27 @@ public class NetBasicInfo
         }
     }
 
-    public String getMacAddress(String netInterface)
-    {
+    public String getMacAddress(String netInterface) {
         String strMacAddr = "";
         byte[] b;
-        try
-        {
+        try {
             NetworkInterface NIC = NetworkInterface.getByName(netInterface);
 
-            if (NIC == null)
-            {
+            if (NIC == null) {
                 NIC = NetworkInterface.getByName("rmnet0");//小米关掉Wifi后只剩下此网卡。
                 strMacAddr = "没有 " + netInterface + " 网卡";
             }
 
-            if (NIC != null)
-            {
+            if (NIC != null) {
                 b = NIC.getHardwareAddress();
 
-                if (b == null)
-                {
+                if (b == null) {
                     return strMacAddr;
                 }
 
                 StringBuffer buffer = new StringBuffer();
-                for (int i = 0; i < b.length; i++)
-                {
-                    if (i != 0)
-                    {
+                for (int i = 0; i < b.length; i++) {
+                    if (i != 0) {
                         buffer.append(':');
                     }
                     String str = Integer.toHexString(b[i] & 0xFF);
@@ -198,9 +181,7 @@ public class NetBasicInfo
                 }
                 strMacAddr = buffer.toString().toUpperCase();
             }
-        }
-        catch (SocketException e)
-        {
+        } catch (SocketException e) {
             e.printStackTrace();
         }
 
@@ -208,24 +189,20 @@ public class NetBasicInfo
         return strMacAddr;
     }
 
-    public String getDnsServerInfo()
-    {
+    public String getDnsServerInfo() {
         Class<?> systemProperties = null;
         Method getMethod = null;
         String sCurrentDnsServer = null;
-        try
-        {
+        try {
             systemProperties = Class.forName("android.os.SystemProperties");
-            if(systemProperties == null)
+            if (systemProperties == null)
                 return "get_dns_failed";
 
             getMethod = systemProperties.getDeclaredMethod("get", String.class);
             getMethod.setAccessible(true);
 
-            sCurrentDnsServer = (String)getMethod.invoke(null, "net.dns1");
-        }
-        catch (Exception e)
-        {
+            sCurrentDnsServer = (String) getMethod.invoke(null, "net.dns1");
+        } catch (Exception e) {
             e.printStackTrace();
             sCurrentDnsServer = "get_dns_failed";
         }
@@ -233,36 +210,25 @@ public class NetBasicInfo
         return sCurrentDnsServer;
     }
 
-    public String getApnInfo()
-    {
+    public String getApnInfo() {
         TelephonyManager tel = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
         String simOperator = tel.getSimOperator();
         //int state = tel.getSimState();
         String opCode = "-1";
-        if(simOperator == null || simOperator.length() < 5 )
-        {
+        if (simOperator == null || simOperator.length() < 5) {
             opCode = "-1";
-        }
-        else
-        {
+        } else {
             opCode = simOperator.substring(3, 5);
         }
 
         String operatorName = "unkown";
-        if (opCode.equals("01"))
-        {
+        if (opCode.equals("01")) {
             operatorName = "联通";
-        }
-        else if (opCode.equals("02"))
-        {
+        } else if (opCode.equals("02")) {
             operatorName = "移动";
-        }
-        else if (opCode.equals("03"))
-        {
+        } else if (opCode.equals("03")) {
             operatorName = "电信";
-        }
-        else
-        {
+        } else {
             operatorName = "SIM Card not found";
         }
 
@@ -279,38 +245,25 @@ public class NetBasicInfo
         mOutputString.append("\r\nMobile Network Info:\r\n");
 
         //通过ExtraInfo 获取移动网络运营商信息
-        if (mobInfo.getExtraInfo() != null)
-        {
+        if (mobInfo.getExtraInfo() != null) {
             mOutputString.append("运营商类型：");
-            if (mobInfo.getExtraInfo().equals(APN_CMWAP) || mobInfo.getExtraInfo().equals(APN_CMNET))
-            {
+            if (mobInfo.getExtraInfo().equals(APN_CMWAP) || mobInfo.getExtraInfo().equals(APN_CMNET)) {
                 mOutputString.append("移动");
-            }
-            else if (mobInfo.getExtraInfo().equals(APN_UNIWAP) || mobInfo.getExtraInfo().equals(APN_UNINET)
-                    || mobInfo.getExtraInfo().equals(APN_UNI3gWAP) || mobInfo.getExtraInfo().equals(APN_UNI3gNET))
-            {
+            } else if (mobInfo.getExtraInfo().equals(APN_UNIWAP) || mobInfo.getExtraInfo().equals(APN_UNINET)
+                    || mobInfo.getExtraInfo().equals(APN_UNI3gWAP) || mobInfo.getExtraInfo().equals(APN_UNI3gNET)) {
                 mOutputString.append("联通");
-            }
-            else if (mobInfo.getExtraInfo().equals(APN_CTWAP) || mobInfo.getExtraInfo().equals(APN_CTNET)
-                    || mobInfo.getExtraInfo().equals(APN_CTLTE))
-            {
+            } else if (mobInfo.getExtraInfo().equals(APN_CTWAP) || mobInfo.getExtraInfo().equals(APN_CTNET)
+                    || mobInfo.getExtraInfo().equals(APN_CTLTE)) {
                 mOutputString.append("电信");
-            }
-            else
-            {
-                mOutputString.append(operatorName+"\r\n");
+            } else {
+                mOutputString.append(operatorName + "\r\n");
             }
 
-            if (mobInfo.getExtraInfo().contains("wap"))
-            {
+            if (mobInfo.getExtraInfo().contains("wap")) {
                 mOutputString.append("--Wap\r\n");
-            }
-            else if (mobInfo.getExtraInfo().contains("net"))
-            {
+            } else if (mobInfo.getExtraInfo().contains("net")) {
                 mOutputString.append("--Net\r\n");
-            }
-            else
-            {
+            } else {
                 mOutputString.append("--Unkown\r\n");
             }
 
@@ -318,8 +271,7 @@ public class NetBasicInfo
             mOutputString.append("\r\n网络类型：\r\n");
 
             int netType = getNetworkClass(mobInfo.getSubtype());
-            switch (netType)
-            {
+            switch (netType) {
                 case NETWORK_CLASS_2_G:
                     mOutputString.append("2G\r\n");
                     break;

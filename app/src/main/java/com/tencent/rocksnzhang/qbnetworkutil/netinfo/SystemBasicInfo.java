@@ -5,10 +5,8 @@ import android.os.Build;
 /**
  * Created by rock on 16-2-25.
  */
-public class SystemBasicInfo
-{
-    public static String getBuildInfo()
-    {
+public class SystemBasicInfo {
+    public static String getBuildInfo() {
         StringBuilder builder = new StringBuilder();
         builder.append("Product:" + Build.PRODUCT);
         builder.append("\r\nTags:" + Build.TAGS);
