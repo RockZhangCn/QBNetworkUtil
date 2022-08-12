@@ -36,7 +36,6 @@ public class PingExecutor extends DetectTask
     {
         BufferedReader in = null;
         Runtime rt = Runtime.getRuntime();
-        boolean FoundMatch = false;
         String pingCommand = "/system/bin/ping -c 3 " + mHost;
         try
         {

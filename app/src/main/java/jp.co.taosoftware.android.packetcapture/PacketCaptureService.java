@@ -11,14 +11,14 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.tencent.mttpacketcapture.Notify;
+//import Notify;
 
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Iterator;
 
 public class PacketCaptureService extends VpnService implements Handler.Callback, Runnable {
-    private static final String TAG = "mttVpnService";
+    private static final String TAG = "MyVpnService";
 
     private Handler mHandler;
     private Thread mThread;
@@ -29,7 +29,7 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
     public native void stopCapture();
     public native void setPCapFileName( String filename );
     
-    public String mPcapFile = "qqpacketcapture.pcap";
+    public String mPcapFile = "packetcapture.pcap";
     
     static {
     	System.loadLibrary("tPacketCapture");
@@ -71,7 +71,7 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
         }
        
         // Start a new session by creating a new thread.
-        mThread = new Thread(this, "mttVpnSrvThread");
+        mThread = new Thread(this, "MyVpnSrvThread");
         mThread.start();
         
         return START_STICKY;
@@ -122,8 +122,8 @@ public class PacketCaptureService extends VpnService implements Handler.Callback
 								.getDeclaredField("user");
 						
 						userField.setAccessible(true);
-						userField.set(vc, "com.tencent.mttpacketcapture");
-						Notify.sVpnConfig = vc;
+						userField.set(vc, "replace with your package");
+//						Notify.sVpnConfig = vc;
 					}
 				} catch (Exception e) {
 				}
